@@ -1,0 +1,17 @@
+# Virtual environment
+.venv
+
+# Django
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+staticfiles/
+
+# Environment variables / secrets
+env.py
+.env
+
+# OS/editor cruft
+.DS_Store
+Thumbs.db
