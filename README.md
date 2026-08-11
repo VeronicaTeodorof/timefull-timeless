@@ -17,6 +17,8 @@ Developed under the unforgiving watch of the Academic Deadline - the cold, merci
    - [Target Audience Segmentation: User Needs and Conversion Value](#target-audience-segmentation-user-needs-and-conversion-value)
    - [Developer Goals](#developer-goals)
    - [Resources Consulted](#resources-consulted)
+2. [Scope Plane](#2-scope-plane)
+   - [User Stories](#user-stories)
 
 ---
 
@@ -49,6 +51,7 @@ Developed under the unforgiving watch of the Academic Deadline - the cold, merci
 **Problem**: The artist has never sold his artwork online before, meaning he has no pre-existing digital reputation or track record of processing distant transactions. For a buyer looking at high-value, unique contemporary sculptures, the lack of an established, secure verification path creates high transactional hesitation and a fear of fraud.
 
 **Solution**: A dedicated website that builds immediate consumer trust through explicit safety features and social proof. The platform will feature a direct inquiry form, giving buyers an immediate line of communication. Additionally, the site will feature a dedicated testimonials section showcasing reviews of his artwork generally, alongside specific delivery-completed reviews from verified customers regarding their online shopping experience.
+Another feature that increases customer confidence is mandatory account registration before any purchase, ensuring that every high-value transaction has a reliable communication channel.
 
 
 ### Target Audience Segmentation: User Needs and Conversion Value
@@ -61,6 +64,7 @@ The website's user base is divided into three distinct groups based on why they 
     *   To feel confident about the artist's professional background and history before spending money online.
     *   To see the exact size, shape, and physical texture of a sculpture from a screen since they cannot visit the studio in person.
     *   To use a familiar, safe payment method and understand exactly how the heavy, fragile artwork will be protected during shipping and customs checks.
+    *   To trust that my personal and payment information is handled securely when creating an account and making a purchase.
 *   **User Needs (Local):**
     *   To browse the artist's current studio inventory online but avoid expensive delivery fees and border paperwork completely.
 *   **Conversion Value [Revenue & Core Sales]:** These are the buyers who make direct purchases, creating the extra income the artist needs to support his teaching salary.
@@ -70,6 +74,7 @@ The website's user base is divided into three distinct groups based on why they 
 *   **User Needs:**
     *   To quickly find exact physical details (size, weight, materials) to make sure a heavy sculpture will fit perfectly into their client's specific room layout.
     *   To review a professional list of the artist's past exhibitions and career history so they can justify the high cost of the art to their business managers or clients.
+    *   To trust that account and transaction details are kept secure and confidential, particularly for business-related purchases.
 *   **Conversion Value [High-Volume & Commission Pipeline]:** These buyers represent businesses that purchase high-value items or build long-term relationships for future custom-made art commissions.
 
 #### 3. The General Audience (Academic Peers, Art Students & Fellow Sculptors)
@@ -83,7 +88,11 @@ The website's user base is divided into three distinct groups based on why they 
 ### Developer Goals
 
 *   **Academic Goals [Course Completion & Passing Criteria]:** To build a complete web application that meets all the grading rules for Unit 4 (Full Stack Frameworks with Django) with a tight deadline.
-*   **Professional Goals [Portfolio Piece & Future Freelance Business]:** To create an MVP website for a real-world client that serves as a main project in my personal portfolio. Building this site proves I can deliver safe, working software, which will hopefully help me start my own freelance business creating websites for people and businesses in the future.
+*   **Professional Goals [Portfolio Piece & Future Freelance Business]:** To create an MVP website for a real-world client that serves as a main project in my personal portfolio. Building this site proves I can deliver safe, working software, which will hopefully help me start my own freelance business creating websites for people and businesses in the future. One skill to showcase is building custom, permission-gated content management (allowing the client to add/edit/delete his own sculptures, events, and bio directly within the site) rather than relying on Django's built-in admin — demonstrating the ability to deliver tailored, non-technical-user-friendly tools.
+
+
+**Note on acknowledged but partially unaddressed need:** The Local Private Collector need identified above (avoiding delivery fees and border paperwork) is only partially met within this build. The Art Basel and UBS report cited below notes local markets outperformed international ones in 2025 due to customs costs, therefore a dedicated, localized Romanian offering - separate pricing, region-relevant payment methods, and a market-specific experience - would likely serve this need more effectively than a single unified international flow; business logic alone suggests building this Romanian-first. However, this project is assessed in English, and the academic constraint of the assessment governs the scope of this build. Local buyers are not excluded — studio pickup avoids shipping costs and customs complexity within the current build — but full market-specific localization is treated as a high-priority direction for the live version of the site, to be addressed once assessment constraints no longer apply.
+
 
 ### Resources Consulted
 
@@ -91,3 +100,37 @@ General market context was informed by the following industry reports
 
 * **[The Art Basel and UBS Global Art Market Report](https://theartmarket.artbasel.com/):** https://theartmarket.artbasel.com/download/The-Art-Basel-and-UBS-Art-Market-Report-2026-by-Arts-Economics.pdf
 *   **[The Deloitte Romania Art Report (with Artmark & RAD)](https://business-review.eu/lifestyle/art/romanias-art-market-shifts-toward-investment-and-growth-295739):** https://business-review.eu/lifestyle/art/deloitte-study-romanian-collectors-are-mainly-motivated-by-aesthetic-and-personal-reasons-283658
+
+---
+
+## 2. Scope Plane
+
+### Theme Justification
+
+The following themes for User Stories have been derived from the user needs, business goals, and developer goals identified at Strategy level:
+- Authentication
+- Sculpture/Gallery
+- Cart & Checkout
+- Shipping & Handling
+- Artist Background (incl. Events)
+- Testimonials
+- Sculptor Controls
+- Contact
+- UX/UI
+
+Below is a table showing how each of these themes was derived from Strategy inputs.  Not every theme is justified by all categories of stakeholders - some are driven by only one or two, therefore some cells are left blank rather than forced.
+
+Order reflects the actual translation pipeline: Strategy (user needs + business goals + developer goals) -> Scope (with themes as the output).
+
+| User Need | Business Goal | Developer Goal | -> Theme |
+|---|---|---|---|
+| Access personal account; trust that personal/payment data is handled securely | Reliable order communication for high-value transactions (no guest checkout) | — | **Authentication** |
+| Browse and find pieces; see exact size/weight/material (B2C + B2B); view artwork for research/interest (academic peers, fellow sculptors) | Reach a wider audience, generate sales | — | **Sculpture/Gallery** |
+| Purchase securely, track orders | Convert visitors into paying customers | — | **Cart & Checkout** |
+| Trust that fragile, high-value items arrive safely | Reduce disputes/damage claims on high-value items | — | **Shipping & Handling** |
+| Learn about the artist; review exhibition history (B2B + academic peers) | Establish a distinct brand, separate from personal/casual social presence | — | **Artist Background (incl. Events)** |
+| See social proof before a high-value purchase | Establish trust with no prior online sales track record | — | **Testimonials** |
+| — | Reduce sculptor's reliance on developer for ongoing updates; professional separation from personal admin | Demonstrates ability to build custom, permission-gated client tools (vs. relying on Django admin) — directly transferable to future freelance client work | **Sculptor Controls** |
+| Ask questions before a significant purchase | Immediate line of communication builds buyer confidence | — | **Contact** |
+| Usable regardless of device or ability | Avoid losing customers to poor experience, wider reach | — | **UX/UI (cross-cutting)** |
+
