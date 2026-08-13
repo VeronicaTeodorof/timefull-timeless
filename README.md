@@ -19,6 +19,7 @@ Developed under the unforgiving watch of the Academic Deadline - the cold, merci
    - [Resources Consulted](#resources-consulted)
 2. [Scope Plane](#2-scope-plane)
    - [User Stories](#user-stories)
+   - [MVP Features Index](#mvp-features-index)
 
 ---
 
@@ -445,7 +446,7 @@ C = could-have.
 </details>
 
 
-#### Sculptor Dashboard (role-based views) Theme
+#### Sculptor Controls Theme
 
 <details><summary>
 27. As the sculptor, I want my account to have elevated permissions, so that only I can access content-management controls across the site. (M)
@@ -601,6 +602,7 @@ Must-have user stories will form the MVP and will be treated as highest priority
 
 The MVP leaves out the CUD (Create, Update, Delete) operations for the testimonials theme, which is instead addressed as a handful of hardcoded entries; full CRUD for testimonials is the next priority after MVP. Similarly, CUD operations for the artist's biography and events are left out, with only a hardcoded page present - these were scoped as could-have stories. Both the testimonials and artist's biography pages will initially render as static pages, and once the MVP is complete, they will be extracted into dedicated apps with their own custom models, views, and URLs
 
+
 ### MVP Features Index:
 - Authentication: register an account, sign in/out, account verification
 - Gallery/Sculptor Controls: full CRUD for Themes and Sculptures
@@ -611,4 +613,66 @@ The MVP leaves out the CUD (Create, Update, Delete) operations for the testimoni
 - Home page
 
 **Non-functional requirements**: accessibility, responsiveness, and interaction feedback across all pages
+
+
+### Data Schema
+
+This schema was designed loosely following the steps recommended by Hernandez's methodology (identifying models, fields, field specifications, relationships, and business constraints), as outlined in Hernandez (2021), but adapted to the scale of this project's database.
+
+#### Models
+Most models were derived directly from the user stories, with some being self-evident (**User**, **Sculpture**, **Order**), while others were adapted from Code Institute's "Boutique Ado" tutorial (**OrderLineItem**) - patterns that may be well-known to an experienced e-commerce developer, but were not obvious on a first build.
+
+In selecting the remaining models, my guiding principle was to favour models over hardcoded constants where the underlying data varies across a dimension the business owner might need to manage independently. **Theme** emerged as a model on this basis: the artist may want to explore new themes, add themes from his existing repertoire that had no saleable pieces at the time of development, or remove themes he no longer produces work for. **Biography**, **Events**, and **Testimonial** were identified as candidates under this same principle, but their CUD operations were excluded from the tight MVP, and their models deferred accordingly.
+
+The biggest unknowns, in terms of their practical meaning for this business, were **Insurance**, **Customs**, and **Delivery**. As each country/economic area has its own policies, my decision was to limit the scope of this project to two countries: Romania, the local market, and the UK, for the international one. Why the UK? The language of the project is English, for one; secondly, choosing the EU area instead would mean dealing with more variables per country; and third, but perhaps most important, the UK represents the second largest market in the world for fine-art buying, according to the Art Market Report cited in the Strategy section. Decisions detailed below were made by the developer after independent research, and represent placeholders for the business's actual policies - to be confirmed with the client once the site is live and such policies are formally established.
+
+**Insurance** rates were found to generally range from 0.8% to 2% of item value; 1.5% was chosen as a reasonable midpoint for a flat MVP rate. Rather than becoming a model of its own, insurance is expressed as fields across three existing models: the global rate lives on `BusinessSettings` (a Django singleton model, editable by the business owner via the admin interface, without developer involvement), a nullable `insurance_rate_override` field was added to Sculpture - a low-cost addition now that allows individually appraised, per-sculpture insurance pricing to be introduced later without a schema change - and the calculated `insurance_cost` for a specific purchase is stored on
+OrderLineItem at checkout time. Insurance was deliberately not modelled as its own entity, since it represents a single, globally-applied calculation rather than data varying across independent rows, unlike **DeliveryCost**.
+
+**Customs duty** was found not to apply, since each sculpture is unique — an "original" work, not a reproduction or cast edition — which qualifies for the UK's duty exemption on original art. **Import VAT** still applies, but at a reduced rate of 5% (rather than the standard 20%) for the same reason. VAT is payable by the customer (the importer), collected by the courier either before or after delivery depending on their policy, and is not calculated or collected at checkout. This is disclosed to the customer in the Terms and Conditions, and again before the checkout process is completed, to ensure the buyer is aware of this additional cost before finalizing their purchase.
+
+As this applies uniformly to all sculptures, it required no schema changes — only static template content, phrased informationally rather than as a guarantee, since final customs treatment depends on the importing authority's own assessment.
+
+**Delivery** costs were found to vary meaningfully based on package weight, dimensions, and destination. Given that the artist's sculptures are consistently small and lightweight (under approximately 3kg), the lower end of the researched range is representative, and a flat rate per country was chosen for MVP rather than a weight/dimension-based calculation.
+
+Two ways for a buyer to receive their purchase were identified: studio pickup (no additional cost) and delivery (a fixed cost per country). `shipping_method` is implemented as a field on Order, distinguishing between the two. A dedicated **DeliveryCost** model holds one row per supported country (Romania, UK), each with an owner-editable flat rate, consistent with the same reasoning applied to Theme earlier - this data varies by country and the business owner may need to adjust it independently. Delivery cost per order is calculated via a lookup function and stored on a `delivery_cost` field on Order.
+
+
+**Final Models List:**
+
+- **User** (Authentication Theme Stories 1-6, Sculptor Controls Story 27) - stores data about those using the website and allows registering for an account, signing in and out of it, verifying an account; the sculptor's elevated permissions are managed via Django's built-in is_staff flag rather than a separate model
+- **Theme** (Gallery/Sculpture Story 7 and Sculptor Controls Story 28) - stores data about the general concepts embodied by the sculptures and allows the sculptor the flexibility of handling creation, editing and deletion without developer's aid; necessary since themes presented on website are likely to vary depending on availability of sculptures from certain themes, or the sculptor exploring and presenting new themes
+- **Sculpture** (Gallery/Sculpture Stories 7-9 and Sculptor Controls Stories 29-30) - stores data about the artwork presented on the site, is the central focus of the entire web application; necessary for giving the artist full control over which artworks are being presented and editing information about them
+- **Order** (Cart & Checkout Stories 11-17) - stores data about a specific purchase; necessary to enable the e-commerce feature of this website
+- **OrderLineItem** (Cart & Checkout Stories 10, 16, 17) - stores data about each specific item in a purchase, linking an Order to the Sculpture(s) it contains; necessary since one order can hold several sculptures, and each needs to be represented individually
+- **DeliveryCost** (Cart & Checkout Stories 12, 13 and Shipping & Handling Theme Story 18) - stores a flat delivery cost per supported country; necessary for calculating total order costs when delivery, rather than studio pickup, is selected
+- **BusinessSettings** (no direct story citation) - a singleton model holding rarely-changed, owner-editable business constants (e.g. the insurance rate); necessary to give the business owner control over these values without developer involvement, consistent with the guiding principle established earlier in this section
+
+
+### Resources consulted
+**Database design principles**
+- Hernandez, M. J. (2021). *Database Design for Mere Mortals: 25th Anniversary Edition*. Addison-Wesley Professional.
+
+**OrderLineItem and Profile models**
+
+Code Institute - *Boutique Ado* tutorial
+
+**Fine-art shipping insurance research**
+- https://fineartshippers.com/art-shipping-insurance-pricing-checklist-for-an-art-owner/
+- MoMAA https://momaa.org/art-shipping-insurance-calculator/
+
+**Original sculpture customs and VAT research**
+- https://conventuslaw.com/report/navigating-cross-border-art-transactions-legal-and-tax-insights-for-collectors/
+- https://www.art2arts.co.uk/sending-artwork-between-eu-and-uk
+- https://www.loughercontemporary.com/blogs/editorial/understanding-import-vat-for-art-collectors-a-comprehensive-guide
+
+**Delivery**
+- https://www.tsishipping.com/resource-center/how-do-i-ship-sculpture
+
+**Implementation: Django Singleton Model**
+- https://www.vicentereyes.org/blog/the-django-singleton-model-how-to-manage-page-headers-without-a-cms-c47a90f8
+
+
+
+
 
