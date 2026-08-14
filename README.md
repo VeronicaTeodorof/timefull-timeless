@@ -635,8 +635,7 @@ As this applies uniformly to all sculptures, it required no schema changes — o
 
 **Delivery** costs were found to vary meaningfully based on package weight, dimensions, and destination. Given that the artist's sculptures are consistently small and lightweight (under approximately 3kg), the lower end of the researched range is representative, and a flat rate per country was chosen for MVP rather than a weight/dimension-based calculation.
 
-Two ways for a buyer to receive their purchase were identified: studio pickup (no additional cost) and delivery (a fixed cost per country). `shipping_method` is implemented as a field on Order, distinguishing between the two. A dedicated **DeliveryCost** model holds one row per supported country (Romania, UK), each with an owner-editable flat rate, consistent with the same reasoning applied to Theme earlier - this data varies by country and the business owner may need to adjust it independently. Delivery cost per order is calculated via a lookup function and stored on a `delivery_cost` field on Order.
-
+Two ways for a buyer to receive their purchase were identified: studio pickup (no additional cost) and delivery (a fixed cost per country). `shipping_method` is implemented as a field on Order, distinguishing between the two, since this is a single choice covering the whole order. Delivery cost itself, however, is calculated per sculpture and stored on a `delivery_cost` field on OrderLineItem, reflecting that each sculpture ships in its own separate crate with its own individual cost - a multi-sculpture order therefore incurs delivery cost per item, not once per order. A dedicated **DeliveryCost** model holds one row per supported country (Romania, UK), each with an owner-editable flat rate, consistent with the same reasoning applied to Theme earlier - this data varies by country and the business owner may need to adjust it independently. Order aggregates each line item's price, insurance, and delivery cost into its `grand_total`.
 
 **Final Models List:**
 
@@ -647,6 +646,100 @@ Two ways for a buyer to receive their purchase were identified: studio pickup (n
 - **OrderLineItem** (Cart & Checkout Stories 10, 16, 17) - stores data about each specific item in a purchase, linking an Order to the Sculpture(s) it contains; necessary since one order can hold several sculptures, and each needs to be represented individually
 - **DeliveryCost** (Cart & Checkout Stories 12, 13 and Shipping & Handling Theme Story 18) - stores a flat delivery cost per supported country; necessary for calculating total order costs when delivery, rather than studio pickup, is selected
 - **BusinessSettings** (no direct story citation) - a singleton model holding rarely-changed, owner-editable business constants (e.g. the insurance rate); necessary to give the business owner control over these values without developer involvement, consistent with the guiding principle established earlier in this section
+
+#### Fields & Field Specifications
+
+Field identification and field specifications are presented together per model below, rather than as separate passes, for readability — each field is listed alongside its type and constraints directly.  Additionally,  field specifications here are described directly using Django model field types and options (e.g. `CharField`), rather than abstract data types to keep documentation and implementation tightly aligned and avoid duplicating effort across a separate abstract schema and its Django translation.
+
+**Note:** Relation fields are listed here for completeness, with full justification for non-trivial relationships provided in the Relationships section below
+
+
+**User**
+
+| Field | Type | Notes |
+|---|---|---|
+| username | CharField | Django default |
+| email | EmailField | Django default |
+| password | CharField (hashed) | Django default |
+| is_staff | BooleanField(default=False) | Used to distinguish the sculptor's elevated permissions from regular registered users (see Models section for reasoning) |
+
+
+**Theme**
+
+| Field | Type | Notes |
+|---|---|---|
+| name | CharField(max_length=100) | |
+| representative_sculpture | ForeignKey(Sculpture, null=True, blank=True, on_delete=SET_NULL) | See Relationships section |
+
+**Sculpture**
+
+| Field | Type | Notes |
+|---|---|---|
+| title | CharField(max_length=200) | The sculpture's original title, in Romanian |
+| title_translation | CharField(max_length=200, null=True, blank=True) | English translation of the title, for non-Romanian-speaking visitors; not a second title * |
+| dimensions | CharField(max_length=100) | Free-text (e.g. "32 x 18 x 15 cm"); chosen over structured height/width/depth fields since source data isn't consistently available in that format |
+| material | CharField(max_length=100) | Free-text; materials vary (metal, wood, glass, etc.) and aren't a fixed set, so `choices` was avoided in favour of flexibility |
+| price | DecimalField(max_digits=6, decimal_places=2) | |
+| weight | DecimalField(max_digits=4, decimal_places=2, null=True, blank=True) | Expressed in kg. Not currently recorded by the artist; added in anticipation of future shipping/insurance calculations that may require it. Nullable for now, since no existing weight data is available |
+| year | PositiveIntegerField, validators=[MinValueValidator, MaxValueValidator(current year)] | Year of creation, consistently present in the artist's own records; bounded to prevent implausible values (e.g. future dates or years before the artist's career began) |
+| image | CloudinaryField('image') | Required; images hosted via Cloudinary, since typical hosting platforms don't persist file uploads reliably |
+| status | CharField(max_length=10, choices=[('available','Available'),('reserved','Reserved'),('sold','Sold')], default='available') | See Business Constraints |
+| is_visible | BooleanField(default=True) | See Business Constraints |
+| insurance_rate_override | DecimalFiel(max_digits=5, decimal_places=4, null=True, blank=True) | Optional per-sculpture override; global rate used if null (see Models section) |
+| themes | ManyToManyField(Theme, related_name='sculptures') | See Relationships section |
+
+* title_translation was added despite not being tied to a specific user story, to preserve the authenticity of the artist's original naming (in Romanian) while still making titles accessible to an English-speaking audience - a translation displayed alongside the original, not a replacement for it.
+
+
+**OrderLineItem**
+
+| Field | Type | Notes |
+|---|---|---|
+| order | ForeignKey(Order) | |
+| sculpture | ForeignKey(Sculpture) | |
+| price_at_purchase | DecimalField(max_digits=6, decimal_places=2) | Snapshot of Sculpture.price at time of purchase |
+| insurance_cost | DecimalField(max_digits=5, decimal_places=2) | Calculated from price_at_purchase × insurance rate (global or per-sculpture override) at checkout |
+| delivery_cost | DecimalField(max_digits=5, decimal_places=2) | Looked up from DeliveryCost based on the order's delivery country at checkout; 0 if pickup |
+| lineitem_total | DecimalField(max_digits=7, decimal_places=2) | price_at_purchase + insurance_cost + delivery_cost; aggregated into Order.grand_total |
+
+**Order**
+
+Fields largely follow the structure of Code Institute's "Boutique Ado" tutorial's Order model, adapted where this project's requirements differ (see Notes column for deviations).
+
+| Field | Type | Notes |
+|---|---|---|
+| order_number | CharField(max_length=32, editable=False) | Generated via UUID at save time, not user-entered (adapted from Boutique Ado) |
+| user | ForeignKey(User) | |
+| full_name | CharField(max_length=50) | |
+| email | EmailField(max_length=254) | |
+| phone_number | CharField(max_length=20) | |
+| country | CharField(max_length=2) | see Business Constraints |
+| postcode | CharField(max_length=20, null=True, blank=True) | See Business Constraints |
+| town_or_city | CharField(max_length=40) | |
+| street_address1 | CharField(max_length=80) | |
+| street_address2 | CharField(max_length=80, null=True, blank=True) | |
+| region | CharField(max_length=80, null=True, blank=True) | |
+| date | DateTimeField(auto_now_add=True) | |
+| shipping_method | CharField(choices=[('delivery','Delivery'),('pickup','Studio Pickup')]) | |
+| shipped_at | DateTimeField(null=True, blank=True) | Set when the order is marked shipped, supporting the same/next-weekday commitment |
+| stripe_pid | CharField(max_length=254) | |
+| original_bag | TextField(default='') | Retained from Boutique Ado tutorial as a defensive snapshot of cart contents at checkout, pending full understanding of Stripe's webhook flow. |
+
+`order_total`, `insurance_total`, `delivery_total`, and `grand_total` are not stored as fields - they are computed dynamically via properties, since they are always derivable from already-snapshotted OrderLineItem values (see Fields- OrderLineItem).
+
+
+**DeliveryCost**
+
+| Field | Type | Notes |
+|---|---|---|
+| country | CharField(max_length=2, choices=[('RO', 'Romania'), ('UK', 'United Kingdom')]) | |
+| cost | DecimalField(max_digits=5, decimal_places=2) | Flat rate per country; owner-editable |
+
+**Business Settings**
+
+| Field | Type | Notes |
+|---|---|---|
+| insurance_rate | DecimalField(max_digits=5, decimal_places=4, default=0.015) | Global insurance rate; owner-editable via Django admin |
 
 
 ### Resources consulted
@@ -669,9 +762,10 @@ Code Institute - *Boutique Ado* tutorial
 **Delivery**
 - https://www.tsishipping.com/resource-center/how-do-i-ship-sculpture
 
-**Implementation: Django Singleton Model**
-- https://www.vicentereyes.org/blog/the-django-singleton-model-how-to-manage-page-headers-without-a-cms-c47a90f8
-
+**Implementation:**
+- Django Singleton Model - https://www.vicentereyes.org/blog/the-django-singleton-model-how-to-manage-page-headers-without-a-cms-c47a90f8-
+- Django validators - https://docs.djangoproject.com/en/6.1/ref/validators/
+- Cloudinary Field - https://cloudinary.com/documentation/django_image_and_video_upload#set_upload_options_on_a_cloudinaryfield
 
 
 
