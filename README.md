@@ -773,6 +773,12 @@ Fields largely follow the structure of Code Institute's "Boutique Ado" tutorial'
 5. 'country' on Order is restricted to countries where delivery is currently available. The list can expand once shipping processes are set up for new destinations.
 6. Although postcode is an important part of the delivery process in the UK, in Romania it's in practice not frequently used and buyers may not specify it - this field is therefore set to 'null=True', 'blank=True'.
 
+#### ERD
+
+<p align="center">
+  <img src="readme_assets/timefull_timeless_erd.png" alt="timefull-timeless erd" width="600">
+</p>
+
 
 #### Resources consulted
 **Database design principles**
