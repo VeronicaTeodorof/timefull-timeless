@@ -20,6 +20,7 @@ Developed under the unforgiving watch of the Academic Deadline - the cold, merci
 2. [Scope Plane](#2-scope-plane)
    - [User Stories](#user-stories)
    - [MVP Features Index](#mvp-features-index)
+   - [Data Schema](#data-schema)
 
 ---
 
@@ -524,12 +525,33 @@ C = could-have.
 - [ ]
 
 </details>
+<details><summary>
+34. As the sculptor, I want to edit the content of my bio, so that I keep it up to date. (C)
+</summary>
+
+**Acceptance Criteria:**
+- [ ]
+- [ ]
+- [ ]
+
+</details>
+
+<details><summary>
+35. As the sculptor, I want my sculpture images to display a watermark with my name and the site identifier, so that my work is protected from unauthorized reuse if the images are copied or shared outside the site. (M)
+</summary>
+
+**Acceptance Criteria:**
+- [ ]
+- [ ]
+- [ ]
+
+</details>
 
 
 #### Contact Theme
 
 <details><summary>
-34. As a site visitor, I want to be able to send the sculptor a message for any reason - inquiries about a piece, custom commissions, collaborations, or general questions — so that I can reach him directly regardless of my purpose for visiting. (M)
+36. As a site visitor, I want to be able to send the sculptor a message for any reason - inquiries about a piece, custom commissions, collaborations, or general questions — so that I can reach him directly regardless of my purpose for visiting. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -543,7 +565,7 @@ C = could-have.
 #### UX/UI Theme
 
 <details><summary>
-35. As a visitor, I want to be welcomed by a homepage that represents the artist's work and vision, so that I'm invited to explore further. (M)
+37. As a visitor, I want to be welcomed by a homepage that represents the artist's work and vision, so that I'm invited to explore further. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -554,7 +576,7 @@ C = could-have.
 </details>
 
 <details><summary>
-36. As a visitor, I want the site to adapt to my screen size (mobile, tablet, desktop), so that I can browse and shop comfortably on any device. (M)
+38. As a visitor, I want the site to adapt to my screen size (mobile, tablet, desktop), so that I can browse and shop comfortably on any device. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -565,7 +587,7 @@ C = could-have.
 </details>
 
 <details><summary>
-37. As a visitor with accessibility needs, I want the site to follow accessibility best practices (screen reader support, keyboard navigation, sufficient colour contrast), so that I can use the site regardless of ability. (M)
+39. As a visitor with accessibility needs, I want the site to follow accessibility best practices (screen reader support, keyboard navigation, sufficient colour contrast), so that I can use the site regardless of ability. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -576,7 +598,7 @@ C = could-have.
 </details>
 
 <details><summary>
-38. As a visitor, I want easy and intuitive navigation throughout the site, so that I can find what I'm looking for without confusion. (M)
+40. As a visitor, I want easy and intuitive navigation throughout the site, so that I can find what I'm looking for without confusion. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -587,7 +609,7 @@ C = could-have.
 </details>
 
 <details><summary>
-39. As a user, I want clear feedback on all my relevant interactions with the website (adding to cart, submitting forms, completing payment, etc.), so that I always know the outcome of my actions. (M)
+41. As a user, I want clear feedback on all my relevant interactions with the website (adding to cart, submitting forms, completing payment, etc.), so that I always know the outcome of my actions. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -612,7 +634,7 @@ The MVP leaves out the CUD (Create, Update, Delete) operations for the testimoni
 - Contact form
 - Home page
 
-**Non-functional requirements**: accessibility, responsiveness, and interaction feedback across all pages
+**Non-functional requirements**: accessibility, responsiveness, and interaction feedback across all pages, watermarked images
 
 
 ### Data Schema
@@ -663,13 +685,12 @@ Field identification and field specifications are presented together per model b
 | password | CharField (hashed) | Django default |
 | is_staff | BooleanField(default=False) | Used to distinguish the sculptor's elevated permissions from regular registered users (see Models section for reasoning) |
 
-
 **Theme**
 
 | Field | Type | Notes |
 |---|---|---|
 | name | CharField(max_length=100) | |
-| representative_sculpture | ForeignKey(Sculpture, null=True, blank=True, on_delete=SET_NULL) | See Relationships section |
+| representative_sculpture | ForeignKey(Sculpture, null=True, blank=True, on_delete=SET_NULL, related_name='') | See Relationships and Constraints section. Falls back to most recently added sculpture's image if unset |
 
 **Sculpture**
 
@@ -677,16 +698,18 @@ Field identification and field specifications are presented together per model b
 |---|---|---|
 | title | CharField(max_length=200) | The sculpture's original title, in Romanian |
 | title_translation | CharField(max_length=200, null=True, blank=True) | English translation of the title, for non-Romanian-speaking visitors; not a second title * |
+| slug | SlugField(max_length=220, unique=True, blank=True) | Auto-generated from `title` on save |
 | dimensions | CharField(max_length=100) | Free-text (e.g. "32 x 18 x 15 cm"); chosen over structured height/width/depth fields since source data isn't consistently available in that format |
 | material | CharField(max_length=100) | Free-text; materials vary (metal, wood, glass, etc.) and aren't a fixed set, so `choices` was avoided in favour of flexibility |
 | price | DecimalField(max_digits=6, decimal_places=2) | |
 | weight | DecimalField(max_digits=4, decimal_places=2, null=True, blank=True) | Expressed in kg. Not currently recorded by the artist; added in anticipation of future shipping/insurance calculations that may require it. Nullable for now, since no existing weight data is available |
 | year | PositiveIntegerField, validators=[MinValueValidator, MaxValueValidator(current year)] | Year of creation, consistently present in the artist's own records; bounded to prevent implausible values (e.g. future dates or years before the artist's career began) |
 | image | CloudinaryField('image') | Required; images hosted via Cloudinary, since typical hosting platforms don't persist file uploads reliably |
-| status | CharField(max_length=10, choices=[('available','Available'),('reserved','Reserved'),('sold','Sold')], default='available') | See Business Constraints |
+| status | CharField(max_length=10, choices=[('available','Available'),('reserved','Reserved'),('sold','Sold')], default='available') | See Relationships and Constraints p. 3 |
+| reserved_at | DateTimeField(null=True, blank=True) | Timestamp set when status changes to 'reserved'. See Relationships and Constraints p.4 |
 | is_visible | BooleanField(default=True) | See Business Constraints |
 | insurance_rate_override | DecimalFiel(max_digits=5, decimal_places=4, null=True, blank=True) | Optional per-sculpture override; global rate used if null (see Models section) |
-| themes | ManyToManyField(Theme, related_name='sculptures') | See Relationships section |
+| themes | ManyToManyField(Theme, related_name='sculptures') | See Relationships and Constraints p.2 |
 
 * title_translation was added despite not being tied to a specific user story, to preserve the authenticity of the artist's original naming (in Romanian) while still making titles accessible to an English-speaking audience - a translation displayed alongside the original, not a replacement for it.
 
@@ -713,8 +736,8 @@ Fields largely follow the structure of Code Institute's "Boutique Ado" tutorial'
 | full_name | CharField(max_length=50) | |
 | email | EmailField(max_length=254) | |
 | phone_number | CharField(max_length=20) | |
-| country | CharField(max_length=2) | see Business Constraints |
-| postcode | CharField(max_length=20, null=True, blank=True) | See Business Constraints |
+| country | CharField(max_length=2) | see Relationships and Constraints p.5 |
+| postcode | CharField(max_length=20, null=True, blank=True) | See Relationships and Constraints p.6 |
 | town_or_city | CharField(max_length=40) | |
 | street_address1 | CharField(max_length=80) | |
 | street_address2 | CharField(max_length=80, null=True, blank=True) | |
@@ -742,11 +765,20 @@ Fields largely follow the structure of Code Institute's "Boutique Ado" tutorial'
 | insurance_rate | DecimalField(max_digits=5, decimal_places=4, default=0.015) | Global insurance rate; owner-editable via Django admin |
 
 
-### Resources consulted
+#### Relationships and Constraints
+1. The FK from Theme.representative_sculpture to Sculpture doesn't prevent the same sculpture from being set as representative for more than one theme. In practice, the chosen sculpture should belong to the theme it represents, but this isn't enforced at the model field level (would need to be checked in clean() if enforcement is added later).
+2. M2M relationship — one sculpture can have many themes, one theme can belong to many sculptures. Since sculptures are presented in gallery by theme, this field should be required on Sculpture, but M2M fields can't enforce "required" at the model level, so this is enforced in forms instead.
+3. This constraint is related to the uniqueness of the artworks on this website. Three status labels have been chosen to represent availability of the sculpture, with 'available' being default. 'Reserved' can be set either automatically when a user adds the artwork to their selection, this status will be removed if a certain fixed amount of tiem ( probably 15 min) has passed and the sculpture hasn't been aquired; but it can also be set or removed manually, when the artist personally wants to reserve it for a potential buyer, still in negotiation/ talking fase. This is to prevent a sculpture being sold twice, either via online sales alone, or online and in person. The third status, 'sold' is again set in two ways: automatically after a successful payment or manually after an in person sale. 'Sold' status can never be undone to prevent accidental rebuying, when a sculpture is returned after a purchase, the only way it can become available again is to be readded with initial sale being set to is_visible = False, to prevent duplicate view whilst keeping order history intact, or deleting and re-entering it, if the sale was in-person (no order record to preserve, so no need to keep the row around).
+4. 'reserved_at' on Sculpture records when a sculpture was added to someone's selection, so the countdown to revert 'reserved' back to 'available' can be calculated. If payment succeeds first, status moves to 'sold' instead.
+5. 'country' on Order is restricted to countries where delivery is currently available. The list can expand once shipping processes are set up for new destinations.
+6. Although postcode is an important part of the delivery process in the UK, in Romania it's in practice not frequently used and buyers may not specify it - this field is therefore set to 'null=True', 'blank=True'.
+
+
+#### Resources consulted
 **Database design principles**
 - Hernandez, M. J. (2021). *Database Design for Mere Mortals: 25th Anniversary Edition*. Addison-Wesley Professional.
 
-**OrderLineItem and Profile models**
+**OrderLineItem and Order models**
 
 Code Institute - *Boutique Ado* tutorial
 
