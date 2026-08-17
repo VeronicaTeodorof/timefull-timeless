@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
 ]
@@ -83,6 +84,19 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 
 ]
+SITE_ID = 1
+
+
+# Allauth
+ACCOUNT_SIGNUP_FIELDS = ['username*', 'email*', 'email2*',
+                         'password1*', 'password2*']
+# low level protection against spam bots useful for a live website
+ACCOUNT_SIGNUP_FORM_HONEYPOT_FIELD = 'phone_number'
+ACCOUNT_LOGIN_METHODS = {'username', 'email'}
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'timefull_timeless.wsgi.application'
 
