@@ -2,6 +2,8 @@
 #### *—  and a race against time*
 ###### *Concept & Branding by Veronica Teodorof*
 
+Live link: https://timefull-timeless-5dc3c432f210.herokuapp.com/
+
 A bespoke, full stack Django web application designed as a digital home for a professional sculptor. This platform strives to unify an elegant fine-art portfolio with a secure e-commerce marketplace, professional resume, and interactive business card.
 
 The project title is a deliberate paradox rooted in the sculptor's core themes of time, flight, and angels: **"timefull"** (intentionally spelled with a double 'l' firstly for visual symmetry, and secondly, to distinguish its meaning from *timeful*) - reads literally: 'full of time', while **"timeless"** represents their eternal artistic and spiritual value.
@@ -21,6 +23,13 @@ Developed under the unforgiving watch of the Academic Deadline - the cold, merci
    - [User Stories](#user-stories)
    - [MVP Features Index](#mvp-features-index)
    - [Data Schema](#data-schema)
+3. [Skeleton Plane](#3-skeleton-plane)
+4. [Surface Plane](#4-surface-plane)
+5. [Deployment and local development](#5-deployment-and-local-development)
+6. [Testing](#6-testing)
+7. [Languages, frameworks, packages, programs](#7-languages-frameworks-packages-programs)
+8. [Credits](#Credts)
+9. [Acknowledgements](#acknowledgements)
 
 ---
 
@@ -776,7 +785,7 @@ Fields largely follow the structure of Code Institute's "Boutique Ado" tutorial'
 #### ERD
 
 <p align="center">
-  <img src="readme_assets/timefull_timeless_erd.png" alt="timefull-timeless erd" width="600">
+  <img src="readme_assets/timefull_timeless_erd.png" alt="timefull-timeless erd" width="800">
 </p>
 
 
@@ -805,6 +814,106 @@ Code Institute - *Boutique Ado* tutorial
 - Django validators - https://docs.djangoproject.com/en/6.1/ref/validators/
 - Cloudinary Field - https://cloudinary.com/documentation/django_image_and_video_upload#set_upload_options_on_a_cloudinaryfield
 
+---
+
+## 3. Skeleton Plane
+
+### Security Features
+- The sign-up form requires email to be typed twice to catch typos at registration, since email communication is essential to this website (order confirmations, availability updates, etc.).
+- A honeypot input field was added as a first layer of protection against naive spam bots.
+
+---
+
+## 4. Surface Plane
+
+---
+
+## 5. Deployment and local development
+### Deployment
+
+This project was deployed on Heroku following the next steps:
+
+#### Prerequisites
+- Heroku account
+- GitHub account
+- Git installed locally
+- gunicorn installed locally and added to requirements.txt
+
+#### Files Required
+- A `Procfile` in the root directory of the project, containing the command that Heroku will use to start the server:
+`web: gunicorn timefull_timeless.wsgi`
+
+Initially I had a hyphen instead of an underscore (`timefull-timeless` instead of `timefull_timeless`), which made gunicorn unable to import the app as a Python module — Python module names can't contain hyphens — resulting in `ModuleNotFoundError` and an application error on deploy.
+
+- A `.python-version` file in the root directory, pinning the Python version used locally (e.g. `3.12`), so Heroku's buildpack uses a matching interpreter rather than defaulting to its current default version.
+
+#### Config Vars
+- Before deploying, the following Config Vars were set in the Heroku app's Settings tab: `SECRET_KEY`, `DATABASE_URL`.
+
+
+#### Steps
+1. Sign into Heroku, navigate to the dashboard, and create a new app with a unique name.
+2. In the app click on the `Deploy` tab.
+3. In the Deployment method section click on `Connect to GitHub` and authenticate.
+4. Search for repository name and click `Connect`.
+5. Scroll to the bottom of the page and click `Deploy Branch` to start a manual deployment of the main branch.
+6. Click on `Open App` to view deployed project.
+
+Access the live app: https://timefull-timeless-5dc3c432f210.herokuapp.com/
+
+### Local development
+
+The project was managed in GitHub: https://github.com/VeronicaTeodorof/timefull-timeless
+
+**To fork the project:**
+1. Navigate to the project's page in GitHub.
+2. Click on the fork icon.
+3. Select a new branch, name it and click `Create Fork`.
+
+**To clone the project:**
+1. Navigate to the project's page in GitHub.
+2. Click the `Code` button and copy the URL shown.
+3. Open your code editor and select a directory for the project.
+4. In the terminal of that directory type 'git clone' followed by the copied URL and press enter.
+5. Create and activate a virtual environment, then install project's dependencies.
+6. Create an `env.py` file in the root directory containing the same variables listed in the Config Vars above using your own values.
+7. Migrate: `python manage.py migrate`.
+8. Run the project locally: `python manage.py runserver`.
+
+---
+
+## 6. Testing
+
+---
+
+## 7. Languages, frameworkds, packages, programs
+
+### Languages
+
+- Python
+
+### Packages
+
+- Django 6.1
+- psycopg3.3.4 (PostgreSQL database adapter)
+- dj-database-url (Parses DATABASE_URL into Django settings)
+- django-allauth 65.19.1 for authentication
+- gunicorn 26.0.0 - WSGI server used for deployment
+
+### Development tools/ programs
+
+- VS Code (IDE)
+- Git & GitHub (version control)
+- dbdiagram.io: https://dbdiagram.io/home (ERD)
+
+## 8. Credits
+
+**Develpment resources**
+- for psycopg version to be installed: https://www.psycopg.org/psycopg3/docs/basic/install.html
+- for allauth settings:
+  -  https://docs.allauth.org/en/latest/installation/quickstart.html
+
+  -  https://docs.allauth.org/en/latest/account/configuration.html
 
 
 
