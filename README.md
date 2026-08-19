@@ -818,6 +818,24 @@ Code Institute - *Boutique Ado* tutorial
 
 ## 3. Skeleton Plane
 
+### From Models to Apps
+
+The models identified in the Scope plane were distributed across three apps:
+
+- **gallery** — Sculpture, Theme (with a many-to-many relationship between them)
+- **checkout** — Order, OrderLineItem, DeliveryCost
+- **pages** — BusinessSettings
+
+Models identified in the Scope plane were grouped into apps according to three criteria.
+
+Firstly, reusability and portability - my tutor stressed that Django apps are most valuable as self-contained, reusable components, so models were grouped to maximise the likelihood that an app could be reused across future projects with minimal modification.
+Both DeliveryCost and BusinessSettings (insurance rate) are admin-editable rates that feed into an order's final cost, and both could sit in either checkout or pages. The deciding factor was reusability: delivery cost by destination is an almost universal e-commerce need, so keeping it in checkout preserves that app as a portable, drop-in component. Insurance on fragile items, by contrast, is specific to this gallery's business model, not a generic commerce concern - so it belongs in pages alongside other site-specific configuration.
+
+
+Secondly, each individual app was checked to ensure it matches a natural aspect of the project, with no app being too small or too big = a common approach being to encapsulate each tightly-connected set of models within a single app.
+
+Finally, any data relevant to multiple apps was shared rather than duplicated, with apps depending on one another where necessary rather than each holding a separate copy of the same information.
+
 ### Security Features
 - The sign-up form requires email to be typed twice to catch typos at registration, since email communication is essential to this website (order confirmations, availability updates, etc.).
 - A honeypot input field was added as a first layer of protection against naive spam bots.
@@ -912,8 +930,6 @@ The project was managed in GitHub: https://github.com/VeronicaTeodorof/timefull-
 - for psycopg version to be installed: https://www.psycopg.org/psycopg3/docs/basic/install.html
 - for allauth settings:
   -  https://docs.allauth.org/en/latest/installation/quickstart.html
-
   -  https://docs.allauth.org/en/latest/account/configuration.html
-
-
+- for sending emails - django:  https://docs.djangoproject.com/en/6.1/topics/email/
 
