@@ -9,6 +9,9 @@
    - [Repeating categories](#repeating-categories)
    - [Per-feature tests](#per-feature-tests)
      - [Authentication (AUTH)](#authentication-auth)
+     - [Responsiveness](#responsivenes)
+     - [Navigation links](#navigation-links)
+     - [Search function](#search-function)
 3. [Story-to-Test Mapping](#story-to-test-mapping)
 4. [Solved Bugs](#solved-bugs)
 5. [Known Bugs / Limitations](#known-bugs--limitations)
@@ -56,6 +59,49 @@
 | AUTH-13 | Sign up with a username shorter than the minimum length | Form rejected with validation error; no account created | As expected | Pass | |
 | AUTH-14 | Sign up with an email already registered to an existing account | Form rejected with validation error; no account created | As expected | Pass | |
 | AUTH-15 | Sign up with a username already taken by an existing account | Form rejected with validation error; no account created | As expected | Pass | |
+
+
+#### Responsiveness (RES)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| RES-01 | Burger visible on mobile (<992px) | Burger icon shown, links hidden | | | |
+| RES-02 | Burger hidden on desktop (≥992px) | Burger hidden, links inline | | | |
+| RES-03 | Burger drawer opens on tap | Collapse expands, links + auth block visible | | | |
+| RES-04 | Burger drawer closes on second tap | Collapses drawer | | | |
+| RES-05 | Search modal opens - mobile | Fullscreen modal opens | | | |
+| RES-06 | Search modal opens - desktop | Centred modal opens | | | |
+| RES-07 | Username shown when authenticated (desktop) | Username replaces Sign in/Sign up | | | |
+| RES-08 | Dropdown opens on username click/tap (mobile + desktop) | Order History / Log out appear | | | |
+| RES-09 | Dropdown closes on second click/tap (mobile + desktop) | Dropdown closes | | | |
+
+#### Navigation links (NAV)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| NAV-00 | Logo | Navigates to home page | | | |
+| NAV-01 | Home link | Navigates to home page | | | |
+| NAV-02 | Gallery link | Navigates to gallery page | | | |
+| NAV-03 | About link | Navigates to about page | | | |
+| NAV-04 | Enquiries link | Navigates to enquiries page | | | |
+| NAV-05 | Sign in link (guest) | Navigates to login page | | | |
+| NAV-06 | Sign up link (guest) | Navigates to signup page | | | |
+| NAV-07 | Order History link (authenticated) | Navigates to order history | | | |
+| NAV-08 | Log out link (authenticated) | Logs out, redirects to home page | | | |
+
+
+#### Search function (SEA)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| SEA-01 | Match by title | Sculpture appears in results | | | |
+| SEA-02 | Match by description | Sculpture(s) appear(s) in results | | | |
+| SEA-03 | Match by theme | All sculptures in that theme appear | | | |
+| SEA-04 | Case insensitivity | Matches regardless of case | | | |
+| SEA-05 | No results | Empty-state message + link back to gallery shown | | | |
+| SEA-06 | Empty submission | Returns no results, not full catalogue | | | |
+| SEA-07 | Duplicate prevention | Sculpture appears only once in results | | | |
+| SEA-08 | Enter key submits | Same result as clicking submit button | | | |
 ---
 
 ## Story-to-Test Mapping
