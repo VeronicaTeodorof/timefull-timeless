@@ -836,10 +836,86 @@ Secondly, each individual app was checked to ensure it matches a natural aspect 
 
 Finally, any data relevant to multiple apps was shared rather than duplicated, with apps depending on one another where necessary rather than each holding a separate copy of the same information.
 
+
+### Layout and mechanics per feature
+
+#### Navigation bar
+
+**Responsiveness - Mechanics**
+
+The navigation bar contains four blocks of elements: the logo, navigation links (common across authentication states), the search feature, and the authentication-state block. Because these blocks are arranged differently depending on screen width, the template contains two divs — one holding the small/medium screen arrangement, the other the large-screen arrangement - each including the same four partials (`_nav_logo.html`, `_nav_links.html`, `_nav_search.html`, `_nav_auth.html`), positioned differently within each div. This avoids duplicating any block's content while still allowing each breakpoint its own arrangement.
+
+**Responsiveness - Layout**
+
+- Mobile: burger icon (left), logo (centre), search icon (right). Navigation links and the authentication-state block sit inside the collapsible drawer, revealed by the burger.
+- Desktop: logo (left), navigation links, search icon, and the authentication-state block, all inline in a single row.
+- Tablet is not wireframed separately; it inherits the mobile arrangement below the chosen breakpoint and the desktop arrangement above it, per standard Bootstrap breakpoint behaviour.
+
+*Wireframes: mobile - burger open, not authenticated; mobile - burger open, authenticated; desktop - not authenticated; desktop - authenticated.*
+
+<p align="center">
+  <img src="readme-assets/wireframes/mobile-nav-not-authenticated.png" width="400" alt="Mobile - burger open, guest">
+  <img src="readme-assets/wireframes/mobile-nav-authenticated.png" width="400" alt="Mobile - burger open, authenticated">
+
+
+  <img src="readme-assets/wireframes/desktop-not-authenticated.png" width="550" alt="Desktop - not authenticated">
+  <img src="readme-assets/wireframes/desktop-dropdown-open.png" width="550" alt="Desktop - authenticated">
+</p>
+
+---
+
+**Authentication - Mechanics**
+
+The authentication-state block renders conditionally based on `user.is_authenticated` inside the `_nav_auth.html` partial.  When not authenticated, it shows Sign in / Sign up. When authenticated, it shows the username in place of those links, which reveals a dropdown containing Order History and Log out. This keeps the block's position within the nav consistent across both states - only its content changes.
+
+
+**Authentication - Layout**
+
+- Mobile: the authentication-state block sits inside the burger drawer, after the Enquiries link. Tapping the username expands the dropdown inline within the drawer.
+- Desktop: the authentication-state block sits at the right of the nav bar. Clicking the username reveals a dropdown (Order History, Log out) - standard Bootstrap .dropdown/.dropdown-menu behaviour within a navbar
+
+---
+
+**Search - Mechanics**
+
+Search matches against sculpture title, description, and theme name, combined in a single query:
+
+```python
+results = Sculpture.objects.filter(
+    Q(name__icontains=query) |
+    Q(description__icontains=query) |
+    Q(theme__name__icontains=query)
+).prefetch_related("theme").distinct()
+```
+
+`.distinct()` prevents duplicate rows where the many-to-many join to Theme produces more than one match per sculpture. This scope was chosen deliberately alongside the planned Material and Availability filters and theme-card browsing: those will provide precise, structured browsing by known categories, so search covers the cases they don't - free-text matches within a sculpture's own name or description - while also offering a quick way to find sculptures matching a particular query, from anywhere on the site.
+
+Live "results as you type" was considered but deferred as a future improvement.
+
+**Search - Layout**
+
+- The search modal is a single Bootstrap component (modal-fullscreen-lg-down) shared across breakpoints: fullscreen below lg, a centred modal at lg and above - matching the nav's own mobile/desktop breakpoint.
+
+*Wireframes: desktop search modal; mobile fullscreen search modal*
+
+<p align="center">
+  <img src="readme-assets/wireframes/mobile-search.png" width="400" alt="Mobile search">
+  <img src="readme-assets/wireframes/desktop-search-modal.png" width="400" alt="Desktop search modal">
+
+</p>
+
 ### Security Features
 - The sign-up form requires email to be typed twice to catch typos at registration, since email communication is essential to this website (order confirmations, availability updates, etc.).
 - A honeypot input field was added as a first layer of protection against naive spam bots.
 
+### Resources Consulted:
+- Complex lookups with Q objects and `prefetch_related()` queryset:
+  - Code Institute: 'Boutique Ado'
+  - https://docs.djangoproject.com/en/6.0/topics/db/queries/#complex-lookups-with-q-objects
+  - https://docs.djangoproject.com/en/6.0/ref/models/querysets/#prefetch-related
+  - empty guard and chaining prefetch_related() and distinct(): https://micropyramid.com/blog/querying-with-django-q-objects/
+- Bootstrap breakpoints for modals:
+  - https://getbootstrap.com/docs/5.3/layout/breakpoints/
 ---
 
 ## 4. Surface Plane
