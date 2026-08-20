@@ -274,7 +274,7 @@ C = could-have.
 #### Cart & Checkout (including order history) Theme
 
 <details><summary>
-10. As a registered user, I want to add a sculpture to my cart, so that I can proceed to payment. (M)
+11. As a registered user, I want to add a sculpture to my cart, so that I can proceed to payment. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -285,7 +285,7 @@ C = could-have.
 </details>
 
 <details><summary>
-11. As a registered user, I want to provide my delivery details and complete payment securely, so that I can finalize the transaction. (M)
+12. As a registered user, I want to provide my delivery details and complete payment securely, so that I can finalize the transaction. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -296,7 +296,7 @@ C = could-have.
 </details>
 
 <details><summary>
-12. As a registered user, I want to be clearly informed whether delivery is available to my country, so that I know whether I can proceed to payment. (M)
+13. As a registered user, I want to be clearly informed whether delivery is available to my country, so that I know whether I can proceed to payment. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -307,7 +307,7 @@ C = could-have.
 </details>
 
 <details><summary>
-13. As a registered user, I want to choose between home delivery and studio pickup before payment, so that I can select the option that best suits me. (M)
+14. As a registered user, I want to choose between home delivery and studio pickup before payment, so that I can select the option that best suits me. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -318,7 +318,7 @@ C = could-have.
 </details>
 
 <details><summary>
-14. As a registered user, I want to provide my delivery details and be redirected to a secure payment page to complete my purchase, so that I can finalize the transaction. (M)
+15. As a registered user, I want to provide my delivery details and be redirected to a secure payment page to complete my purchase, so that I can finalize the transaction. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -329,7 +329,7 @@ C = could-have.
 </details>
 
 <details><summary>
-15. As a registered user, I want to receive feedback on whether my transaction was successful or not, so that I am aware of the outcome. (M)
+16. As a registered user, I want to receive feedback on whether my transaction was successful or not, so that I am aware of the outcome. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -340,7 +340,7 @@ C = could-have.
 </details>
 
 <details><summary>
-16. As a registered user, I want to see the total price and a breakdown of costs before making a payment, so that I know exactly what I'm being charged for. (M)
+17. As a registered user, I want to see the total price and a breakdown of costs before making a payment, so that I know exactly what I'm being charged for. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -351,7 +351,7 @@ C = could-have.
 </details>
 
 <details><summary>
-17. As a registered user, I want to view my order history, so that I can review my past purchases. (S)
+18. As a registered user, I want to view my order history, so that I can review my past purchases. (S)
 </summary>
 
 **Acceptance Criteria:**
@@ -365,7 +365,7 @@ C = could-have.
 #### Shipping & Handling Theme
 
 <details><summary>
-18. As a visitor, I want to know how my order would be packed and shipped, so that I feel confident the artwork will arrive safely. (M)
+19. As a visitor, I want to know how my order would be packed and shipped, so that I feel confident the artwork will arrive safely. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -376,7 +376,7 @@ C = could-have.
 </details>
 
 <details><summary>
-19. As a registered user, I want to be offered transparent information about insurance and insurance costs, so that I can make an informed decision when buying a sculpture. (M)
+20. As a registered user, I want to be offered transparent information about insurance and insurance costs, so that I can make an informed decision when buying a sculpture. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -387,7 +387,7 @@ C = could-have.
 </details>
 
 <details><summary>
-20. As a registered user, I want to be informed that a Certificate of Authenticity is included with my purchase, so that I can trust the piece's provenance and value. (S)
+21. As a registered user, I want to be informed that a Certificate of Authenticity is included with my purchase, so that I can trust the piece's provenance and value. (S)
 </summary>
 
 **Acceptance Criteria:**
@@ -401,7 +401,7 @@ C = could-have.
 #### Artist Background Theme
 
 <details><summary>
-21. As a visitor, I want to learn about the sculptor's background, so that I can understand his artistic journey and history. (M)
+22. As a visitor, I want to learn about the sculptor's background, so that I can understand his artistic journey and history. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -412,7 +412,7 @@ C = could-have.
 </details>
 
 <details><summary>
-22. As a visitor, I want to be informed of the sculptor's past and upcoming events, so that I can understand his presence in the local artistic world and visit one of his exhibitions if I have the chance. (S)
+23. As a visitor, I want to be informed of the sculptor's past and upcoming events, so that I can understand his presence in the local artistic world and visit one of his exhibitions if I have the chance. (S)
 </summary>
 
 **Acceptance Criteria:**
@@ -425,7 +425,7 @@ C = could-have.
 #### Testimonials Theme
 
 <details><summary>
-23. As an authenticated user, I want to share my impressions of the sculptor's work, so that I can express my appreciation and contribute to the site's community of supporters. (S)
+24. As an authenticated user, I want to share my impressions of the sculptor's work, so that I can express my appreciation and contribute to the site's community of supporters. (S)
 </summary>
 
 **Acceptance Criteria:**
@@ -436,7 +436,7 @@ C = could-have.
 </details>
 
 <details><summary>
-24. As a verified buyer, I want to share a testimonial about my purchase experience, so that other prospective buyers can trust the quality, value, and overall service. (S)
+25. As a verified buyer, I want to share a testimonial about my purchase experience, so that other prospective buyers can trust the quality, value, and overall service. (S)
 </summary>
 
 **Acceptance Criteria:**
@@ -447,7 +447,7 @@ C = could-have.
 </details>
 
 <details><summary>
-25. As a registered user, I want to edit or delete my own testimonial, so that I can keep it accurate or remove it if my views change. (S)
+26. As a registered user, I want to edit or delete my own testimonial, so that I can keep it accurate or remove it if my views change. (S)
 </summary>
 
 **Acceptance Criteria:**
@@ -458,7 +458,7 @@ C = could-have.
 </details>
 
 <details><summary>
-26. As a visitor, I want to filter testimonials by type (general impressions or verified purchase experiences), so that I can find the perspective most relevant to me. (C)
+27. As a visitor, I want to filter testimonials by type (general impressions or verified purchase experiences), so that I can find the perspective most relevant to me. (C)
 </summary>
 
 **Acceptance Criteria:**
@@ -472,7 +472,7 @@ C = could-have.
 #### Sculptor Controls Theme
 
 <details><summary>
-27. As the sculptor, I want my account to have elevated permissions, so that only I can access content-management controls across the site. (M)
+28. As the sculptor, I want my account to have elevated permissions, so that only I can access content-management controls across the site. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -483,7 +483,7 @@ C = could-have.
 </details>
 
 <details><summary>
-28. As the sculptor, I want to add, edit, or delete themes (with safeguards preventing deletion of a theme still assigned to sculptures), so that I can keep my thematic index accurate and up to date. (M)
+29. As the sculptor, I want to add, edit, or delete themes (with safeguards preventing deletion of a theme still assigned to sculptures), so that I can keep my thematic index accurate and up to date. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -494,7 +494,7 @@ C = could-have.
 </details>
 
 <details><summary>
-29. As the sculptor, I want to upload or replace a sculpture's image when adding or editing it, so that the listing accurately reflects the artwork. (M)
+30. As the sculptor, I want to upload or replace a sculpture's image when adding or editing it, so that the listing accurately reflects the artwork. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -505,7 +505,7 @@ C = could-have.
 </details>
 
 <details><summary>
-30. As the sculptor, I want to add a new sculpture, edit the details of an existing one, or remove it from the gallery (permanently deleting it if never sold, or archiving it if it has been), so that I have complete control over what's displayed in my gallery page. (M)
+31. As the sculptor, I want to add a new sculpture, edit the details of an existing one, or remove it from the gallery (permanently deleting it if never sold, or archiving it if it has been), so that I have complete control over what's displayed in my gallery page. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -516,7 +516,7 @@ C = could-have.
 </details>
 
 <details><summary>
-31. As the sculptor, I want to be notified by email and see a list of new orders, so that I know what to prepare and ship. (M)
+32. As the sculptor, I want to be notified by email and see a list of new orders, so that I know what to prepare and ship. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -527,7 +527,7 @@ C = could-have.
 </details>
 
 <details><summary>
-32. As the sculptor, I want to edit the content of my bio, so that I keep it up to date. (C)
+33. As the sculptor, I want to edit the content of my bio, so that I keep it up to date. (C)
 </summary>
 
 **Acceptance Criteria:**
@@ -538,7 +538,7 @@ C = could-have.
 </details>
 
 <details><summary>
-33. As the sculptor, I want to add, edit, or remove events, so that I keep a clear and accurate list of my participations. (C)
+34. As the sculptor, I want to add, edit, or remove events, so that I keep a clear and accurate list of my participations. (C)
 </summary>
 
 **Acceptance Criteria:**
@@ -548,7 +548,7 @@ C = could-have.
 
 </details>
 <details><summary>
-34. As the sculptor, I want to edit the content of my bio, so that I keep it up to date. (C)
+35. As the sculptor, I want to edit the content of my bio, so that I keep it up to date. (C)
 </summary>
 
 **Acceptance Criteria:**
@@ -559,7 +559,7 @@ C = could-have.
 </details>
 
 <details><summary>
-35. As the sculptor, I want my sculpture images to display a watermark with my name and the site identifier, so that my work is protected from unauthorized reuse if the images are copied or shared outside the site. (M)
+36. As the sculptor, I want my sculpture images to display a watermark with my name and the site identifier, so that my work is protected from unauthorized reuse if the images are copied or shared outside the site. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -573,7 +573,7 @@ C = could-have.
 #### Contact Theme
 
 <details><summary>
-36. As a site visitor, I want to be able to send the sculptor a message for any reason - inquiries about a piece, custom commissions, collaborations, or general questions — so that I can reach him directly regardless of my purpose for visiting. (M)
+37. As a site visitor, I want to be able to send the sculptor a message for any reason - inquiries about a piece, custom commissions, collaborations, or general questions — so that I can reach him directly regardless of my purpose for visiting. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -587,7 +587,7 @@ C = could-have.
 #### UX/UI Theme
 
 <details><summary>
-37. As a visitor, I want to be welcomed by a homepage that represents the artist's work and vision, so that I'm invited to explore further. (M)
+38. As a visitor, I want to be welcomed by a homepage that represents the artist's work and vision, so that I'm invited to explore further. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -598,7 +598,7 @@ C = could-have.
 </details>
 
 <details><summary>
-38. As a visitor, I want the site to adapt to my screen size (mobile, tablet, desktop), so that I can browse and shop comfortably on any device. (M)
+39. As a visitor, I want the site to adapt to my screen size (mobile, tablet, desktop), so that I can browse and shop comfortably on any device. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -609,7 +609,7 @@ C = could-have.
 </details>
 
 <details><summary>
-39. As a visitor with accessibility needs, I want the site to follow accessibility best practices (screen reader support, keyboard navigation, sufficient colour contrast), so that I can use the site regardless of ability. (M)
+40. As a visitor with accessibility needs, I want the site to follow accessibility best practices (screen reader support, keyboard navigation, sufficient colour contrast), so that I can use the site regardless of ability. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -620,7 +620,7 @@ C = could-have.
 </details>
 
 <details><summary>
-40. As a visitor, I want easy and intuitive navigation throughout the site, so that I can find what I'm looking for without confusion. (M)
+41. As a visitor, I want easy and intuitive navigation throughout the site, so that I can find what I'm looking for without confusion. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -635,7 +635,7 @@ C = could-have.
 </details>
 
 <details><summary>
-41. As a user, I want clear feedback on all my relevant interactions with the website (adding to cart, submitting forms, completing payment, etc.), so that I always know the outcome of my actions. (M)
+42. As a user, I want clear feedback on all my relevant interactions with the website (adding to cart, submitting forms, completing payment, etc.), so that I always know the outcome of my actions. (M)
 </summary>
 
 **Acceptance Criteria:**
