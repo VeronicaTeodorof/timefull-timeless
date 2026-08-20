@@ -258,6 +258,19 @@ C = could-have.
 
 </details>
 
+<details><summary>
+10. As a visitor, I want to search for sculptures by keyword from anywhere on the site, so that I can quickly find a specific piece or theme without browsing the full gallery. (S)
+</summary>
+
+**Acceptance Criteria:**
+- [ ] Given I am on any page, when I click the search icon, then a search modal opens (fullscreen on mobile, centred on desktop).
+- [ ] Given I enter a search term and submit, when the search runs, then I am shown sculptures whose title, description, or theme name match my search term.
+- [ ] Given my search term matches no sculptures, when the results page loads, then I see a message indicating no sculptures were found, along with a link back to the full gallery.
+- [ ] Given I submit an empty search, when the results page loads, I am directed to the gallery page.
+- [ ] Given I press Enter or click/tap submit button after typing my search term, when the form submits, I am taken to results page or to gallery page as appropriate.
+
+</details>
+
 #### Cart & Checkout (including order history) Theme
 
 <details><summary>
@@ -589,9 +602,9 @@ C = could-have.
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
+- [ ] Given I am on a mobile-width screen (<992px), when I load any page, then the navigation bar shows a burger icon, centred logo, and search icon, with navigation links and authentication state contained within a collapsible drawer.
+- [ ] Given I am on a desktop-width screen (≥992px), when I load any page, then the navigation bar shows the logo, navigation links, search icon, and authentication state inline in a single row, with no burger icon.
+- [ ] Given I open the search modal, when I am on a mobile-width screen, then the modal displays fullscreen; when I am on a desktop-width screen, then the modal displays centred.
 
 </details>
 
@@ -611,9 +624,13 @@ C = could-have.
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
+- [ ] Given I am on any page, when I look at the navigation bar, then I can see links to Home, Gallery, About, and Enquiries.
+- [ ] Given I click the logo, when the page loads, then I am taken to the home page.
+- [ ] Given I click any navigation link, when the corresponding page loads, then the link correctly navigates me there with no broken links.
+- [ ] Given I am not authenticated, when I look at the navigation bar, then I see Sign in and Sign up options.
+- [ ] Given I am authenticated, when I look at the navigation bar, then I see my username in place of Sign in/Sign up.
+- [ ] Given I am authenticated and click my username, when the dropdown opens, then I see Order History and Log out options.
+- [ ] Given I click Log out, when the action completes, then I am logged out and redirected to home page.
 
 </details>
 
@@ -785,7 +802,7 @@ Fields largely follow the structure of Code Institute's "Boutique Ado" tutorial'
 #### ERD
 
 <p align="center">
-  <img src="readme_assets/timefull_timeless_erd.png" alt="timefull-timeless erd" width="800">
+  <img src="readme-assets/timefull_timeless_erd.png" alt="timefull-timeless erd" width="800">
 </p>
 
 
