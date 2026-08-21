@@ -79,15 +79,15 @@
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| NAV-00 | Logo | Navigates to home page | | | |
-| NAV-01 | Home link | Navigates to home page | | | |
-| NAV-02 | Gallery link | Navigates to gallery page | | | |
-| NAV-03 | About link | Navigates to about page | | | |
-| NAV-04 | Enquiries link | Navigates to enquiries page | | | |
-| NAV-05 | Sign in link (guest) | Navigates to login page | | | |
-| NAV-06 | Sign up link (guest) | Navigates to signup page | | | |
-| NAV-07 | Order History link (authenticated) | Navigates to order history | | | |
-| NAV-08 | Log out link (authenticated) | Logs out, redirects to home page | | | |
+| NAV-00 | Logo | Navigates to home page | As expected | Pass | |
+| NAV-01 | Home link | Navigates to home page | As expected | Pass | |
+| NAV-02 | Gallery link | Navigates to gallery page | As expected | Pass | |
+| NAV-03 | About link | Navigates to about page | As expected | Pass | |
+| NAV-04 | Enquiries link | Navigates to enquiries page | As expected | Pass | |
+| NAV-05 | Sign in link (guest) | Navigates to login page | As expected | Pass | |
+| NAV-06 | Sign up link (guest) | Navigates to signup page | As expected | Pass | |
+| NAV-07 | Order History link (authenticated) | Navigates to order history | As expected | Pass | |
+| NAV-08 | Log out link (authenticated) | Logs out, redirects to home page | As expected | Pass | |
 
 
 #### Search function (SEA)
