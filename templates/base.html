@@ -32,8 +32,8 @@
                 {% partialdef nav_links %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'pages:home' %}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'gallery:gallery' %}">Gallery</a></li>
-                    <li class="nav-item"><a class="nav-link" href="">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="">Enquiries</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'pages:about' %}">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'pages:contact' %}">Enquiries</a></li>
                 {% endpartialdef nav_links %}
 
                 {% partialdef nav_auth %}
