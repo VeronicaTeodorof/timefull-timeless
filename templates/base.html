@@ -31,7 +31,7 @@
 
                 {% partialdef nav_links %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'pages:home' %}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'gallery:gallery' %}">Gallery</a></li>
                     <li class="nav-item"><a class="nav-link" href="">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="">Enquiries</a></li>
                 {% endpartialdef nav_links %}
@@ -50,7 +50,7 @@
                         </li>
                     {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}">Sign in</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'account_signup' %}">Sign up</a></li>
+                        <li class="nav-item"><a class="nav-link me-5" href="{% url 'account_signup' %}">Sign up</a></li>
                     {% endif %}
                 {% endpartialdef nav_auth %}
 
