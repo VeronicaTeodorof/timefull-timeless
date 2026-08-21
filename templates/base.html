@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %} -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,9 +38,9 @@
 
                 {% partialdef nav_auth %}
                     {% if user.is_authenticated %}
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown me-5">
                             <a class="nav-link dropdown-toggle" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 {{user.username}}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -94,17 +94,18 @@
                         </ul>
                     </div>
                 </div>
-                <!-- desktop navigation -->
+
+                <!-- Desktop navigation -->
                 <div class="d-none d-lg-flex align-items-center w-100">
                     {% partial nav_logo %}
 
                     <ul class="navbar-nav flex-row ms-auto gap-lg-4">
                         {% partial nav_links %}
-                    </ul>
-                    <div class="mx-5">
-                        {% partial nav_search %}
-                    </div>
-                    <ul class="navbar-nav flex-row gap-lg-4 me-5">
+
+                        <!-- Search Modal Button -->
+                        <li class="nav-item mx-4">
+                            {% partial nav_search %}
+                        </li>
                         {% partial nav_auth %}
                     </ul>
                 </div>
