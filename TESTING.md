@@ -110,6 +110,39 @@
 
 ## Solved Bugs
 
+### Desktop Navbar Dropdown Layout Shift Bug
+
+#### The Problem
+
+When clicking the user profile dropdown on desktop, the entire navigation bar shifted horizontally to the left. This layout shift never happened on mobile, even though both breakpoints used the same login partial and username data.
+
+#### Why It Happened
+
+**Desktop vs. mobile rendering:** mobile stacks items vertically in normal document flow, so opening a menu just pushes content down. Desktop places items side-by-side in a flex row, which behaves differently when a child's layout changes.
+**Flexbox & position overrides:** opening the dropdown made Bootstrap recalculate the floating menu's coordinates dynamically. Inside a horizontal flex row, this recalculation forced the whole row to resize, producing a visible horizontal "snap" as sibling elements shifted to accommodate the dropdown's changing inline styles.
+
+#### The Solution
+
+The menu layer is strictly anchored using CSS rules targeted specifically at desktop viewports:
+
+```css
+/* Apply custom positioning only to desktop viewports (lg and up) */
+@media (min-width: 992px) {
+    .navbar-nav .dropdown-menu-end {
+        position: absolute !important;
+        right: 0 !important;
+        left: auto !important;
+    }
+}
+```
+
+#### Key Takeaways
+
+- `position: absolute !important;` completely detaches the floating menu from the navbar's physical layout calculations so opening it cannot push sibling elements.
+- `right: 0 !important;` and `left: auto !important;` anchor the dropdown directly to the right edge of its parent container.
+- Scope the CSS inside a `@media (min-width: 992px)` query to protect mobile screens, allowing the mobile drawer to collapse and expand vertically without breaking.
+
+Note: This bug was diagnosed and fixed with the help of AI tools.
 ---
 
 ## Known Bugs / Limitations
