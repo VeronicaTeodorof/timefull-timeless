@@ -860,7 +860,7 @@ Finally, any data relevant to multiple apps was shared rather than duplicated, w
 
 **Responsiveness - Mechanics**
 
-The navigation bar contains four blocks of elements: the logo, navigation links (common across authentication states), the search feature, and the authentication-state block. Because these blocks are arranged differently depending on screen width, the template contains two divs — one holding the small/medium screen arrangement, the other the large-screen arrangement - each including the same four partials (`_nav_logo.html`, `_nav_links.html`, `_nav_search.html`, `_nav_auth.html`), positioned differently within each div. This avoids duplicating any block's content while still allowing each breakpoint its own arrangement.
+The navigation bar contains four blocks of elements: the logo, navigation links (common across authentication states), the search feature, and the authentication-state block. Because these blocks are arranged differently depending on screen width, the template contains two divs — one holding the small/medium screen arrangement, the other the large-screen arrangement - each including the same three partials and a partial definition (`{% partialdef nav_logo %}`, `_nav_links.html`, `_nav_search.html`, `_nav_auth.html`), positioned differently within each div. This avoids duplicating any block's content while still allowing each breakpoint its own arrangement.
 
 **Responsiveness - Layout**
 
@@ -918,6 +918,18 @@ Live "results as you type" was considered but deferred as a future improvement.
 <p align="center">
   <img src="readme-assets/wireframes/mobile-search.png" width="400" alt="Mobile search">
   <img src="readme-assets/wireframes/desktop-search-modal.png" width="400" alt="Desktop search modal">
+
+</p>
+
+---
+#### Footer
+**Layout** - contains studio address, links to Shippment and Terms, a Secure Checkout badge and copyright.
+
+*Wireframes: desktop footer; mobile footer*
+
+<p align="center">
+  <img src="readme-assets/wireframes/footer-mobile-wireframe.png" width="250" alt="Mobile search">
+  <img src="readme-assets/wireframes/footer-desktop-wireframe.png" width="550" alt="Desktop search modal">
 
 </p>
 
@@ -1002,20 +1014,26 @@ The project was managed in GitHub: https://github.com/VeronicaTeodorof/timefull-
 ### Languages
 
 - Python
+- HTML
+- CSS
 
 ### Packages
 
 - Django 6.1
-- psycopg3.3.4 (PostgreSQL database adapter)
+- psycopg 3.3.4 (PostgreSQL database adapter)
 - dj-database-url (Parses DATABASE_URL into Django settings)
 - django-allauth 65.19.1 for authentication
 - gunicorn 26.0.0 - WSGI server used for deployment
+
+### Front-end libraries
+- Bootstrap 5.3.8: https://getbootstrap.com/
 
 ### Development tools/ programs
 
 - VS Code (IDE)
 - Git & GitHub (version control)
 - dbdiagram.io: https://dbdiagram.io/home (ERD)
+- excalidraw: https://excalidraw.com/ (wireframes)
 
 ## 8. Credits
 
@@ -1025,4 +1043,5 @@ The project was managed in GitHub: https://github.com/VeronicaTeodorof/timefull-
   -  https://docs.allauth.org/en/latest/installation/quickstart.html
   -  https://docs.allauth.org/en/latest/account/configuration.html
 - for sending emails - django:  https://docs.djangoproject.com/en/6.1/topics/email/
+- for overriding allauth default templates: https://www.makeuseof.com/override-default-templates-django-allauth/
 

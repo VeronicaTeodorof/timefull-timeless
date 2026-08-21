@@ -88,6 +88,8 @@
 | NAV-06 | Sign up link (guest) | Navigates to signup page | As expected | Pass | |
 | NAV-07 | Order History link (authenticated) | Navigates to order history | As expected | Pass | |
 | NAV-08 | Log out link (authenticated) | Logs out, redirects to home page | As expected | Pass | |
+| NAV-09 | Shipping link on footer | Navigates to policies page, shipping section | | | |
+| NAV-10 | Terms link on footer | Navigates to policies page, terms section | | | |
 
 
 #### Search function (SEA)
