@@ -76,6 +76,10 @@ TEMPLATES = [
     },
 ]
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
 AUTHENTICATION_BACKENDS = [
 
     # Needed to login by username in Django admin, regardless of `allauth`
