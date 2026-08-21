@@ -65,15 +65,15 @@
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| RES-01 | Burger visible on mobile (<992px) | Burger icon shown, links hidden | | | |
-| RES-02 | Burger hidden on desktop (≥992px) | Burger hidden, links inline | | | |
-| RES-03 | Burger drawer opens on tap | Collapse expands, links + auth block visible | | | |
-| RES-04 | Burger drawer closes on second tap | Collapses drawer | | | |
-| RES-05 | Search modal opens - mobile | Fullscreen modal opens | | | |
-| RES-06 | Search modal opens - desktop | Centred modal opens | | | |
-| RES-07 | Username shown when authenticated (desktop) | Username replaces Sign in/Sign up | | | |
-| RES-08 | Dropdown opens on username click/tap (mobile + desktop) | Order History / Log out appear | | | |
-| RES-09 | Dropdown closes on second click/tap (mobile + desktop) | Dropdown closes | | | |
+| RES-01 | Burger visible on mobile (<992px) | Burger icon shown, links hidden | As expected | Pass | |
+| RES-02 | Burger hidden on desktop (≥992px) | Burger hidden, links inline | As expected | Pass | |
+| RES-03 | Burger drawer opens on tap | Collapse expands, links + auth block visible | As expected | Pass | |
+| RES-04 | Burger drawer closes on second tap | Collapses drawer | As expected | Pass  | |
+| RES-05 | Search modal opens - mobile | Fullscreen modal opens | As expected | Pass | |
+| RES-06 | Search modal opens - desktop | Centred modal opens | As expected | Pass | |
+| RES-07 | Username shown when authenticated (desktop) | Username replaces Sign in/Sign up | As expected | Pass | |
+| RES-08 | Dropdown opens on username click/tap (mobile + desktop) | Order History / Log out appear | As expected | Pass | |
+| RES-09 | Dropdown closes on second click/tap (mobile + desktop) | Dropdown closes | As expected | Pass | |
 
 #### Navigation links (NAV)
 
