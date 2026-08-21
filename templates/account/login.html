@@ -1,0 +1,19 @@
+<!-- Login page -->
+<!-- Uses code from https://www.makeuseof.com/override-default-templates-django-allauth/ -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Sign In</h1>
+
+    <p>If you don't have an account, please <a href="{% url 'account_signup' %}">sign up.</a></p>
+
+    <form method="post" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+    {% endif %}
+    <a href="{% url 'account_reset_password' %}">Forgot Password?</a>
+    <button type="submit" class="btn btn-outline-success">Sign In</button>
+</form>
+{% endblock %}
