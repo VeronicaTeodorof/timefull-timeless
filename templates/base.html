@@ -44,7 +44,7 @@
                                 {{user.username}}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#">Order History</a></li>
+                                <li><a class="dropdown-item" href="{% url 'checkout:order_history' %}">Order History</a></li>
                                 <li><a class="dropdown-item" href="{% url 'account_logout' %}">Log out</a></li>
                             </ul>
                         </li>
