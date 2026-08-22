@@ -20,7 +20,7 @@
     {% block extra_head %}{% endblock %}
 </head>
 
-<body>
+<body class="min-vh-100 d-flex flex-column">
     <header>
         <nav class="navbar" aria-label="Main navigation">
             <div class="container-fluid">
@@ -123,8 +123,35 @@
        {% block content %}{% endblock %}
     </main>
 
-    <footer>
-
+    <footer class="mt-auto">
+        <div class="container-fluid px-5">
+            <div class="row">
+                <div class="col-6 col-lg-8">
+                    <address>
+                        <strong>Studio Address:</strong><br>
+                        Str. Aleea Florilor,<br class="d-lg-none">
+                        Braila,<br class="d-lg-none">
+                        Romania
+                    </address>
+                </div>
+                <nav class="col-6 col-lg-4" aria-label="Footer">
+                    <ul class="list-unstyled d-lg-flex gap-lg-4">
+                        <li><a href="">Shipping</a></li>
+                        <li><a href="">Terms</a></li>
+                        <li>Secure checkout</a>
+                    </ul>
+                </nav>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <small class="text-lg-center">
+                        &copy; 2026 Enel Dumitrascu<br class="d-lg-none">
+                        Images may not be copied without permission
+                    </small>
+                </div>
+            </div>
+        </div>
     </footer>
 
     <!-- Search Modal -->
