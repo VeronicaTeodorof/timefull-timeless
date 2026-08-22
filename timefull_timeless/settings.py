@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'pages',
     'gallery',
     'checkout',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -98,7 +99,7 @@ SITE_ID = 1
 ACCOUNT_SIGNUP_FIELDS = ['username*', 'email*', 'email2*',
                          'password1*', 'password2*']
 # low level protection against spam bots useful for a live website
-ACCOUNT_SIGNUP_FORM_HONEYPOT_FIELD = 'phone_number'
+# ACCOUNT_SIGNUP_FORM_HONEYPOT_FIELD = 'phone_number'
 ACCOUNT_LOGIN_METHODS = {'username', 'email'}
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_USERNAME_MIN_LENGTH = 4
@@ -181,4 +182,3 @@ else:
         },
     }
     DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
-
