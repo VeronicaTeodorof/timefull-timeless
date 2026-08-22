@@ -716,7 +716,7 @@ Field identification and field specifications are presented together per model b
 | Field | Type | Notes |
 |---|---|---|
 | name | CharField(max_length=100) | |
-| representative_sculpture | ForeignKey(Sculpture, null=True, blank=True, on_delete=SET_NULL, related_name='') | See Relationships and Constraints section. Falls back to most recently added sculpture's image if unset |
+| representative_sculpture | ForeignKey(Sculpture, null=True, blank=True, on_delete=SET_NULL, related_name='representing_themes') | See Relationships and Constraints section. Falls back to most recently added sculpture's image if unset |
 
 **Sculpture**
 
@@ -804,6 +804,13 @@ Fields largely follow the structure of Code Institute's "Boutique Ado" tutorial'
 <p align="center">
   <img src="readme-assets/timefull_timeless_erd.png" alt="timefull-timeless erd" width="800">
 </p>
+
+Notes:
+- `Theme.slug` was added after the ERD was finalized (not shown in diagram). It is needed to link to a dedicated filtered view (/gallery/theme/<slug>/) giving clean, shareable URLs.
+
+- `Sculpture.is_manually_reserved` was added after the ERD was finalized (not shown in diagram). Needed to distinguish reservations made manually by the artist (never auto-expire) from automatic reservations created when a sculpture is added to a buyer's selection (revert to available after 20–30 min if not purchased).
+
+- `Sculpture.reserved_by` was added after the ERD was finalized (not shown in diagram). Needed to distinguish who holds a reservation, so only that buyer can complete the purchase while others still see the sculpture as reserved.
 
 
 #### Resources consulted
@@ -1006,6 +1013,13 @@ The project was managed in GitHub: https://github.com/VeronicaTeodorof/timefull-
 ---
 
 ## 6. Testing
+### Resources consulted
+
+**Testing Models**
+- for testing field existance: https://docs.djangoproject.com/en/6.1/ref/models/meta/
+- for testing field type: https://www.geeksforgeeks.org/python/python-unittest-assertisinstance-function/
+- for testing Cloudinary field: https://github.com/cloudinary/pycloudinary/blob/master/django_tests/test_cloudinaryField.py
+
 
 ---
 
@@ -1024,6 +1038,7 @@ The project was managed in GitHub: https://github.com/VeronicaTeodorof/timefull-
 - dj-database-url (Parses DATABASE_URL into Django settings)
 - django-allauth 65.19.1 for authentication
 - gunicorn 26.0.0 - WSGI server used for deployment
+- cloudinary-1.46.0 - cloud based image hosting and transformation
 
 ### Front-end libraries
 - Bootstrap 5.3.8: https://getbootstrap.com/
@@ -1037,11 +1052,17 @@ The project was managed in GitHub: https://github.com/VeronicaTeodorof/timefull-
 
 ## 8. Credits
 
-**Develpment resources**
+### Develpment resources
 - for psycopg version to be installed: https://www.psycopg.org/psycopg3/docs/basic/install.html
+
+**Allauth**
 - for allauth settings:
   -  https://docs.allauth.org/en/latest/installation/quickstart.html
   -  https://docs.allauth.org/en/latest/account/configuration.html
 - for sending emails - django:  https://docs.djangoproject.com/en/6.1/topics/email/
 - for overriding allauth default templates: https://www.makeuseof.com/override-default-templates-django-allauth/
+
+**Django models**
+- constraints: https://docs.djangoproject.com/en/6.0/ref/models/constraints/
+- database functions - Lower(): https://docs.djangoproject.com/en/6.0/ref/models/database-functions/#lower
 
