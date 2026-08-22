@@ -57,3 +57,29 @@ class ThemeModelCase(TestCase):
         Theme.objects.create(name='Any Theme')
         with self.assertRaises(IntegrityError):
             Theme.objects.create(name='Any Theme')
+
+    def test_theme_slug_auto_generates_from_name(self):
+        """
+        Tests that slug is automatically generated from name
+        when not explicitly provided.
+        """
+        theme = Theme.objects.create(name='Any Theme')
+        self.assertEqual(theme.slug, 'any-theme')
+
+    def test_theme_name_must_be_unique_case_insensitive(self):
+        """
+        Tests that creating a theme with a name matching an existing one,
+        different only in case, raises Integrity Error
+        """
+
+        Theme.objects.create(name='Any Theme')
+        with self.assertRaises(IntegrityError):
+            Theme.objects.create(name='any theme')
+
+    def test_theme_name_strips_whitespace(self):
+        """
+        Tests that whitespace leading/trailling whitespace is
+        stirpped from name when saved
+        """
+        Theme.objects.create(name=' Any Name ')
+        self.assertEqual(Theme.name, 'Any Name')
