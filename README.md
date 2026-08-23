@@ -940,6 +940,19 @@ Live "results as you type" was considered but deferred as a future improvement.
 
 </p>
 
+---
+
+#### Gallery Page
+**Empty state** matters primarily for the sculptor (staff) view, since regular users are unlikely to encounter it. It displays a quote, an empty-state message, and an 'Add Sculpture' CTA button — hardcoded at first.
+
+*Wireframes: desktop and mobile empty state gallery page for staff*
+
+<p align="center">
+  <img src="readme-assets/wireframes/gallery-empty-moblie-staff.png" width="300" alt="Mobile gallery empty state for staff">
+  <img src="readme-assets/wireframes/gallery-empty-desktop-staff.png" width="550" alt="Desktop gallery empty state for staff">
+
+</p>
+
 ### Security Features
 - The sign-up form requires email to be typed twice to catch typos at registration, since email communication is essential to this website (order confirmations, availability updates, etc.).
 - A honeypot input field was added as a first layer of protection against naive spam bots.
@@ -952,6 +965,12 @@ Live "results as you type" was considered but deferred as a future improvement.
   - empty guard and chaining prefetch_related() and distinct(): https://micropyramid.com/blog/querying-with-django-q-objects/
 - Bootstrap breakpoints for modals:
   - https://getbootstrap.com/docs/5.3/layout/breakpoints/
+
+**UI:**
+- For floating action buttons (FAB) used for 'Add sculpture' button in mobile view sculptor controls:
+  - https://m3.material.io/components/floating-action-button/guidelines
+  - Thinking on ways to solve FAB: https://www.youtube.com/watch?v=RXopH5t2Kww
+
 ---
 
 ## 4. Surface Plane
