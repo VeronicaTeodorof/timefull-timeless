@@ -414,19 +414,37 @@ class SculptureModelCase(TestCase):
         field = Sculpture._meta.get_field('image')
         self.assertIsInstance(field, CloudinaryField)
 
-    def test_sculpture_image_cannot_be_null(self):
+    def test_sculpture_image_cannot_be_blank(self):
         """
-        Tests that creating a Sculpture with image=None raises
-        IntegrityError, since image is not nullable.
+        Tests that a Sculpture without an image fails validation,
+        since blank=False on the image field (validated via
+        full_clean(), not a database constraint).
         """
-        with self.assertRaises(IntegrityError):
-            Sculpture.objects.create(
-                title='Imageless Sculpture',
-                year=2024,
-                price=100.00,
-                image=None,
-                material='Bronze',
-            )
+        sculpture = Sculpture(
+            title='Imageless Sculpture',
+            year=2024,
+            price=100.00,
+            material='Bronze',
+            image=None,
+        )
+        with self.assertRaises(ValidationError):
+            sculpture.full_clean()
+
+    def test_sculpture_can_save_without_image_at_database_level(self):
+        """
+        Tests that Sculpture.objects.create() succeeds with image=None,
+        since CloudinaryField does not enforce null at the database
+        level — only full_clean()'s blank check catches a missing image.
+        """
+        sculpture = Sculpture.objects.create(
+            title='Database Level Imageless Sculpture',
+            year=2024,
+            price=100.00,
+            material='Bronze',
+            image=None,
+        )
+        sculpture.refresh_from_db()
+        self.assertIsNone(sculpture.image.public_id)
 
     def test_sculpture_has_status_field(self):
         """
