@@ -22,6 +22,40 @@
 ## Pass 1 — Code Audit
 
 ### Automated tests
+#### First TDD pass for Theme and Sculpture models in gallery app
+
+Model-level tests were written first (red), followed by the model implementation (green), following TDD. Tests are grouped by category
+below rather than listed individually, given the volume of similar field-level checks.
+
+| Category | Models Covered | Approx. Tests | Result |
+|---|---|---|---|
+| Field existence & type | Theme, Sculpture | ~20 | All pass |
+| Nullability constraints (`null=True`/`False`) | Theme, Sculpture | ~12 | All pass |
+| Uniqueness constraints (case-insensitive name/title, slug) | Theme, Sculpture | 4 | All pass |
+| Validator boundaries (price, weight, year, insurance_rate_override) | Sculpture | 8 | All pass |
+| Default values (status, is_visible, is_manually_reserved) | Sculpture | 3 | All pass |
+| Slug auto-generation from name/title | Theme, Sculpture | 2 | All pass |
+| Foreign key SET_NULL behaviour on delete | Theme ↔ Sculpture | 1 | All pass |
+| ManyToMany relationship (themes ↔ sculptures) | Sculpture | 1 | All pass |
+| Image field required-ness (CloudinaryField) | Sculpture | 2 | **Failed initially** — see note below |
+
+### Notable finding: Sculpture.image (CloudinaryField)
+
+I expected `Sculpture.objects.create(image=None)` to raise `IntegrityError`, since `image` is defined with `null=False`.
+
+The test failed with no exception was raised. Investigation with Claude AI via the Django shell showed that `CloudinaryField` does not pass a true database `NULL` when given `None`; instead it substitutes an empty `CloudinaryResource` object (with `public_id=None`). Since something non-null is written to the row, the database's `NOT NULL` constraint is never violated.
+
+Django's `null` check therefore never triggers on this field. What does catch a missing image is `full_clean()`'s **blank** check
+(`image` does not have `blank=True`), since Django considers the empty `CloudinaryResource` "blank."
+
+Two tests were written to capture this:
+
+- One confirming `Sculpture.objects.create(image=None)` succeeds at the database level (documents the gap as expected, current
+  behaviour of `CloudinaryField`).
+- One confirming `full_clean()` raises `ValidationError` for a missing image (confirms required is enforced at the validation layer instead).
+
+**Risk noted:** any code path that saves a `Sculpture` without calling `full_clean()` first (e.g. a direct `.objects.create()` or
+`.save()` call outside a `ModelForm`) could silently save a sculpture with no real image, since the database itself will not reject it.
 
 ---
 
