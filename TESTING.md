@@ -182,6 +182,7 @@ Two tests were written to capture this:
 | NAV-08 | Log out link (authenticated) | Logs out, redirects to home page | As expected | Pass | |
 | NAV-09 | Shipping link on footer | Navigates to policies page, shipping section | | | |
 | NAV-10 | Terms link on footer | Navigates to policies page, terms section | | | |
+| NAV-11 | Click 'Add sculpture' button on gallery page | Navigates to add sculpture page | | | |
 
 
 #### Search function (SEA)
@@ -196,6 +197,20 @@ Two tests were written to capture this:
 | SEA-06 | Empty submission | Returns no results, not full catalogue | | | |
 | SEA-07 | Duplicate prevention | Sculpture appears only once in results | | | |
 | SEA-08 | Enter key submits | Same result as clicking submit button | | | |
+
+#### Empty states (EMPTY)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| EMPTY-01 | Gallery page empty state content | Quote and empty message for regular users, plus add sculpture button for staff controls | | | |
+
+#### Permissions (PERM)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| PERM-01 | Gallery page anonymous user | Doesn't see 'Add sculpture' button | | | |
+| PERM-02 | Gallery page authenticated non-staff user | Doesn't see 'Add sculpture' button | | | |
+| PERM-03 | Gallery page staff | Sees 'Add sculpture' button | | | |
 ---
 
 ## Story-to-Test Mapping
