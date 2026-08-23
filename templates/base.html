@@ -120,7 +120,18 @@
     {% block extra_header %}{% endblock %}
 
     <main>
-       {% block content %}{% endblock %}
+        <!-- Django messages copied from my 'got it?' project -->
+        {% if messages %}
+        <!-- role="status" announces messages to screen reader users without interrupting, best practice for cases where
+        these appear dynamically without a page reload, but are not urgent -->
+        <ul class="messages" role="status">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% block content %}{% endblock %}
     </main>
 
     <footer class="mt-auto">
