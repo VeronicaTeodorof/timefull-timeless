@@ -12,6 +12,9 @@
      - [Responsiveness (RES)](#responsiveness-res)
      - [Navigation links (NAV)](#navigation-links-nav)
      - [Search function (SEA)](#search-function-sea)
+     - [Empty states (EMPTY)](#empty-states-empty)
+     - [Permissions (PERM)](#permissions-perm)
+     - [Theme (THEME)](#theme-theme)
 3. [Story-to-Test Mapping](#story-to-test-mapping)
 4. [Solved Bugs](#solved-bugs)
 5. [Known Bugs / Limitations](#known-bugs--limitations)
@@ -202,7 +205,8 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| EMPTY-01 | Gallery page empty state content | Quote and empty message for regular users, plus add sculpture button for staff controls | | | |
+| EMPTY-01 | Gallery page empty state content | Quote and empty message for regular users, plus Add Sculpture button for staff controls | | | |
+| EMPTY-02 | Gallery page non-empty state content | Quote, filter row, and theme card grid render when at least one sculpture exists | | | |
 
 #### Permissions (PERM)
 
@@ -211,7 +215,16 @@ Two tests were written to capture this:
 | PERM-01 | Gallery page anonymous user | Doesn't see 'Add sculpture' button | | | |
 | PERM-02 | Gallery page authenticated non-staff user | Doesn't see 'Add sculpture' button | | | |
 | PERM-03 | Gallery page staff | Sees 'Add sculpture' button | | | |
+| PERM-04 | Change representative image icon visibility | Visible to staff only, on theme cards in non-empty state | | | |
+
+#### Theme (THEME)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| THEME-01 | Theme card display per theme | Theme card displays when the theme has one or more sculptures; does not display when the theme has none | | | |
+
 ---
+
 
 ## Story-to-Test Mapping
 
