@@ -953,6 +953,37 @@ Live "results as you type" was considered but deferred as a future improvement.
 
 </p>
 
+**Non-empty state** renders when at least one sculpture exists. It displays a quote (shared position with empty state), a filter row (Material, Availability), and Bootstrap theme cards.
+
+*Wireframes: mobile staff, desktop staff, desktop non-staff*
+
+<p align="center">
+  <img src="readme-assets/wireframes/gallery-nonempty-mobile-staff.png" width="300" alt="Mobile gallery non-empty state for staff">
+  <img src="readme-assets/wireframes/gallery-nonempty-desktop-staff.png" width="550" alt="Desktop gallery non-empty state for staff">
+  <img src="readme-assets/wireframes/gallery-nonempty-desktop-nonstaff.png" width="550" alt="Desktop gallery non-empty state for regular users">
+</p>
+
+**Mechanics**
+
+Top-level state is gated by a single condition: `{% if sculptures %}`. This determines whether the filter row + theme grid render, or the empty-state block renders instead.
+
+**Permissions**
+
+Two elements are gated by `user.is_staff`:
+
+- **Add Sculpture CTA** — appears in both empty and non-empty states. Given its repetition across states and breakpoints, it is implemented as a Django partial (`{% partialdef %}`) with the permission check baked into the partial itself — a single source of truth, rather than repeating the `{% if user.is_staff %}` guard at every call site.
+- **Change representative image** — the edit icon on each theme card, allowing staff to choose which sculpture's photo represents that theme. Only relevant in the non-empty state, since it lives on theme cards that don't exist when the grid is empty. Not implemented as a partial, since it only appears in one context (theme card).
+
+**Layout of the Add Sculpture CTA:**
+- Mobile, non-empty - floating action button (FAB), icon only, label hidden
+- Desktop, non-empty - inline with the filter row, icon + label visible
+- Empty state, both breakpoints - centered button at the bottom of the block, icon + label visible
+
+**Responsiveness**
+
+Layout differences are visible in the wireframes above. Implemented with Bootstrap utility classes for base layout, wrapper `<div>`s with modifier classes to scope CTA positioning per context, and a `lg` media query that repositions the CTA from FAB to inline as the base mobile-first style is overridden at the desktop breakpoint.
+
+
 ### Security Features
 - The sign-up form requires email to be typed twice to catch typos at registration, since email communication is essential to this website (order confirmations, availability updates, etc.).
 - A honeypot input field was added as a first layer of protection against naive spam bots.
