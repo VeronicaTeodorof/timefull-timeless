@@ -61,6 +61,64 @@ Two tests were written to capture this:
 
 ### Manual tests — code reflection in UI
 
+#### gallery app
+
+##### models.py
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---|---|---|---|---|---|
+| MGM-01 | Theme name appears on Bootstrap theme cards in gallery page | Each theme card displays the theme's name clearly | | | |
+| MGM-02 | Select a theme card on the gallery page | URL updates to include the theme's slug (e.g. `/gallery/theme/broken-forms/`), and the page shows sculptures filtered to that theme | | | |
+| MGM-03 | Sculptor's control shows a "change image" (or similar) button on each theme card | Clicking it lets the sculptor select/change which sculpture is the representative_sculpture for that theme | | | |
+| MGM-04 | Delete a sculpture set as a theme's representative_sculpture | Theme card remains on the gallery page; theme is not deleted | | | |
+| MGM-05 | A theme still has other sculptures after its representative_sculpture is deleted | Theme card remains displayed on the gallery page | | | |
+| MGM-06 | A theme has no sculptures remaining at all | Theme card is not displayed on the gallery page | | | |
+| MGM-07 | Sculptor enters an existing theme name with different case (e.g. "broken forms" vs "Broken Forms") | No new theme card is created; sculpture is linked to the existing theme | | | |
+| MGM-08 | Sculptor enters an existing theme name with leading/trailing whitespace (e.g. " Broken Forms ") | No new theme card is created; sculpture is linked to the existing theme | | | |
+| MGM-09 | Create and edit forms in sculptor's controls display the status field | Field shows exactly three choices: Available, Reserved, Sold | | | |
+| MGM-10 | Title field present on create and edit sculpture forms; submit with title blank | Field is shown on both forms; blank submission is rejected with a validation error | | | |
+| MGM-11 | Title translation field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission succeeds (nullable/optional) | | | |
+| MGM-12 | View a sculpture's detail page | URL shows the sculpture's slug (e.g. `/gallery/sculpture/whispering-bronze/`) | | | |
+| MGM-13 | Dimensions field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission succeeds (nullable/optional) | | | |
+| MGM-14 | Material field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission is rejected with a validation error | | | |
+| MGM-15 | Price field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission is rejected with a validation error | | | |
+| MGM-16 | Enter non-digit characters (excluding "e" and "-", which the number input allows by default) into the price field | Form does not submit; validation error shown | | | |
+| MGM-17 | Enter 0.01 in the price field | Form submits successfully (minimum allowed value) | | | |
+| MGM-18 | Enter 0 in the price field | Form does not submit; validation error shown | | | |
+| MGM-19 | Enter a negative number in the price field | Form does not submit; validation error shown | | | |
+| MGM-20 | Weight field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission succeeds (nullable/optional) | | | |
+| MGM-21 | Enter 0.10 in the weight field | Form submits successfully (minimum allowed value) | | | |
+| MGM-22 | Enter 0.09 in the weight field | Form does not submit; validation error shown | | | |
+| MGM-23 | Year field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission is rejected with a validation error | | | |
+| MGM-24 | Enter 1990 in the year field | Form submits successfully (minimum allowed value) | | | |
+| MGM-25 | Enter 1989 in the year field | Form does not submit; validation error shown | | | |
+| MGM-26 | Enter 2026 in the year field | Form submits successfully (current year, maximum allowed) | | | |
+| MGM-27 | Enter 2027 in the year field | Form does not submit; validation error shown | | | |
+| MGM-28 | Enter a negative number in the year field | Form does not submit; validation error shown (PositiveIntegerField) | | | |
+| MGM-29 | Image upload option present on create form; image change option present on edit form; submit with no image | Upload/change control shown appropriately on each form; blank submission is rejected with a validation error | | | |
+| MGM-30 | View a sculpture's detail/edit page in sculptor's controls | reserved_at timestamp is displayed (read-only) when the sculpture is reserved | | | |
+| MGM-31 | View a sculpture's detail/edit page in sculptor's controls | is_manually_reserved value is displayed (read-only), for verifying reservation logic behaves correctly | | | |
+| MGM-32 | New sculpture created, no reservation activity yet | is_manually_reserved displays as False (default) | | | |
+| MGM-33 | Artist manually reserves a sculpture from the edit page | is_manually_reserved displays as True | | | |
+| MGM-34 | Sculpture is reserved automatically (added to a buyer's selection) | is_manually_reserved displays as False | | | |
+| MGM-35 | View a sculpture's detail/edit page in sculptor's controls | is_visible field is present, displays True by default | | | |
+| MGM-36 | Sculptor sets is_visible to False | Sculpture no longer appears in the public gallery | | | |
+| MGM-37 | Sculptor resets is_visible back to True | Sculpture reappears in the public gallery | | | |
+| MGM-38 | Insurance rate override field present on create/edit sculpture forms; sculptor can fill in or change value | Field shown and editable on both forms | | | |
+| MGM-39 | Submit with insurance_rate_override left blank | Submission succeeds (nullable/optional) | | | |
+| MGM-40 | Enter 0 in insurance_rate_override | Form submits successfully | | | |
+| MGM-41 | Enter -1 in insurance_rate_override | Form does not submit; validation error shown | | | |
+| MGM-42 | Enter 50 in insurance_rate_override | Form submits successfully (maximum allowed value) | | | |
+| MGM-43 | Enter 50.01 in insurance_rate_override | Form does not submit; validation error shown | | | |
+| MGM-44 | Themes field present on create/edit sculpture forms | Field is shown and themes are selectable (multi-select) | | | |
+| MGM-45 | View a sculpture's detail/edit page in sculptor's controls | reserved_by is displayed (read-only), for verifying reservation logic behaves correctly | | | |
+| MGM-46 | Delete a user (e.g. via admin) who has reserved_by set on a sculpture | Sculpture is not deleted; reserved_by reverts to None (SET_NULL) | | | |
+| MGM-47 | Submit a sculpture form with a title exactly matching an existing sculpture's title (same casing) | Form rejects submission; validation error shown | | | |
+| MGM-48 | Submit a sculpture form with a title matching an existing sculpture's title but in different casing | Form rejects submission; validation error shown | | | |
+| MGM-49 | Submit a sculpture form with a title matching an existing sculpture's title, but with leading/trailing whitespace | Form rejects submission; validation error shown | | | |
+| MGM-50 | Submit sculpture form with material entered in lowercase (e.g. "bronze wire") | After saving, material displays as title case (e.g. "Bronze Wire") on the sculpture's detail/edit page | | | |
+
+
 ---
 
 ## Pass 2 — User-Perspective Testing
@@ -179,6 +237,7 @@ The menu layer is strictly anchored using CSS rules targeted specifically at des
 - Scope the CSS inside a `@media (min-width: 992px)` query to protect mobile screens, allowing the mobile drawer to collapse and expand vertically without breaking.
 
 Note: This bug was diagnosed and fixed with the help of AI tools.
+
 ---
 
 ## Known Bugs / Limitations
