@@ -948,8 +948,8 @@ Live "results as you type" was considered but deferred as a future improvement.
 *Wireframes: desktop and mobile empty state gallery page for staff*
 
 <p align="center">
-  <img src="readme-assets/wireframes/gallery-empty-moblie-staff.png" width="300" alt="Mobile gallery empty state for staff">
-  <img src="readme-assets/wireframes/gallery-empty-desktop-staff.png" width="550" alt="Desktop gallery empty state for staff">
+  <img src="readme-assets/wireframes/gallery-empty-moblie-staff.png" width="250" alt="Mobile gallery empty state for staff">
+  <img src="readme-assets/wireframes/gallery-empty-desktop-staff.png" width="500" alt="Desktop gallery empty state for staff">
 
 </p>
 
@@ -958,9 +958,9 @@ Live "results as you type" was considered but deferred as a future improvement.
 *Wireframes: mobile staff, desktop staff, desktop non-staff*
 
 <p align="center">
-  <img src="readme-assets/wireframes/gallery-nonempty-mobile-staff.png" width="300" alt="Mobile gallery non-empty state for staff">
-  <img src="readme-assets/wireframes/gallery-nonempty-desktop-staff.png" width="550" alt="Desktop gallery non-empty state for staff">
-  <img src="readme-assets/wireframes/gallery-nonempty-desktop-nonstaff.png" width="550" alt="Desktop gallery non-empty state for regular users">
+  <img src="readme-assets/wireframes/gallery-nonempty-mobile-staff.png" width="250" alt="Mobile gallery non-empty state for staff">
+  <img src="readme-assets/wireframes/gallery-nonempty-desktop-staff.png" width="500" alt="Desktop gallery non-empty state for staff">
+  <img src="readme-assets/wireframes/gallery-nonempty-desktop-nonstaff.png" width="500" alt="Desktop gallery non-empty state for regular users">
 </p>
 
 **Mechanics**
@@ -983,6 +983,38 @@ Two elements are gated by `user.is_staff`:
 
 Layout differences are visible in the wireframes above. Implemented with Bootstrap utility classes for base layout, wrapper `<div>`s with modifier classes to scope CTA positioning per context, and a `lg` media query that repositions the CTA from FAB to inline as the base mobile-first style is overridden at the desktop breakpoint.
 
+---
+
+#### Add Sculpture Page
+
+Staff-only form for adding a new sculpture to the gallery - reached via the CTA on the gallery page. Access is gated at both the template level (button visibility) and view level (login + is_staff check).
+
+**Layout**
+
+- Responsiveness: single column on mobile, two-column grid on desktop pairing related fields, image upload spans full width on both breakpoints.
+
+*Wireframes: mobile (single column), desktop (two column)*
+
+<p align="center">
+  <img src="readme-assets/wireframes/add-sculpture-mobile-wirframe.png" width="250" alt="Add sculpture form, mobile, single column">
+  <img src="readme-assets/wireframes/add-sculpture-desktop-wireframe.png" width="500" alt="Add sculpture form, desktop, two column">
+</p>
+
+- Fields: Title, title translation, dimensions, year, material, price, theme (dropdown of existing themes, or a text field to create a new one), image (one image per sculpture as per sculptor's actual records).
+
+- Deferred: weight (no data currently recorded), reserved status (only Available/Sold), filters and search, watermarking, live image preview, insurance rate override (a fallback lives on the business settings model; no override values exist yet to justify exposing it on this form).
+
+**Mechanics:**
+
+- Save behaviour: two buttons, no separate Cancel.
+  - **Save** - `is_visible = True`, sculpture is published to the public gallery immediately
+  - **Save as draft** - `is_visible = False`, sculpture is saved but excluded from the public gallery until edited later
+
+- Staff draft visibility: staff users see all sculptures in the gallery, including drafts (marked distinctly); non-staff and anonymous users only see `is_visible=True` sculptures.
+
+- Navigation away from the form: the back arrow at the top of the form doubles as the cancel affordance; no dedicated Cancel as 3 buttons = 3 decisions and loss of focus. Since the form is long and includes an image upload, navigating away without saving loses all input. A `beforeunload` confirmation warning is planned.
+
+---
 
 ### Security Features
 - The sign-up form requires email to be typed twice to catch typos at registration, since email communication is essential to this website (order confirmations, availability updates, etc.).
@@ -1001,6 +1033,12 @@ Layout differences are visible in the wireframes above. Implemented with Bootstr
 - For floating action buttons (FAB) used for 'Add sculpture' button in mobile view sculptor controls:
   - https://m3.material.io/components/floating-action-button/guidelines
   - Thinking on ways to solve FAB: https://www.youtube.com/watch?v=RXopH5t2Kww
+
+**UX:**
+- For warning when navigating away from an unsubmitted form (`beforeunload`):
+  - https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
+  - https://javascript.info/onload-ondomcontentloaded
+  - https://www.geeksforgeeks.org/javascript/how-to-display-warning-before-leaving-the-web-page-with-unsaved-changes-using-javascript/
 
 ---
 
