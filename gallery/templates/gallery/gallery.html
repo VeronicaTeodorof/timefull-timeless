@@ -18,7 +18,7 @@
 
     {% if user.is_staff %}
         <div class="cta d-flex justify-content-center my-5">
-            <a href="" class="btn my-auto btn-secondary">Add sculpture</a>
+            <a href="{% url 'gallery:add-sculpture' %}" class="btn my-auto btn-secondary">Add sculpture</a>
         </div>
     {% endif %}
 {% endblock %}

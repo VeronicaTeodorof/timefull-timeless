@@ -185,7 +185,7 @@ Two tests were written to capture this:
 | NAV-08 | Log out link (authenticated) | Logs out, redirects to home page | As expected | Pass | |
 | NAV-09 | Shipping link on footer | Navigates to policies page, shipping section | | | |
 | NAV-10 | Terms link on footer | Navigates to policies page, terms section | | | |
-| NAV-11 | Click 'Add sculpture' button on gallery page | Navigates to add sculpture page | | | |
+| NAV-11 | Click 'Add sculpture' button on gallery page | Navigates to add sculpture page | As expected | Pass | |
 
 
 #### Search function (SEA)
