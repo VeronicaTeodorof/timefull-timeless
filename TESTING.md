@@ -216,6 +216,9 @@ Two tests were written to capture this:
 | PERM-02 | Gallery page authenticated non-staff user | Doesn't see 'Add sculpture' button | As expected | Pass | |
 | PERM-03 | Gallery page staff | Sees 'Add sculpture' button | As expected | Pass | |
 | PERM-04 | Change representative image icon visibility | Visible to staff only, on theme cards in non-empty state | | | |
+| PERM-05 | Anonymous user tries to access '/gallery/add_sculpture/' | Redirects to login page | | | |
+| PERM-06 | Authenticated non-staff user tries to access '/gallery/add_sculpture/' | Gets 403 response | | | |
+| PERM-07 | Staff user tries to access '/gallery/add_sculpture/' from url browser | Page loads successfully | | | |
 
 #### Theme (THEME)
 
