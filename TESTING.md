@@ -212,9 +212,9 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| PERM-01 | Gallery page anonymous user | Doesn't see 'Add sculpture' button | | | |
-| PERM-02 | Gallery page authenticated non-staff user | Doesn't see 'Add sculpture' button | | | |
-| PERM-03 | Gallery page staff | Sees 'Add sculpture' button | | | |
+| PERM-01 | Gallery page anonymous user | Doesn't see 'Add sculpture' button | As expected | Pass | |
+| PERM-02 | Gallery page authenticated non-staff user | Doesn't see 'Add sculpture' button | As expected | Pass | |
+| PERM-03 | Gallery page staff | Sees 'Add sculpture' button | As expected | Pass | |
 | PERM-04 | Change representative image icon visibility | Visible to staff only, on theme cards in non-empty state | | | |
 
 #### Theme (THEME)

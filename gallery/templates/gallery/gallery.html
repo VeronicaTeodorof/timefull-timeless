@@ -7,7 +7,7 @@
 {% block content %}
     <!-- Non-empty state will come here -->
 
-    
+
     <!-- Empty state hardcoded -->
     <div class="quote text-center mt-5">
         <p class="fs-3">Quote by Expert</p>
@@ -15,7 +15,10 @@
     <div class="empty  text-center mt-5">
         <p class="display-4">No sculptures to display</p>
     </div>
-    <div class="cta d-flex justify-content-center my-5">
-        <a href="" class="btn my-auto btn-secondary">Add sculpture</a>
-    </div>
+
+    {% if user.is_staff %}
+        <div class="cta d-flex justify-content-center my-5">
+            <a href="" class="btn my-auto btn-secondary">Add sculpture</a>
+        </div>
+    {% endif %}
 {% endblock %}
