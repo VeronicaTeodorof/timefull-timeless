@@ -230,11 +230,11 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| ASP-01 | Page title | "Add sculpture" heading renders | | | |
-| ASP-02 | Back link presence | Back-to-gallery affordance renders at top of form | | | |
-| ASP-03 | Back link destination | Clicking back link navigates to gallery page | | | |
-| ASP-04 | All form fields present | Title, title translation, dimensions, year, material, price, theme (dropdown + new-theme text), image upload all render | | | |
-| ASP-05 | Save buttons present | "Save" and "Save as draft" buttons both render | | | |
+| ASP-01 | Page title | "Add sculpture" heading renders | As expected | Pass | |
+| ASP-02 | Back link presence | Back-to-gallery affordance renders at top of form | As expected | Pass | |
+| ASP-03 | Back link destination | Clicking back link navigates to gallery page | As expected | Pass | |
+| ASP-04 | All form fields present | Title, title translation, dimensions, year, material, price, status, theme (dropdown + new-theme text), image upload all render | As expected | Pass | |
+| ASP-05 | Save buttons present | "Save" and "Save as draft" buttons both render | As expected | Pass | |
 | ASP-06 | Unsaved changes warning | Navigating away with unsaved input shows confirmation | | | |
 
 ---

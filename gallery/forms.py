@@ -10,9 +10,11 @@ class SculptureForm(ModelForm):
     new_theme = forms.CharField(
                 required=False,
                 label="Or type a new theme",
-                widget=forms.TextInput(attrs={'placeholder': 'New theme name'})
+                widget=forms.TextInput(attrs={'placeholder': 'New theme name',
+                                              'class': 'form-control'},
+                                       )
             )
-    
+
     class Meta:
         model = Sculpture
         fields = [
@@ -26,3 +28,27 @@ class SculptureForm(ModelForm):
             'image',
             'status',
         ]
+        widgets = {
+            'title': forms.TextInput(
+                attrs={'placeholder': 'Sculpture title required',
+                       'class': 'form-control'}),
+            'title_translation': forms.TextInput(
+                attrs={'placeholder': 'Optional translation',
+                       'class': 'form-control'}),
+            'dimensions': forms.TextInput(
+                attrs={'placeholder': 'e.g. 40x20x15cm',
+                       'class': 'form-control'}),
+            'year': forms.NumberInput(attrs={'placeholder': '2026',
+                                             'class': 'form-control'}),
+            'material': forms.TextInput(attrs={'placeholder': 'e.g. Bronze',
+                                               'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'placeholder': '0.00',
+                                              'class': 'form-control'}),
+            'status': forms.Select(attrs={
+                'class': 'form-select',
+            }),
+            'themes': forms.CheckboxSelectMultiple(),
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+            }),
+        }

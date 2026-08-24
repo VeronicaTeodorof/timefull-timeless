@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from .forms import SculptureForm
 
 
 # Create your views here.
@@ -15,4 +16,5 @@ def add_sculpture(request):
     """
     if not request.user.is_staff:
         raise PermissionDenied
-    return render(request, 'gallery/add_sculpture.html')
+    form = SculptureForm()
+    return render(request, 'gallery/add_sculpture.html', {'form': form})

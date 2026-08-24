@@ -1,1 +1,81 @@
-# add_sculpture page
+{% extends 'base.html' %}
+
+{% block extra_title %} | Add sculpture{% endblock %}
+{% block extra_header %}
+    <!-- Back link affordance -->
+    <a href="{% url 'gallery:gallery' %}"
+         class="back-link ms-2 ms-lg-5 mt-2 link-body-emphasis link-underline-opacity-0 link-underline-opacity-100-hover link-offset-3">
+        <!-- Bootstrap Icon - back arrow-->
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" aria-hidden="true" class="bi bi-arrow-left back-icon" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+    </svg>
+    Back to gallery</a>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    <h1 class="text-center mt-4 mb-4">Add sculpture</h1>
+
+    <!-- Add Sculpture Form -->
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="row g-3">
+             <div class="col-md-6">
+                <label for="{{ form.title.id_for_label }}" class="visually-hidden">{{ form.title.label }}</label>
+                {{ form.title }}
+            </div>
+            <div class="col-md-6">
+                <label for="{{ form.title_translation.id_for_label }}" class="visually-hidden">{{ form.title_translation.label }}</label>
+                {{ form.title_translation }}
+            </div>
+
+            <div class="col-md-6">
+                <label for="{{ form.dimensions.id_for_label }}" class="visually-hidden">{{ form.dimensions.label }}</label>
+                {{ form.dimensions }}
+            </div>
+            <div class="col-md-6">
+                <label for="{{ form.year.id_for_label }}" class="visually-hidden">{{ form.year.label }}</label>
+                {{ form.year }}
+            </div>
+
+            <div class="col-md-6">
+                <label for="{{ form.material.id_for_label }}" class="visually-hidden">{{ form.material.label }}</label>
+                {{ form.material }}
+            </div>
+            <div class="col-md-6">
+                <label for="{{ form.price.id_for_label }}" class="visually-hidden">{{ form.price.label }}</label>
+                {{ form.price }}
+            </div>
+
+            <div class="col-md-6">
+                <label for="{{ form.status.id_for_label }}" class="visually-hidden">{{ form.status.label }}</label>
+                {{ form.status }}
+            </div>
+           <div class="col-md-6">
+                <fieldset>
+                    <legend>{{ form.themes.label }}</legend>
+                    {{ form.themes }}
+                </fieldset>
+            </div>
+
+            <div class="col-md-6">
+                <label for="{{ form.new_theme.id_for_label }}" class="visually-hidden">{{ form.new_theme.label }}</label>
+                {{ form.new_theme }}
+            </div>
+            <div class="col-md-6">
+                <label for="{{ form.image.id_for_label }}" class="visually-hidden">{{ form.image.label }}</label>
+                {{ form.image }}
+            </div>
+
+            <div class="col-12 d-flex gap-2 my-3">
+                <button type="submit" name="action" value="publish" class="btn btn-primary">Save</button>
+                <button type="submit" name="action" value="draft" class="btn btn-outline-secondary">Save as draft</button>
+            </div>
+
+        </div>
+    </form>
+    </div>
+
+{% endblock %}
+
