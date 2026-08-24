@@ -62,7 +62,7 @@ class Sculpture(models.Model):
     """
     class Status(models.TextChoices):
         AVAILABLE = 'available', 'Available'
-        RESERVED = 'reserved', 'Reserved'
+        # RESERVED = 'reserved', 'Reserved' - DO NOT REMOVE - Deferred from MVP
         SOLD = 'sold', 'Sold'
     status = models.CharField(max_length=10,
                               choices=Status.choices,
