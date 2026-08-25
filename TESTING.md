@@ -122,6 +122,19 @@ Two tests were written to capture this:
 | MGM-50 | Submit sculpture form with material entered in lowercase (e.g. "bronze wire") | After saving, material displays as title case (e.g. "Bronze Wire") on the sculpture's detail/edit page | | | |
 
 
+##### forms.py
+
+**SculptureForm**
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---|---|---|---|---|---|
+| MGF-01 | New theme field |  Present on the form | As expected | | |
+| MGF-02 | Submit with blank 'new theme' field | Form submits successfully | | | |
+| MGF-03 | 'title', 'title_translation', 'dimensions', 'year', 'material', 'price', 'themes', 'image', 'status'  fields | Present | | | |
+| MGF-04 | placeholders | Correct placeholders on each input | | | |
+
+
+
 ---
 
 ## Pass 2 — User-Perspective Testing
@@ -226,6 +239,25 @@ Two tests were written to capture this:
 |---------|------|----------|--------|-------|------------|
 | THEME-01 | Theme card display per theme | Theme card displays when the theme has one or more sculptures; does not display when the theme has none | | | |
 
+#### Forms
+##### Add Sculpture Form
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| ASF-01 | All form fields present | Title, title translation, dimensions, year, material, price, status, theme (dropdown + new-theme text), image upload all render | As expected | Pass | Pass |
+| ASF-02 | Save buttons present | "Save" and "Save as draft" buttons both render | As expected | Pass | Pass |
+| ASF-03 | Required fields | Clearly marked as such | Inconsistent marking | Fail | |
+| ASF-04 | Click the status dropdown on create/edit form | Dropdown opens showing tow choices (Available, Sold); hovering over an option shows a visible hover state; clicking an option selects it and closes the dropdown, showing the selected value in the field | As expected | Pass | Pass |
+| ASF-05 | Click the image upload box/button on create form | File picker dialog opens, allowing the user to select an image from their device | As exptected | Pass | Pass |
+| ASF-06 | Select an image file in the file picker | File picker closes; a visual indicator or message confirms the file was selected/attached (e.g. filename shown, thumbnail preview, "1 file selected" text) | Nothing indicates successful/unsuccessful upload | Fail | |
+| ASF-07 | Hover over form buttons (Save/Save as Draft) | Each button shows a visible hover state (color/shadow/cursor change) indicating it's interactive | As expected | Pass | |
+| ASF-08 | Submit form with all valid data | Form saves; a success message/confirmation is shown to the user (not just a redirect with no feedback) | Nothing happens | Fail | |
+| ASF-09 | Submit form with invalid/missing data | Form does not save; relevant, clear error message(s) shown next to the failing field(s) | Nothing happens | Fail | |
+| ASF-10 | Save a valid sculpture as staff/sculptor, then view the gallery logged in as (or logged out from) a non-staff account | Newly saved sculpture appears in the public gallery | Nothing happens | Fail | |
+| ASF-11 | Save a sculpture as draft then view the gallery as a non-staff account | Sculpture does NOT appear in the public gallery | Nothing happens | Fail | |
+| ASF-12 | Save a sculpture as draft then view it via sculptor's controls (staff account) | Sculpture DOES appear in sculptor's controls | Nothing happens | Fail | |
+
+
+
 #### Add Sculpture Page
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
@@ -233,9 +265,7 @@ Two tests were written to capture this:
 | ASP-01 | Page title | "Add sculpture" heading renders | As expected | Pass | |
 | ASP-02 | Back link presence | Back-to-gallery affordance renders at top of form | As expected | Pass | |
 | ASP-03 | Back link destination | Clicking back link navigates to gallery page | As expected | Pass | |
-| ASP-04 | All form fields present | Title, title translation, dimensions, year, material, price, status, theme (dropdown + new-theme text), image upload all render | As expected | Pass | |
-| ASP-05 | Save buttons present | "Save" and "Save as draft" buttons both render | As expected | Pass | |
-| ASP-06 | Unsaved changes warning | Navigating away with unsaved input shows confirmation | | | |
+| ASP-04 | Unsaved changes warning | Navigating away with unsaved input shows confirmation | | | |
 
 ---
 
