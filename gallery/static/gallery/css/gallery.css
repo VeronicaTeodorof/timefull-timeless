@@ -2,13 +2,6 @@
 
 /* input file button */
 /* https://www.w3tutorials.net/blog/styling-an-input-type-file-button/ */
-.image-upload-box {
-    border: 1px dashed #171c20;
-    border-radius: 0.3rem;
-    padding: 1.5rem;
-    cursor: pointer;
-    color: #64707b;
-}
 
 #id_image {
     /* visually hide the native input, keep it functional */
@@ -21,4 +14,16 @@
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
+}
+
+.image-upload-box {
+    border: 1px dashed #171c20;
+    border-radius: 0.3rem;
+    padding: 1.5rem;
+    cursor: pointer;
+    color: #64707b;
+}
+
+.image-upload-box:hover {
+    background-color:#e2eaf2
 }
