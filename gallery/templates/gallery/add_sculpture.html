@@ -37,17 +37,8 @@
             </div>
 
             <div class="col-md-6">
-                <label for="{{ form.dimensions.id_for_label }}" class="visually-hidden">{{ form.dimensions.label }}</label>
-                {{ form.dimensions }}
-            </div>
-            <div class="col-md-6">
                 <label for="{{ form.year.id_for_label }}" class="visually-hidden">{{ form.year.label }}</label>
                 {{ form.year }}
-            </div>
-
-            <div class="col-md-6">
-                <label for="{{ form.material.id_for_label }}" class="visually-hidden">{{ form.material.label }}</label>
-                {{ form.material }}
             </div>
             <div class="col-md-6">
                 <label for="{{ form.price.id_for_label }}" class="visually-hidden">{{ form.price.label }}</label>
@@ -55,20 +46,26 @@
             </div>
 
             <div class="col-md-6">
-                <label for="{{ form.status.id_for_label }}" class="visually-hidden">{{ form.status.label }}</label>
+                <label for="{{ form.material.id_for_label }}" class="visually-hidden">{{ form.material.label }}</label>
+                {{ form.material }}
+            </div>
+            <div class="col-md-6">
+                <label for="{{ form.dimensions.id_for_label }}" class="visually-hidden">{{ form.dimensions.label }}</label>
+                {{ form.dimensions }}
+            </div>
+
+            <div class="col-md-6">
+                <label for="{{ form.material.id_for_label }}" class="visually-hidden">{{ form.material.label }}</label>
                 {{ form.status }}
             </div>
            <div class="col-md-6">
                 <fieldset>
-                    <legend>{{ form.themes.label }}</legend>
+                    <legend class="fs-6 fs-md-5">Theme(required) - choose from existing themes</legend>
                     {{ form.themes }}
+                    {{ form.new_theme }}
                 </fieldset>
             </div>
 
-            <div class="col-md-6">
-                <label for="{{ form.new_theme.id_for_label }}" class="visually-hidden">{{ form.new_theme.label }}</label>
-                {{ form.new_theme }}
-            </div>
             <div class="col-12">
                 <label for="{{ form.image.id_for_label }}" class="image-upload-box d-flex flex-column align-items-center justify-content-center text-center">
                     <!-- Bootstrap upload icon -->
@@ -76,7 +73,7 @@
                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
                         <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"/>
                     </svg>
-                    <span>Upload image</span>
+                    <span>Upload image (required)</span>
                 </label>
                 {{ form.image }}
             </div>

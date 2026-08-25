@@ -10,8 +10,9 @@ class SculptureForm(ModelForm):
     new_theme = forms.CharField(
                 required=False,
                 label="Or type a new theme",
-                widget=forms.TextInput(attrs={'placeholder': 'New theme name',
-                                              'class': 'form-control'},
+                widget=forms.TextInput(
+                    attrs={'placeholder': 'or add a new theme',
+                           'class': 'form-control'},
                                        )
             )
 
@@ -30,19 +31,20 @@ class SculptureForm(ModelForm):
         ]
         widgets = {
             'title': forms.TextInput(
-                attrs={'placeholder': 'Sculpture title required',
+                attrs={'placeholder': 'Sculpture title (required)',
                        'class': 'form-control'}),
             'title_translation': forms.TextInput(
-                attrs={'placeholder': 'Optional translation',
+                attrs={'placeholder': 'Title translation (optional)',
                        'class': 'form-control'}),
             'dimensions': forms.TextInput(
-                attrs={'placeholder': 'Dimensions',
+                attrs={'placeholder': 'Dimensions (optional)',
                        'class': 'form-control'}),
-            'year': forms.NumberInput(attrs={'placeholder': 'Year',
+            'year': forms.NumberInput(attrs={'placeholder': 'Year (required)',
                                              'class': 'form-control'}),
-            'material': forms.TextInput(attrs={'placeholder': 'Material',
-                                               'class': 'form-control'}),
-            'price': forms.NumberInput(attrs={'placeholder': 'Price',
+            'material': forms.TextInput(
+                attrs={'placeholder': 'Material (required)',
+                       'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'placeholder': 'Price (required)',
                                               'class': 'form-control'}),
             'status': forms.Select(attrs={
                 'class': 'form-select',
