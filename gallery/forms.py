@@ -36,13 +36,13 @@ class SculptureForm(ModelForm):
                 attrs={'placeholder': 'Optional translation',
                        'class': 'form-control'}),
             'dimensions': forms.TextInput(
-                attrs={'placeholder': 'e.g. 40x20x15cm',
+                attrs={'placeholder': 'Dimensions',
                        'class': 'form-control'}),
-            'year': forms.NumberInput(attrs={'placeholder': '2026',
+            'year': forms.NumberInput(attrs={'placeholder': 'Year',
                                              'class': 'form-control'}),
-            'material': forms.TextInput(attrs={'placeholder': 'e.g. Bronze',
+            'material': forms.TextInput(attrs={'placeholder': 'Material',
                                                'class': 'form-control'}),
-            'price': forms.NumberInput(attrs={'placeholder': '0.00',
+            'price': forms.NumberInput(attrs={'placeholder': 'Price',
                                               'class': 'form-control'}),
             'status': forms.Select(attrs={
                 'class': 'form-select',

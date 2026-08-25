@@ -1,0 +1,24 @@
+/* Add sculpture page */
+
+/* input file button */
+/* https://www.w3tutorials.net/blog/styling-an-input-type-file-button/ */
+.image-upload-box {
+    border: 1px dashed #171c20;
+    border-radius: 0.3rem;
+    padding: 1.5rem;
+    cursor: pointer;
+    color: #64707b;
+}
+
+#id_image {
+    /* visually hide the native input, keep it functional */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
