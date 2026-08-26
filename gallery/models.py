@@ -5,7 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import date
 from cloudinary.models import CloudinaryField
 from django.conf import settings
-
+from decimal import Decimal
 # Create your models here.
 
 
@@ -75,7 +75,11 @@ class Sculpture(models.Model):
     price = models.DecimalField(
         max_digits=6,
         decimal_places=2,
-        validators=[MinValueValidator(0.01)]
+        # Note: must be Decimal('0.01') (string),
+        # not Decimal(0.01) or bare 0.01
+        # float imprecision makes the literal minimum value get rejected.
+        # See testing.md.
+        validators=[MinValueValidator(Decimal('0.01'))]
         )
     weight = models.DecimalField(
         max_digits=4,

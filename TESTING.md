@@ -79,13 +79,13 @@ Two tests were written to capture this:
 | MGM-07 | Sculptor enters an existing theme name with different case (e.g. "broken forms" vs "Broken Forms") | No new theme card is created; sculpture is linked to the existing theme | | | |
 | MGM-08 | Sculptor enters an existing theme name with leading/trailing whitespace (e.g. " Broken Forms ") | No new theme card is created; sculpture is linked to the existing theme | | | |
 | MGM-09 | Create and edit forms in sculptor's controls display the status field | Field shows exactly three choices: Available, Reserved, Sold | | | |
-| MGM-10 | Title field present on create and edit sculpture forms; submit with title blank | Field is shown on both forms; blank submission is rejected with a validation error | | | |
-| MGM-11 | Title translation field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission succeeds (nullable/optional) | | | |
+| MGM-10 | Title field present on create and edit sculpture forms; submit with title blank | Field is shown on both forms; blank submission is rejected with a validation error | As expected on create | Pass on create | |
+| MGM-11 | Title translation field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission succeeds (nullable/optional) | As expected on create | Pass on create | |
 | MGM-12 | View a sculpture's detail page | URL shows the sculpture's slug (e.g. `/gallery/sculpture/whispering-bronze/`) | | | |
-| MGM-13 | Dimensions field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission succeeds (nullable/optional) | | | |
-| MGM-14 | Material field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission is rejected with a validation error | | | |
-| MGM-15 | Price field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission is rejected with a validation error | | | |
-| MGM-16 | Enter non-digit characters (excluding "e" and "-", which the number input allows by default) into the price field | Form does not submit; validation error shown | | | |
+| MGM-13 | Dimensions field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission succeeds (nullable/optional) | As expected on crate | Pass on create | |
+| MGM-14 | Material field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission is rejected with a validation error | As expected on create | Pass on create | |
+| MGM-15 | Price field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission is rejected with a validation error | As expected on create | Pass on create | |
+| MGM-16 | Enter non-digit characters (excluding "e" and "-", which the number input allows by default) into the price field | Form does not submit; validation error shown | Pass on create | Pass | |
 | MGM-17 | Enter 0.01 in the price field | Form submits successfully (minimum allowed value) | | | |
 | MGM-18 | Enter 0 in the price field | Form does not submit; validation error shown | | | |
 | MGM-19 | Enter a negative number in the price field | Form does not submit; validation error shown | | | |
@@ -245,12 +245,12 @@ Two tests were written to capture this:
 |---------|------|----------|--------|-------|------------|
 | ASF-01 | All form fields present | Title, title translation, dimensions, year, material, price, status, theme (dropdown + new-theme text), image upload all render | As expected | Pass | Pass |
 | ASF-02 | Save buttons present | "Save" and "Save as draft" buttons both render | As expected | Pass | Pass |
-| ASF-03 | Required fields | Clearly marked as such | Inconsistent marking | Fail | |
+| ASF-03 | Required fields | Clearly marked as such | Consistent marking | Pass | |
 | ASF-04 | Click the status dropdown on create/edit form | Dropdown opens showing tow choices (Available, Sold); hovering over an option shows a visible hover state; clicking an option selects it and closes the dropdown, showing the selected value in the field | As expected | Pass | Pass |
 | ASF-05 | Click the image upload box/button on create form | File picker dialog opens, allowing the user to select an image from their device | As exptected | Pass | Pass |
-| ASF-06 | Select an image file in the file picker | File picker closes; a visual indicator or message confirms the file was selected/attached (e.g. filename shown, thumbnail preview, "1 file selected" text) | Nothing indicates successful/unsuccessful upload | Fail | |
+| ASF-06 | Select an image file in the file picker | File picker closes; a visual indicator or message confirms the file was selected/attached | File name shown | Pass | |
 | ASF-07 | Hover over form buttons (Save/Save as Draft) | Each button shows a visible hover state (color/shadow/cursor change) indicating it's interactive | As expected | Pass | |
-| ASF-08 | Submit form with all valid data | Form saves; a success message/confirmation is shown to the user (not just a redirect with no feedback) | Nothing happens | Fail | |
+| ASF-08 | Submit form with all valid data | Form saves; a success message/confirmation is shown to the user (not just a redirect with no feedback) | As expected | Pass | |
 | ASF-09 | Submit form with invalid/missing data | Form does not save; relevant, clear error message(s) shown next to the failing field(s) | Nothing happens | Fail | |
 | ASF-10 | Save a valid sculpture as staff/sculptor, then view the gallery logged in as (or logged out from) a non-staff account | Newly saved sculpture appears in the public gallery | Nothing happens | Fail | |
 | ASF-11 | Save a sculpture as draft then view the gallery as a non-staff account | Sculpture does NOT appear in the public gallery | Nothing happens | Fail | |
@@ -309,6 +309,32 @@ The menu layer is strictly anchored using CSS rules targeted specifically at des
 - Scope the CSS inside a `@media (min-width: 992px)` query to protect mobile screens, allowing the mobile drawer to collapse and expand vertically without breaking.
 
 Note: This bug was diagnosed and fixed with the help of AI tools.
+
+
+### DecimalField MinValueValidator Silently Rejecting Its Own Minimum
+
+#### The Problem
+
+Submitting `price = 0.01` — exactly the field's stated minimum — was rejected with "Ensure this value is greater than or equal to 0.01."
+
+#### Why It Happened
+
+`MinValueValidator(0.01)` used a Python `float`. Floats can't represent `0.01` exactly; the stored value was actually slightly above true `0.01`. Since `price` is a `DecimalField`, the submitted value cleaned to an exact `Decimal('0.01')` — which compared as *less than* the imprecise float, so the validator rejected its own limit.
+
+A first attempt, `Decimal(0.01)`, didn't fix it — passing a float into `Decimal()` just carries the same imprecision.
+
+#### The Solution
+
+```python
+validators=[MinValueValidator(Decimal('0.01'))]
+```
+
+Pass the limit as a **string**, not a float — `Decimal('0.01')` parses the digits exactly, with no float detour.
+
+#### Key Takeaways
+
+- Never pass a bare float (or `Decimal(float)`) into a validator on a `DecimalField` — wrap the literal as `Decimal('0.01')` (string).
+- Bugs like this only surface at the exact boundary value — testing the literal minimum/maximum catches what a "typical" value won't.
 
 ---
 
