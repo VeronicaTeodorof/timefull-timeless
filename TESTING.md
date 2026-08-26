@@ -86,40 +86,38 @@ Two tests were written to capture this:
 | MGM-14 | Material field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission is rejected with a validation error | As expected on create | Pass on create | |
 | MGM-15 | Price field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission is rejected with a validation error | As expected on create | Pass on create | |
 | MGM-16 | Enter non-digit characters (excluding "e" and "-", which the number input allows by default) into the price field | Form does not submit; validation error shown | Pass on create | Pass | |
-| MGM-17 | Enter 0.01 in the price field | Form submits successfully (minimum allowed value) | | | |
-| MGM-18 | Enter 0 in the price field | Form does not submit; validation error shown | | | |
-| MGM-19 | Enter a negative number in the price field | Form does not submit; validation error shown | | | |
-| MGM-20 | Weight field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission succeeds (nullable/optional) | | | |
-| MGM-21 | Enter 0.10 in the weight field | Form submits successfully (minimum allowed value) | | | |
-| MGM-22 | Enter 0.09 in the weight field | Form does not submit; validation error shown | | | |
-| MGM-23 | Year field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission is rejected with a validation error | | | |
-| MGM-24 | Enter 1990 in the year field | Form submits successfully (minimum allowed value) | | | |
-| MGM-25 | Enter 1989 in the year field | Form does not submit; validation error shown | | | |
-| MGM-26 | Enter 2026 in the year field | Form submits successfully (current year, maximum allowed) | | | |
-| MGM-27 | Enter 2027 in the year field | Form does not submit; validation error shown | | | |
-| MGM-28 | Enter a negative number in the year field | Form does not submit; validation error shown (PositiveIntegerField) | | | |
-| MGM-29 | Image upload option present on create form; image change option present on edit form; submit with no image | Upload/change control shown appropriately on each form; blank submission is rejected with a validation error | | | |
-| MGM-30 | View a sculpture's detail/edit page in sculptor's controls | reserved_at timestamp is displayed (read-only) when the sculpture is reserved | | | |
-| MGM-31 | View a sculpture's detail/edit page in sculptor's controls | is_manually_reserved value is displayed (read-only), for verifying reservation logic behaves correctly | | | |
-| MGM-32 | New sculpture created, no reservation activity yet | is_manually_reserved displays as False (default) | | | |
-| MGM-33 | Artist manually reserves a sculpture from the edit page | is_manually_reserved displays as True | | | |
-| MGM-34 | Sculpture is reserved automatically (added to a buyer's selection) | is_manually_reserved displays as False | | | |
-| MGM-35 | View a sculpture's detail/edit page in sculptor's controls | is_visible field is present, displays True by default | | | |
+| MGM-17 | Enter 0.01 in the price field | Form submits successfully (minimum allowed value) | As expected on create | Pass on create | |
+| MGM-18 | Enter 0 in the price field | Form does not submit; validation error shown | As expected on create | Pass on create | |
+| MGM-19 | Enter a negative number in the price field | Form does not submit; validation error shown | As expected on create | Pass on create | |
+| MGM-20 | Weight field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission succeeds (nullable/optional) | Does not apply/inconsistent artist records | | |
+| MGM-21 | Enter 0.10 in the weight field | Form submits successfully (minimum allowed value) | Does not apply | | |
+| MGM-22 | Enter 0.09 in the weight field | Form does not submit; validation error shown | Does not apply | | |
+| MGM-23 | Year field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission is rejected with a validation error | As expected on creatte | Pass on create | |
+| MGM-24 | Enter 1990 in the year field | Form submits successfully (minimum allowed value) | As expected on create | Pass on create | |
+| MGM-25 | Enter 1989 in the year field | Form does not submit; validation error shown | As expected on create | Pass on create | |
+| MGM-26 | Enter 2026 in the year field | Form submits successfully (current year, maximum allowed) | As expected on create | Pass on create | |
+| MGM-27 | Enter 2027 in the year field | Form does not submit; validation error shown | As expected  on create | Pass on create | |
+| MGM-28 | Enter a negative number in the year field | Form does not submit; validation error shown (PositiveIntegerField) | As expected on create | Pass on create | |
+| MGM-29 | Image upload option present on create form; image change option present on edit form; submit with no image | Upload/change control shown appropriately on each form; blank submission is rejected with a validation error | As expected on create | Pass on create | |
+| MGM-30 | View a sculpture's detail/edit page in sculptor's controls | reserved_at timestamp is displayed (read-only) when the sculpture is reserved | Does not apply for this MVP| | |
+| MGM-31 | View a sculpture's detail/edit page in sculptor's controls | is_manually_reserved value is displayed (read-only), for verifying reservation logic behaves correctly | Does not apply for this MVP | | |
+| MGM-32 | New sculpture created, no reservation activity yet | is_manually_reserved displays as False (default) | Does not apply for this MVP | | |
+| MGM-33 | Artist manually reserves a sculpture from the edit page | is_manually_reserved displays as True | Does not apply for this MVP | | |
+| MGM-34 | Sculpture is reserved automatically (added to a buyer's selection) | is_manually_reserved displays as False | Does not apply for this MVP | | |
+| MGM-35 | View a sculpture's detail/edit page in sculptor's controls | is_visible field is present, displays True by default | Save as draft vs Save buttons present | Pass | |
 | MGM-36 | Sculptor sets is_visible to False | Sculpture no longer appears in the public gallery | | | |
 | MGM-37 | Sculptor resets is_visible back to True | Sculpture reappears in the public gallery | | | |
-| MGM-38 | Insurance rate override field present on create/edit sculpture forms; sculptor can fill in or change value | Field shown and editable on both forms | | | |
-| MGM-39 | Submit with insurance_rate_override left blank | Submission succeeds (nullable/optional) | | | |
-| MGM-40 | Enter 0 in insurance_rate_override | Form submits successfully | | | |
-| MGM-41 | Enter -1 in insurance_rate_override | Form does not submit; validation error shown | | | |
-| MGM-42 | Enter 50 in insurance_rate_override | Form submits successfully (maximum allowed value) | | | |
-| MGM-43 | Enter 50.01 in insurance_rate_override | Form does not submit; validation error shown | | | |
-| MGM-44 | Themes field present on create/edit sculpture forms | Field is shown and themes are selectable (multi-select) | | | |
-| MGM-45 | View a sculpture's detail/edit page in sculptor's controls | reserved_by is displayed (read-only), for verifying reservation logic behaves correctly | | | |
-| MGM-46 | Delete a user (e.g. via admin) who has reserved_by set on a sculpture | Sculpture is not deleted; reserved_by reverts to None (SET_NULL) | | | |
-| MGM-47 | Submit a sculpture form with a title exactly matching an existing sculpture's title (same casing) | Form rejects submission; validation error shown | | | |
-| MGM-48 | Submit a sculpture form with a title matching an existing sculpture's title but in different casing | Form rejects submission; validation error shown | | | |
-| MGM-49 | Submit a sculpture form with a title matching an existing sculpture's title, but with leading/trailing whitespace | Form rejects submission; validation error shown | | | |
-| MGM-50 | Submit sculpture form with material entered in lowercase (e.g. "bronze wire") | After saving, material displays as title case (e.g. "Bronze Wire") on the sculpture's detail/edit page | | | |
+| MGM-38 | Insurance rate override field present on create/edit sculpture forms; sculptor can fill in or change value | Field shown and editable on both forms | Doesn't apply for this MVP | | |
+| MGM-39 | Submit with insurance_rate_override left blank | Submission succeeds (nullable/optional) | Does not apply for this MVP | | |
+| MGM-40 | Enter 0 in insurance_rate_override | Form submits successfully | Does not apply for this MVP  | | |
+| MGM-41 | Enter -1 in insurance_rate_override | Form does not submit; validation error shown | Does not apply for this MVP| | |
+| MGM-42 | Enter 50 in insurance_rate_override | Form submits successfully (maximum allowed value) | Does not apply for this MVP | | |
+| MGM-43 | Enter 50.01 in insurance_rate_override | Form does not submit; validation error shown | Does not apply for this MVP | | |
+| MGM-44 | Themes field present on create/edit sculpture forms | Field is shown and themes are selectable (multi-select) | As expected on create | Pass on create | |
+| MGM-45 | Submit a sculpture form with a title exactly matching an existing sculpture's title (same casing) | Form rejects submission; validation error shown | | | |
+| MGM-46 | Submit a sculpture form with a title matching an existing sculpture's title but in different casing | Form rejects submission; validation error shown | | | |
+| MGM-47 | Submit a sculpture form with a title matching an existing sculpture's title, but with leading/trailing whitespace | Form rejects submission; validation error shown | | | |
+| MGM-48 | Submit sculpture form with material entered in lowercase (e.g. "bronze wire") | After saving, material displays as title case (e.g. "Bronze Wire") on the sculpture's detail/edit page | | | |
 
 
 ##### forms.py
@@ -150,11 +148,11 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|-------|-------|------------|
-| AUTH-01 | Sign up with valid data | Loads Confirm Emai page | As expected | Pass | |
+| AUTH-01 | Sign up with valid data | Loads Confirm Emai page | As expected | Pass | Pass |
 | AUTH-02 | Paste confirmation link url in browser (obtained via console backend) | Loads "Confirm Email Address" page showing correct email/username | As expected | Pass | |
-| AUTH-03 | Click Confirm button on that page | Email is marked verified; redirects to Sign in page  | As expected | Pass | |
-| AUTH-04 | Submit signup with honeypot field (`phone_number`) filled in (simulating a bot) | Signup appears to succeed (fake success page shown) but no user account is actually created | As expected — no user created, confirmed via shell query | Pass | |
-| AUTH-05 | Attempt login before confirming email | Login blocked; redirected to Confirm Email page rather than logged in | As expected — redirected to Confirm Email page, login refused | Pass | |
+| AUTH-03 | Click Confirm button on that page | Email is marked verified; redirects to Sign in page  | As expected | Pass | Pass |
+| AUTH-04 | Submit signup with honeypot field (`phone_number`) filled in (simulating a bot) | Signup appears to succeed (fake success page shown) but no user account is actually created | Does not apply for this MVP | | |
+| AUTH-05 | Attempt login before confirming email | Login blocked; redirected to Confirm Email page rather than logged in | As expected - redirected to Confirm Email page, login refused | Pass | Pass|
 | AUTH-06 | Login with valid credentials (username) from a verified account | Logs in and redirects to home page | As expected | Pass | |
 | AUTH-07 | Login with valid credentials (email) from a verified account | Logs in and redirects to home page | As expected | Pass | |
 | AUTH-08 | Request password reset with a registered email | Loads "password reset sent" confirmation page; reset email printed to console | As expected | Pass | |
@@ -167,6 +165,8 @@ Two tests were written to capture this:
 | AUTH-13 | Sign up with a username shorter than the minimum length | Form rejected with validation error; no account created | As expected | Pass | |
 | AUTH-14 | Sign up with an email already registered to an existing account | Form rejected with validation error; no account created | As expected | Pass | |
 | AUTH-15 | Sign up with a username already taken by an existing account | Form rejected with validation error; no account created | As expected | Pass | |
+| AUTH-16 | Sign up with valid data using a real, accessible inbox, check that inbox | Confirmation email arrives in the real inbox, addressed to the exact email entered, with a working confirmation link | As expected | | Pass |
+| AUTH-17 | Click confirmation link from a real email client | Link opens and loads the Confirm Email Address page correctly, showing the right email/username | As expected | | Pass |
 
 
 #### Responsiveness (RES)

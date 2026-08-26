@@ -161,10 +161,9 @@ C = could-have.
 
 **Acceptance Criteria:**
 
-- [ ]
-- [ ]
-- [ ]
-
+- [ ] Given I am on any page as a visitor, when I click "Sign up," then I am taken to a registration form.
+- [ ] Given I submit the form with valid data, when the form processes, then my account is created and I am shown a confirmation step.
+- [ ] Given I submit the form with invalid or missing data, when the form processes, then it is rejected and I am clearly shown what needs correcting.
 </details>
 
 <details><summary>
@@ -1014,6 +1013,8 @@ Staff-only form for adding a new sculpture to the gallery - reached via the CTA 
 
 - Navigation away from the form: the back arrow at the top of the form doubles as the cancel affordance; no dedicated Cancel as 3 buttons = 3 decisions and loss of focus. Since the form is long and includes an image upload, navigating away without saving loses all input. A `beforeunload` confirmation warning is planned.
 
+**Correction:** `status` (Available/Sold) is also a field on this form - accidentally omitted from the original field list. The artist should be able to manually set it to available or sold (given some sculptures could be aquired in person, or returned and readded).
+
 ---
 
 ### Security Features
@@ -1039,6 +1040,10 @@ Staff-only form for adding a new sculpture to the gallery - reached via the CTA 
   - https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
   - https://javascript.info/onload-ondomcontentloaded
   - https://www.geeksforgeeks.org/javascript/how-to-display-warning-before-leaving-the-web-page-with-unsaved-changes-using-javascript/
+
+**Styling**
+- For input file button:
+  - https://www.w3tutorials.net/blog/styling-an-input-type-file-button/
 
 ---
 
@@ -1103,10 +1108,16 @@ The project was managed in GitHub: https://github.com/VeronicaTeodorof/timefull-
 ## 6. Testing
 ### Resources consulted
 
+**Django general testing resources **
+- https://docs.djangoproject.com/en/6.1/topics/testing/overview/
+
 **Testing Models**
 - for testing field existance: https://docs.djangoproject.com/en/6.1/ref/models/meta/
 - for testing field type: https://www.geeksforgeeks.org/python/python-unittest-assertisinstance-function/
 - for testing Cloudinary field: https://github.com/cloudinary/pycloudinary/blob/master/django_tests/test_cloudinaryField.py
+
+**Mocking External API Calls**
+- https://www.honeybadger.io/blog/django-integration-testing/
 
 
 ---
@@ -1127,6 +1138,7 @@ The project was managed in GitHub: https://github.com/VeronicaTeodorof/timefull-
 - django-allauth 65.19.1 for authentication
 - gunicorn 26.0.0 - WSGI server used for deployment
 - cloudinary-1.46.0 - cloud based image hosting and transformation
+- whitenoise==6.12.0 - serves static files in production
 
 ### Front-end libraries
 - Bootstrap 5.3.8: https://getbootstrap.com/
