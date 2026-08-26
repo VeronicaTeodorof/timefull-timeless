@@ -167,13 +167,14 @@ C = could-have.
 </details>
 
 <details><summary>
-2. As a registered user, I want to log in to my account, so that I can access my personal information and account features. (M)
+2. As a registered user, I want to log in to my account, so that I can proceed to purchase a sculpture. (M)
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
+**Acceptance Criteria:**
+- [ ] Given I am a registered, verified user, when I submit valid login credentials (username), then I am logged in and recognized as authenticated (my username appears in the nav).
+- [ ] Given I am a registered, verified user, when I submit valid login credentials (email), then I am logged in and recognized as authenticated.
+- [ ] Given I submit invalid credentials, when the form processes, then I am shown a clear error and remain logged out.
 
 </details>
 
