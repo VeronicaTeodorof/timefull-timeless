@@ -183,9 +183,8 @@ C = could-have.
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
+- [ ] Given I am logged in, when I click "Log out," then my session ends and I am redirected to the home page.
+- [ ] Given I have logged out, when I try to access a page that requires authentication, then I am redirected to the login page rather than shown the page.
 
 </details>
 
@@ -194,9 +193,8 @@ C = could-have.
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
+- [ ] Given I register with valid data, when my account is created, then a confirmation email is sent to the email address I registered with.
+- [ ] Given I check the email I registered with, when I look for the message, then I find a confirmation email containing a verification link.
 
 </details>
 
@@ -205,14 +203,26 @@ C = could-have.
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
+- [ ] Given I click the verification link in my confirmation email, when the page loads, then I see a Confirm Email Address page showing my correct email/username.
+- [ ] Given I click Confirm on that page, when the action completes, then my email is marked verified and I am redirected to the Sign in page.
+- [ ] Given I have not yet verified my email, when I attempt to log in, then I am redirected to the Confirm Email page rather than being logged in.
 
 </details>
 
 <details><summary>
-6. As a visitor without an account, I want to be prompted to register or log in when I try to purchase, so that my order is tied to a verified account. (M)
+6. As a registered user, I want to reset my password if I forget it, so that I can regain access to my account if I need to. (S)
+</summary>
+
+**Acceptance Criteria:**
+- [ ] Given I click "Forgot password," when I submit my registered email, then I see a confirmation that a reset email has been sent.
+- [ ] Given I click the reset link in that email, when the page loads, then I can set a new password.
+- [ ] Given I set a new password, when I log in with it, then login succeeds.
+- [ ] Given I try to reuse the same reset link a second time, when I click it, then it is rejected
+
+</details>
+
+<details><summary>
+7. As an unauthenticated visitor, I want to be prompted to register or log in when I try to purchase, so that my order is tied to a verified account. (M)
 </summary>
 
 **Acceptance Criteria:**
