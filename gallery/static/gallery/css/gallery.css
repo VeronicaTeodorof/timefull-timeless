@@ -43,6 +43,11 @@
   object-fit: cover;
   flex: 1;
   min-height: 0;
+  transition: transform 1s ease;
+}
+
+.theme-card-link:hover img {
+  transform: scale(1.05);
 }
 
 .theme-footer {
@@ -50,4 +55,10 @@
   background: #212529;
   color: #fff;
   flex-shrink: 0;
+}
+
+.theme-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
