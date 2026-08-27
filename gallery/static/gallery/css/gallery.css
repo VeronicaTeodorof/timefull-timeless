@@ -29,50 +29,25 @@
 }
 
 /* Gallery page */
-/* masonry adapted form https://w3bits.com/blog/css-masonry/ */
-
-.masonry-container {
-    --gap: 1.5rem;
-    column-count: 3;
-    column-gap: var(--gap);
-    width: 100%;
-    max-width: 1200px; /* Constraints grid from filling giant monitors */
-    margin: 0 auto;
-}
-
-.masonry-item {
-    display: block;                     /* Ensures proper block sizing inside CSS columns */
-    width: 100%;                        /* Prevents image/card overflow */
-    margin-bottom: var(--gap);
-    break-inside: avoid;                /* Prevents the card from breaking across columns */
-    -webkit-column-break-inside: avoid;
-    box-sizing: border-box;
-}
 
 .theme-card {
-    border-radius: 12px;
-    overflow: hidden;
-    width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
 }
 
 .theme-card img {
-    display: block;
-    width: 100% !important;     /* Overrides Bootstrap width conflicts */
-    max-width: 100% !important; /* Prevents overflow */
-    height: auto !important;    /* Preserves native aspect ratio */
-    object-fit: cover;
+  width: 100%;
+  object-fit: cover;
+  flex: 1;
+  min-height: 0;
 }
 
 .theme-footer {
-    padding: 12px 14px;
-    background:#212529;
-    color: #fff;
-}
-
-/* Media Queries */
-@media (max-width: 992px) {
-    .masonry-container { column-count: 2; }
-}
-@media (max-width: 576px) {
-    .masonry-container { column-count: 1; }
+  padding: 12px 14px;
+  background: #212529;
+  color: #fff;
+  flex-shrink: 0;
 }
