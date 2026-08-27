@@ -170,7 +170,7 @@ C = could-have.
 2. As a registered user, I want to log in to my account, so that I can proceed to purchase a sculpture. (M)
 </summary>
 
-**Acceptance Criteria:**
+
 **Acceptance Criteria:**
 - [ ] Given I am a registered, verified user, when I submit valid login credentials (username), then I am logged in and recognized as authenticated (my username appears in the nav).
 - [ ] Given I am a registered, verified user, when I submit valid login credentials (email), then I am logged in and recognized as authenticated.
@@ -236,13 +236,12 @@ C = could-have.
 #### Sculpture/Gallery (browse, filter) Theme
 
 <details><summary>
-7. As a visitor, I want to be able to see a selection of artist's sculptures ordered by theme, so that I get to understand the artistic vision of this sculptor. (M)
+8. As a visitor, I want to be able to see a selection of artist's sculptures ordered by theme, so that I get to understand the artistic vision of this sculptor. (M)
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
+- [ ] Given I look at the gallery page, when it loads, then I see sculptures grouped by theme.
+- [ ] Given I click on a theme, when the page updates, then I see the sculptures belonging to that theme.
 
 </details>
 
@@ -953,6 +952,9 @@ Live "results as you type" was considered but deferred as a future improvement.
 ---
 
 #### Gallery Page
+
+**Layout:**
+
 **Empty state** matters primarily for the sculptor (staff) view, since regular users are unlikely to encounter it. It displays a quote, an empty-state message, and an 'Add Sculpture' CTA button — hardcoded at first.
 
 *Wireframes: desktop and mobile empty state gallery page for staff*
@@ -973,9 +975,20 @@ Live "results as you type" was considered but deferred as a future improvement.
   <img src="readme-assets/wireframes/gallery-nonempty-desktop-nonstaff.png" width="500" alt="Desktop gallery non-empty state for regular users">
 </p>
 
+
+**CSS-columns masonry** (`column-count: 3`, responsive down to 2/1 on smaller screens) was chosen over a fixed-height grid because it lets each theme's representative image render at its natural aspect ratio - while still being pure CSS with no JS dependency.
+
+- `break-inside: avoid` on each card wrapper prevents an image splitting across a column break.
+- Trade-off accepted: reading order flows top-to-bottom per column rather than strictly left-to-right. Acceptable since themes aren't a sequence the visitor needs to browse in order.
+
+**Card structure:** whole card is clickable (wrapped in an `<a>`), linking to the theme detail page. Theme name sits in a fixed-height footer strip below the image (solid background, not an overlay), for more reliable colour contrast.
+
 **Mechanics**
 
 Top-level state is gated by a single condition: `{% if sculptures %}`. This determines whether the filter row + theme grid render, or the empty-state block renders instead.
+
+Clicking a theme card navigates to `/gallery/theme/<slug>/`, which renders `theme_detail.html` — a Bootstrap carousel where each slide is that theme's sculptures, in order. Both this carousel and the standalone `/gallery/sculpture/<slug>/` page share the same underlying detail content via a reusable partial (`_sculpture_detail_content.html`), so a sculpture's detail markup (image, title, price, material, dimensions, Buy button) is written once and rendered in two contexts, rather than duplicated.
+
 
 **Permissions**
 
