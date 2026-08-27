@@ -14,7 +14,7 @@
      - [Search function (SEA)](#search-function-sea)
      - [Empty states (EMPTY)](#empty-states-empty)
      - [Permissions (PERM)](#permissions-perm)
-     - [Theme (THEME)](#theme-theme)
+     - [Gallery page (GP)](#gallery-page-gp)
 3. [Story-to-Test Mapping](#story-to-test-mapping)
 4. [Solved Bugs](#solved-bugs)
 5. [Known Bugs / Limitations](#known-bugs--limitations)
@@ -160,7 +160,7 @@ Two tests were written to capture this:
 | AUTH-09 | Submit new password on that form | Password updated; redirected to reset-complete page | As expected | Pass | Pass |
 | AUTH-09 | Log in with the new password | Login succeeds | As expected | Pass | Pass |
 | AUTH-10 | Attempt to reuse the same reset link a second time | Link rejected | As expected | Pass | Pass |
-| AUTH-11 | Sign up with mismatched email and email confirmation fields | Form rejected with validation error; no account created | As expected | Pass | |
+| AUTH-11 | Sign up with mismatched email and email confirmation fields | Form rejected with validation error; no account created | As expected | Pass | Pass |
 | AUTH-12 | Sign up with mismatched password and password confirmation fields | Form rejected with validation error; no account created | As expected | Pass | Pass |
 | AUTH-13 | Sign up with a username shorter than the minimum length | Form rejected with validation error; no account created | As expected | Pass | Pass |
 | AUTH-14 | Sign up with an email already registered to an existing account | Form rejected with validation error; no account created | As expected | Pass | Pass |
@@ -173,6 +173,8 @@ Two tests were written to capture this:
 
 #### Responsiveness (RES)
 
+**Navbar**
+
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
 | RES-01 | Burger visible on mobile (<992px) | Burger icon shown, links hidden | As expected | Pass | |
@@ -184,6 +186,14 @@ Two tests were written to capture this:
 | RES-07 | Username shown when authenticated (desktop) | Username replaces Sign in/Sign up | As expected | Pass | |
 | RES-08 | Dropdown opens on username click/tap (mobile + desktop) | Order History / Log out appear | As expected | Pass | |
 | RES-09 | Dropdown closes on second click/tap (mobile + desktop) | Dropdown closes | As expected | Pass | |
+
+**Gallery Page**
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| RES-10 | Masonry column count at desktop width | Theme cards arrange into 3 columns | | | |
+| RES-11 | Masonry column count at tablet width | Theme cards arrange into 2 columns | | | |
+| RES-12 | Masonry column count at mobile width | Theme cards arrange into 1 column | | | |
 
 #### Navigation links (NAV)
 
@@ -235,11 +245,20 @@ Two tests were written to capture this:
 | PERM-06 | Authenticated non-staff user tries to access '/gallery/add_sculpture/' | Gets 403 response | As expected | Pass | |
 | PERM-07 | Staff user tries to access '/gallery/add_sculpture/' from url browser | Page loads successfully | As expected | Pass | |
 
-#### Theme (THEME)
+#### Gallery page (GP)
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| THEME-01 | Theme card display per theme | Theme card displays when the theme has one or more sculptures; does not display when the theme has none | | | |
+| GP-01 | Theme card display per theme | Theme card displays when the theme has one or more sculptures; does not display when the theme has none | | | |
+| GP-02 | Click a theme card | Loads a carousel of sculpture detail pages belonging to that theme | | | |
+| GP-03 | Card masonry / cards appear in a staggered layout | Theme cards render at varying heights matching each image's natural aspect ratio, not aligned to a uniform grid | | | |
+| GP-04 | Card image does not split across a column break | Each theme card's image and footer render as one unbroken block, never cut across two columns | | | |
+| GP-05 | Card height matches image aspect ratio | Theme cards are not cropped or forced to a uniform height; each card's height reflects its image's natural proportions | | | |
+| GP-06 | Click anywhere on a theme card | Clicking the image, footer, or any part of the card navigates to that theme's detail page | | | |
+| GP-07 | Card link hover state | Hovering the card shows a visible affordance indicating it's clickable | | | |
+| GP-08 | Theme name renders in footer| Theme name text appears in a solid-background footer strip below the image| | | |
+| GP-10 | Footer text contrast | Theme name text is legible against the footer's solid background, regardless of the image above it | | | |
+| GP-11 | Footer height consistency | Footer strip height is consistent across cards regardless of image height (masonry) or theme name length | | | |
 
 #### Forms
 ##### Add Sculpture Form
