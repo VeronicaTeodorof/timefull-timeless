@@ -2,19 +2,64 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% block extra_head %}
+    <!-- Custom Gallery CSS -->
+    <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
+{% endblock %}
 
 
 {% block content %}
+    <!-- Common states content -->
+    <div class="quote text-center mt-3">
+        <p class="fs-5">"Enel Dumitrascu's sculptures are spirals in constant motion -
+            matter itself taking flight, rising beyond its own limits"<br>
+            <span class="fs-6"> - Claudia Anca Moldovan, curator, Braila <br>(adapted from Romanian)</span></p>
+    </div>
     <!-- Non-empty state will come here -->
+    <!-- Themes Section -->
+        <div class="container my-4">
+        <div class="masonry-container">
+            <div class="masonry-item">
+                <div class="theme-card">
+                    <img src="{% static 'gallery/images/expansiune_temporala.jpg' %}" alt="...">
+                    <div class="theme-footer">
+                        <h5>Time</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="masonry-item">
+                <div class="theme-card">
+                    <img src="{% static 'gallery/images/inger_temporal.jpg' %}" alt="...">
+                    <div class="theme-footer">
+                        <h5>Angels</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="masonry-item">
+                <div class="theme-card">
+                    <img src="{% static 'gallery/images/in_ochiul_lui.jpg' %}" alt="...">
+                    <div class="theme-footer">
+                        <h5>Eyes</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="masonry-item">
+                <div class="theme-card">
+                    <img src="{% static 'gallery/images/salt_in_timp.jpg' %}" alt="...">
+                    <div class="theme-footer">
+                        <h5>Leap</h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        </div>
 
 
     <!-- Empty state hardcoded -->
-    <div class="quote text-center mt-5">
-        <p class="fs-3">Quote by Expert</p>
-    </div>
-    <div class="empty  text-center mt-5">
+    <!-- <div class="empty  text-center mt-5">
         <p class="display-4">No sculptures to display</p>
-    </div>
+    </div> -->
 
     {% if user.is_staff %}
         <div class="cta d-flex justify-content-center my-5">
