@@ -250,9 +250,9 @@ C = could-have.
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
+- [ ] Given a sculpture exists, when a visitor navigates to that sculpture's detail page, then the image, title, material, dimensions, availability status and price are all visible
+- [ ] Given a sculpture's image fails to load, when the detail page renders, then a neutral placeholder graphic is displayed in its place, rather than a broken image icon.
+- [ ] Given the price field, when displayed, then it is formatted clearly and consistently regardless of the underlying stored value.
 
 </details>
 
