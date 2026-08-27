@@ -191,9 +191,8 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| RES-10 | Masonry column count at desktop width | Theme cards arrange into 3 columns | | | |
-| RES-11 | Masonry column count at tablet width | Theme cards arrange into 2 columns | | | |
-| RES-12 | Masonry column count at mobile width | Theme cards arrange into 1 column | | | |
+| GP-04 | Column count at desktop width | Theme cards arrange into 3 columns for tablet and disktop | As expected | Pass | |
+| GP-05 | Column count at mobile width | Theme cards arrange into one column for mobile | As expected | Pass | |
 
 #### Navigation links (NAV)
 
@@ -230,7 +229,7 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| EMPTY-01 | Gallery page empty state content | Quote and empty message for regular users, plus Add Sculpture button for staff controls | | | |
+| EMPTY-01 | Gallery page empty state content | Quote and empty message for regular users, plus Add Sculpture button for staff controls | As expected | Pass | |
 | EMPTY-02 | Gallery page non-empty state content | Quote, filter row, and theme card grid render when at least one sculpture exists | | | |
 
 #### Permissions (PERM)
@@ -251,14 +250,13 @@ Two tests were written to capture this:
 |---------|------|----------|--------|-------|------------|
 | GP-01 | Theme card display per theme | Theme card displays when the theme has one or more sculptures; does not display when the theme has none | | | |
 | GP-02 | Click a theme card | Loads a carousel of sculpture detail pages belonging to that theme | | | |
-| GP-03 | Card masonry / cards appear in a staggered layout | Theme cards render at varying heights matching each image's natural aspect ratio, not aligned to a uniform grid | | | |
-| GP-04 | Card image does not split across a column break | Each theme card's image and footer render as one unbroken block, never cut across two columns | | | |
-| GP-05 | Card height matches image aspect ratio | Theme cards are not cropped or forced to a uniform height; each card's height reflects its image's natural proportions | | | |
-| GP-06 | Click anywhere on a theme card | Clicking the image, footer, or any part of the card navigates to that theme's detail page | | | |
-| GP-07 | Card link hover state | Hovering the card shows a visible affordance indicating it's clickable | | | |
-| GP-08 | Theme name renders in footer| Theme name text appears in a solid-background footer strip below the image| | | |
-| GP-10 | Footer text contrast | Theme name text is legible against the footer's solid background, regardless of the image above it | | | |
-| GP-11 | Footer height consistency | Footer strip height is consistent across cards regardless of image height (masonry) or theme name length | | | |
+| GP-03 | Theme cards render at uniform height | All theme cards display at a consistent fixed height regardless of source image aspect ratio | As expected | Pass | |
+| GP-04 | Image crop, no distortion | Source image fills the fixed card height via crop | As exptected | Pass | |
+| GP-05 | Click anywhere on a theme card | Clicking the image, footer, or any part of the card navigates to that theme's detail page | | | |
+| GP-06 | Card link hover state | Hovering the card shows a visible affordance indicating it's clickable | Zoom on hover | Pass | |
+| GP-07 | Theme name renders in footer| Theme name text appears in a solid-background footer strip below the image| As expected - hardcoded | Pass | |
+| GP-08 | Footer text contrast | Theme name text is legible against the footer's solid background, regardless of the image above it | As expected | Pass | |
+| GP-09 | Footer height consistency | Footer strip height is consistent across cards regardless of image height (masonry) or theme name length | As expected | Pass | |
 
 #### Forms
 ##### Add Sculpture Form

@@ -975,13 +975,9 @@ Live "results as you type" was considered but deferred as a future improvement.
   <img src="readme-assets/wireframes/gallery-nonempty-desktop-nonstaff.png" width="500" alt="Desktop gallery non-empty state for regular users">
 </p>
 
+**Layout:** Standard Bootstrap grid with each theme card fixed at a set height and its image cropped to fill via object-fit: cover.
 
-**CSS-columns masonry** (`column-count: 3`, responsive down to 2/1 on smaller screens) was chosen over a fixed-height grid because it lets each theme's representative image render at its natural aspect ratio - while still being pure CSS with no JS dependency.
-
-- `break-inside: avoid` on each card wrapper prevents an image splitting across a column break.
-- Trade-off accepted: reading order flows top-to-bottom per column rather than strictly left-to-right. Acceptable since themes aren't a sequence the visitor needs to browse in order.
-
-**Card structure:** whole card is clickable (wrapped in an `<a>`), linking to the theme detail page. Theme name sits in a fixed-height footer strip below the image (solid background, not an overlay), for more reliable colour contrast.
+CSS-columns masonry was considered and hardcoded first, as a way to let each theme's image render at its natural aspect ratio without cropping, but wasn't the best fit going forward — the fixed-grid approach gives predictable, uniform card sizing, at the cost of accepting some image cropping.
 
 **Mechanics**
 
@@ -1058,6 +1054,7 @@ Staff-only form for adding a new sculpture to the gallery - reached via the CTA 
 - For floating action buttons (FAB) used for 'Add sculpture' button in mobile view sculptor controls:
   - https://m3.material.io/components/floating-action-button/guidelines
   - Thinking on ways to solve FAB: https://www.youtube.com/watch?v=RXopH5t2Kww
+- For themes cards masonry: https://w3bits.com/blog/css-masonry/
 
 **UX:**
 - For warning when navigating away from an unsubmitted form (`beforeunload`):
