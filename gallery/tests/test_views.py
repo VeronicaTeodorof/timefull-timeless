@@ -100,3 +100,22 @@ class AddSculptureViewCase(TestCase):
         self.client.force_login(self.staff_user)
         response = self.client.get(self.url)
         self.assertIn('form', response.context)
+
+    def test_valid_data_creates_object(self):
+        """
+        Tests that a staff user's valid POST data creates a Sculpture object
+        """
+        self.client.force_login(self.staff_user)
+        data = self.data
+        response = self.client.post(self.url, data)
+        # assertion written by Claude Ai
+        # logic: every assertion can contain an optional msg argument
+        # this argument is helpful in debugging
+        # in this test, the form's validation errors are printed in the
+        # terminal if the form failed validation (re-rendered with context);
+        # otherwise there's no context, since success means a redirect
+        self.assertEqual(
+            Sculpture.objects.count(), 1,
+            response.context["form"].errors if response.context else
+            "no context (redirect?)"
+        )
