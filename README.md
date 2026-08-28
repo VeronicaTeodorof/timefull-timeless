@@ -246,7 +246,7 @@ C = could-have.
 </details>
 
 <details><summary>
-8. As a visitor, I want to be able to see a representative image of the sculpture, along with a full description of material, dimensions, and price, so that I'm fully informed about that particular artwork. (M)
+9. As a visitor, I want to be able to see a representative image of the sculpture, along with a full description of material, dimensions, and price, so that I'm fully informed about that particular artwork. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -807,6 +807,8 @@ Fields largely follow the structure of Code Institute's "Boutique Ado" tutorial'
 4. 'reserved_at' on Sculpture records when a sculpture was added to someone's selection, so the countdown to revert 'reserved' back to 'available' can be calculated. If payment succeeds first, status moves to 'sold' instead.
 5. 'country' on Order is restricted to countries where delivery is currently available. The list can expand once shipping processes are set up for new destinations.
 6. Although postcode is an important part of the delivery process in the UK, in Romania it's in practice not frequently used and buyers may not specify it - this field is therefore set to 'null=True', 'blank=True'.
+7. `dimensions` is stored as free text (CharField, null=True, blank=True) rather than structured fields, because the artist's own records are inconsistent - some pieces are documented with two measurements, others with only one. This is a concession to the real data, not a preferred design; dimensions should ideally be entered consistently, and a structured field would be the better long-term choice once that discipline is in place.
+8. `weight` is modelled (DecimalField, validated with a minimum, nullable) since it's a genuinely necessary field for the real business - shipping cost and courier requirements for metal sculptures - but the artist's existing records don't include it. The model supports weight without enforcing it, though in practice no sculpture in this dataset currently has a recorded value.
 
 #### ERD
 
@@ -1034,6 +1036,25 @@ Staff-only form for adding a new sculpture to the gallery - reached via the CTA 
 - Navigation away from the form: the back arrow at the top of the form doubles as the cancel affordance; no dedicated Cancel as 3 buttons = 3 decisions and loss of focus. Since the form is long and includes an image upload, navigating away without saving loses all input. A `beforeunload` confirmation warning is planned.
 
 **Correction:** `status` (Available/Sold) is also a field on this form - accidentally omitted from the original field list. The artist should be able to manually set it to available or sold (given some sculptures could be aquired in person, or returned and readded).
+
+
+#### Sculpture Detail Page
+
+**Layout**
+
+Each sculpture's card follows the sequence: image, identifiers, details, actions, so a user sees the artwork and its information before being asked to act. Fields are ordered by the sequence a buyer actually needs them: Title -> English translation -> Year -> Material -> Dimensions -> Availability, followed by the action buttons. Title, translation, and year form an identification cluster — year is treated as part of identifying which piece this is, so it sits with the title rather than with the other details, since it consistently appears alongside the title in the artist's own records, unlike material or dimensions. Material and dimensions follow as the buyer-relevant physical facts needed to evaluate the piece in that order because material is usually the more immediately meaningful fact, with dimensions naturally paired after it. Availability comes last, directly before the button - placing it immediately above removes any gap between "can I get this" and "here's how." Theme, while central to the sculptor's practice, is deliberately excluded from this per-piece list: it functions as organizational/branding metadata (grouping and gallery structure) rather than information a buyer needs restated on an individual piece's page, so it lives only in Sculptor Controls rather than competing with user-relevant facts here.
+
+*Wireframes: mobile (image and details single column), desktop (two separate columns)*
+<p align="center">
+  <img src="readme-assets/wireframes/sculpture-detail-mobile.png" width="250" alt="Sculpture detail page, mobile, single column">
+  <img src="readme-assets/wireframes/sculpture-detail-desktop.png" width="500" alt="Sculpture detail page, desktop, two column">
+</p>
+
+The button label uses "Acquire Now" rather than "Buy Now." "Acquire"/"acquisition" is the standard register collectors and curators use for considered art purchases; this holds for the primary target audience (collectors, curators, designers) and the secondary audience (art students, peers). The choice also reinforces the site's broader gallery presentation as opposed to a general retail one.
+While inspired by Amazon's "Buy Now" button, "Acquire Now" is not intended to encourage impulse buying - it was adopted for two distinct reasons: it fits the business model (mostly individual purchases of high-value unique artwork, delivered individually even when multi-buy orders would be technically available), and it simplifies the overall purchase process, which would otherwise require a third, deferred availability status - "reserved" - to guard against the rare but possible case of two buyers attempting to acquire the same unique artwork at the same time. In practice, a reserved status would function similarly to a booking system; although time doesn't permit building it for the MVP, the Sculpture model already includes the fields needed to support it as a future enhancement.
+
+**Mechanics**
+'Acquire Now' links to the terms page rather than directly into checkout, and 'Enquire about this piece' links to the contact page - both reinforcing that the intended action is an informed one, not an impulse click. Full checkout flow and terms-page behaviour are addressed separately.
 
 ---
 
