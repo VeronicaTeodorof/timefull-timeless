@@ -194,6 +194,15 @@ Two tests were written to capture this:
 | GP-04 | Column count at desktop width | Theme cards arrange into 3 columns for tablet and disktop | As expected | Pass | |
 | GP-05 | Column count at mobile width | Theme cards arrange into one column for mobile | As expected | Pass | |
 
+**Sculpture Detail Page**
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| RES-06 | Layout at mobile width | Image and details stack in a single column | | | |
+| RES-07 | Layout at desktop width (≥768px) | Image and details render in two columns (image left, details right) | | | |
+| RES-08 | Layout transition across breakpoint | Resizing across 768px switches cleanly between stacked and two-column, no overlap or broken spacing | | | |
+
+
 #### Navigation links (NAV)
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
@@ -209,7 +218,6 @@ Two tests were written to capture this:
 | NAV-08 | Log out link (authenticated) | Logs out, redirects to home page | As expected | Pass | |
 | NAV-09 | Shipping link on footer | Navigates to policies page, shipping section | | | |
 | NAV-10 | Terms link on footer | Navigates to policies page, terms section | | | |
-| NAV-11 | Click 'Add sculpture' button on gallery page | Navigates to add sculpture page | As expected | Pass | |
 
 
 #### Search function (SEA)
@@ -252,11 +260,22 @@ Two tests were written to capture this:
 | GP-02 | Click a theme card | Loads a carousel of sculpture detail pages belonging to that theme | | | |
 | GP-03 | Theme cards render at uniform height | All theme cards display at a consistent fixed height regardless of source image aspect ratio | As expected | Pass | |
 | GP-04 | Image crop, no distortion | Source image fills the fixed card height via crop | As exptected | Pass | |
-| GP-05 | Click anywhere on a theme card | Clicking the image, footer, or any part of the card navigates to that theme's detail page | | | |
-| GP-06 | Card link hover state | Hovering the card shows a visible affordance indicating it's clickable | Zoom on hover | Pass | |
-| GP-07 | Theme name renders in footer| Theme name text appears in a solid-background footer strip below the image| As expected - hardcoded | Pass | |
-| GP-08 | Footer text contrast | Theme name text is legible against the footer's solid background, regardless of the image above it | As expected | Pass | |
-| GP-09 | Footer height consistency | Footer strip height is consistent across cards regardless of image height (masonry) or theme name length | As expected | Pass | |
+| GP-05 | Card link hover state | Hovering the card shows a visible affordance indicating it's clickable | Zoom on hover | Pass | |
+| GP-06 | Theme name renders in footer| Theme name text appears in a solid-background footer strip below the image| As expected - hardcoded | Pass | |
+| GP-07 | Footer text contrast | Theme name text is legible against the footer's solid background, regardless of the image above it | As expected | Pass | |
+| GP-08 | Footer height consistency | Footer strip height is consistent across cards regardless of image height (masonry) or theme name length | As expected | Pass | |
+| GP-09 | Click 'Add sculpture' button on gallery page | Navigates to add sculpture page | As expected | Pass | |
+
+
+#### Sculpture Detail
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| SDP-01 | Mobile layout matches wireframe | Field order and grouping (image, identifiers, details, actions) match the mobile wireframe | | | |
+| SDP-02 | Desktop layout matches wireframe | Field order and grouping match the desktop wireframe, with image and details in separate columns | | | |
+|---------|------|----------|--------|-------|------------|
+| SD-03 | Click "Acquire Now"  | Navigates to the terms page | | | |
+| SD-04 | Click "Enquire about this piece" | Navigates to the contact page | | | |
 
 #### Forms
 ##### Add Sculpture Form
