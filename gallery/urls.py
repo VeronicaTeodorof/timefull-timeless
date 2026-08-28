@@ -7,4 +7,7 @@ app_name = 'gallery'
 urlpatterns = [
     path('', views.gallery, name='gallery'),
     path('add_sculpture/', views.add_sculpture, name='add-sculpture'),
+    path('sculpture/<slug:slug>/',
+         views.sculpture_detail,
+         name='sculpture-detail'),
 ]

@@ -15,3 +15,7 @@ env.py
 # OS/editor cruft
 .DS_Store
 Thumbs.db
+
+# Real sculpture photography — not for public repo
+gallery/static/gallery/images/*
+!gallery/static/gallery/images/.gitkeep

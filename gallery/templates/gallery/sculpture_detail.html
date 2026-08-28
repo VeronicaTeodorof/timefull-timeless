@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_head %}
+    <!-- Custom Gallery CSS -->
+    <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
+{% endblock %}
+{# sculpture detail page #}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6 py-3">
+            <img src="{% static 'gallery/images/expansiune_temporala.jpg' %}"
+                 alt="Temporal Expansion Sculpture"
+                 class="sculpture-detail-image img-sm-fluid">
+        </div>
+        <div class="col-12 col-md-6 py-3">
+            <div class="title ms-2 ms-lg-5">
+                <h1 class="mt-lg-5">Expansiune Temporala</h1>
+                <h2 class="text-muted">Temporal Expansion</h2>
+                <h3 class="year">Year: 2024</h3>
+            </div>
+            <div class="details ms-2 ms-lg-5 mt-4">
+                <p><span>Material: Iron</span><br>
+                   <span>Dimensions: 23x25cm</span>
+                </p>
+            </div>
+             <div class="cost ms-2 ms-lg-5 mt-4">
+                <p><span class="badge text-bg-success">Available</span><br>
+                   <span class="fs-5">Price: £3,000.00</span><br>
+                   <span class="authenticity fs-6">Comes with a signed Certificate of Authenticity.</span>
+                </p>
+            </div>
+            <div class="actions ms-2 ms-lg-5 my-4 d-flex flex-column gap-2">
+                <button class="btn btn-success">Acquire Now</button>
+                <a href="" class="mt-3 link-body-emphasis link-underline-opacity-75 link-underline-opacity-100-hover link-offset-3">Enquire about this piece</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
