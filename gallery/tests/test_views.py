@@ -1,4 +1,6 @@
 # gallery app test_views.py
+
+# Imports
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.contrib.auth import get_user_model
@@ -6,6 +8,13 @@ from gallery.models import Theme, Sculpture
 from django.core.files.uploadedfile import SimpleUploadedFile
 from unittest.mock import patch
 import cloudinary
+
+# Constants
+# written as refactor with Claude AI
+MINIMAL_GIF = (
+    b'GIF89a\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04\x01\x00\x00\x00'
+    b'\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3b'
+)
 
 
 @override_settings(STORAGES={
@@ -68,6 +77,27 @@ class AddSculptureViewCase(TestCase):
             "themes": [self.theme.pk],
         }
 
+    def get_mock_upload_and_image(self):
+        """
+        Returns a valid CloudinaryResource (to use as a mock's return
+        value) and a SimpleUploadedFile built from MINIMAL_GIF, for
+        tests that need to simulate a successful image upload.
+        """
+        mock_result = cloudinary.CloudinaryResource(
+            public_id='test_public_id_123',
+            version='1234567890',
+            format='jpg',
+            resource_type='image',
+            type='upload',
+        )
+        image = SimpleUploadedFile(
+            name='test_image.gif',
+            content=MINIMAL_GIF,
+            content_type='image/gif'
+        )
+        # returning a tuple
+        return mock_result, image
+
     def test_add_sculpture_url_resolves(self):
         self.assertEqual(self.url, '/gallery/add_sculpture/')
 
@@ -116,17 +146,11 @@ class AddSculptureViewCase(TestCase):
         Tests that a staff user's valid POST data creates a Sculpture object
         """
         # copied from the above resource
-        mock_upload.return_value = cloudinary.CloudinaryResource(
-            public_id='test_public_id_123',
-            version='1234567890',
-            format='jpg',
-            resource_type='image',
-            type='upload',
-            )
+        mock_upload.return_value, image = self.get_mocked_upload_and_image()
         self.client.force_login(self.staff_user)
         image = SimpleUploadedFile(
             name='test_image.gif',
-            content=b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3b',
+            content=MINIMAL_GIF,
             content_type='image/gif'
     )
         data = {**self.data, "status": "available", "image": image}
