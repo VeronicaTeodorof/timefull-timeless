@@ -3,6 +3,9 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from gallery.models import Theme, Sculpture
+from django.core.files.uploadedfile import SimpleUploadedFile
+from unittest.mock import patch
+import cloudinary
 
 
 @override_settings(STORAGES={
@@ -101,12 +104,32 @@ class AddSculptureViewCase(TestCase):
         response = self.client.get(self.url)
         self.assertIn('form', response.context)
 
-    def test_valid_data_creates_object(self):
+    # Passing version reached through trial and error, using
+    # https://www.honeybadger.io/blog/django-integration-testing/
+    # as a starting point, adapted with Claude AI once the article's
+    # exact pattern (mocking upload, not upload_resource; returning a
+    # dict, not a CloudinaryResource) didn't match this project's setup.
+
+    @patch('cloudinary.uploader.upload_resource')
+    def test_valid_data_creates_object(self, mock_upload):
         """
         Tests that a staff user's valid POST data creates a Sculpture object
         """
+        # copied from the above resource
+        mock_upload.return_value = cloudinary.CloudinaryResource(
+            public_id='test_public_id_123',
+            version='1234567890',
+            format='jpg',
+            resource_type='image',
+            type='upload',
+            )
         self.client.force_login(self.staff_user)
-        data = self.data
+        image = SimpleUploadedFile(
+            name='test_image.gif',
+            content=b'\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x00\x00\x00\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3b',
+            content_type='image/gif'
+    )
+        data = {**self.data, "status": "available", "image": image}
         response = self.client.post(self.url, data)
         # assertion written by Claude Ai
         # logic: every assertion can contain an optional msg argument
