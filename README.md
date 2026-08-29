@@ -485,9 +485,9 @@ C = could-have.
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
+- [ ] Given an anonymous visitor, when they attempt to access any content-management control (add/edit/delete sculpture, theme management), then they are redirected (302) rather than shown the control.
+- [ ] Given an authenticated non-staff user, when they attempt to access any content-management control, then they receive a 403 Forbidden response.
+- [ ] Given an authenticated staff user, when they access any content-management control, then they successfully reach it (200).
 
 </details>
 
@@ -1153,10 +1153,16 @@ The project was managed in GitHub: https://github.com/VeronicaTeodorof/timefull-
 **Django general testing resources **
 - https://docs.djangoproject.com/en/6.1/topics/testing/overview/
 
+**Optional third (msg) argument on assertions:
+- https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertEqual
+
 **Testing Models**
 - for testing field existance: https://docs.djangoproject.com/en/6.1/ref/models/meta/
 - for testing field type: https://www.geeksforgeeks.org/python/python-unittest-assertisinstance-function/
 - for testing Cloudinary field: https://github.com/cloudinary/pycloudinary/blob/master/django_tests/test_cloudinaryField.py
+
+**Override Settings Testing**
+- https://www.geeksforgeeks.org/python/how-to-unit-test-with-different-settings-in-django/
 
 **Mocking External API Calls**
 - https://www.honeybadger.io/blog/django-integration-testing/
