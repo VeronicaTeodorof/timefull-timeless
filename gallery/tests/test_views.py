@@ -44,6 +44,7 @@ class GalleryViewCase(TestCase):
         response = self.client.get(reverse('gallery:gallery'))
         self.assertNotContains(response, 'Add sculpture')
 
+
 # Decorator overrides production STORAGES setting for staticfiles,
 # which requires an extra build step that doesn't run in tests.
 # Provides a default setting for this test case only.
@@ -73,11 +74,11 @@ class AddSculptureViewCase(TestCase):
             "price": 500,
             "material": "Bronze",
             "dimensions": "30x20x10cm",
-            "status": "draft",
+            "status": "available",
             "themes": [self.theme.pk],
         }
 
-    def get_mock_upload_and_image(self):
+    def get_mocked_upload_and_image(self):
         """
         Returns a valid CloudinaryResource (to use as a mock's return
         value) and a SimpleUploadedFile built from MINIMAL_GIF, for
@@ -145,15 +146,9 @@ class AddSculptureViewCase(TestCase):
         """
         Tests that a staff user's valid POST data creates a Sculpture object
         """
-        # copied from the above resource
         mock_upload.return_value, image = self.get_mocked_upload_and_image()
         self.client.force_login(self.staff_user)
-        image = SimpleUploadedFile(
-            name='test_image.gif',
-            content=MINIMAL_GIF,
-            content_type='image/gif'
-    )
-        data = {**self.data, "status": "available", "image": image}
+        data = {**self.data, "image": image}
         response = self.client.post(self.url, data)
         # assertion written by Claude Ai
         # logic: every assertion can contain an optional msg argument
@@ -165,4 +160,20 @@ class AddSculptureViewCase(TestCase):
             Sculpture.objects.count(), 1,
             response.context["form"].errors if response.context else
             "no context (redirect?)"
+        )
+
+    @patch('cloudinary.uploader.upload_resource')
+    def test_successful_save_redirects_to_sculpture_detail(self, mock_upload):
+        """
+        Tests that saving a valid sculpture
+        redirects to that sculpture's detail page
+        """
+        mock_upload.return_value, image = self.get_mocked_upload_and_image()
+        self.client.force_login(self.staff_user)
+        data = {**self.data, "image": image}
+        response = self.client.post(self.url, data)
+        sculpture = Sculpture.objects.get(title=self.data['title'])
+        self.assertRedirects(
+            response,
+            reverse('gallery:sculpture-detail', kwargs={'slug': sculpture.slug})
         )
