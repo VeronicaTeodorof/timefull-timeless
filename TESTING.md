@@ -61,12 +61,33 @@ Two tests were written to capture this:
 `.save()` call outside a `ModelForm`) could silently save a sculpture with no real image, since the database itself will not reject it.
 
 #### Tdd pass for gallery views
-- To add #### TDD pass for gallery views permission enforcement automated tests needed for each new staff-only view, mirroring the existing add-sculpture pattern (anonymous -> 302, non-staff -> 403, staff ->200):
+- To add pass for gallery views permission enforcement automated tests needed for each new staff-only view, mirroring the existing add-sculpture pattern (anonymous -> 302, non-staff -> 403, staff ->200):
 
 - [ ] edit_sculpture view
 - [ ] delete_sculpture view
 - [ ] edit_theme view
 - [ ] change representative image view
+
+
+#### TDD pass for Create and Edit Theme
+
+- [ ] AC1 - new theme created on valid submission
+- [ ] AC2 - new theme created and attached to the sculpture
+- [ ] AC3 - duplicate name (case-insensitive) reuses existing theme, no duplicate created
+- [ ] AC4 - form rejects submission when both theme fields are empty
+- [ ] AC5 - multi-select displays all existing themes, including empty ones
+- [ ] AC6 - selecting multiple existing themes attaches all of them
+- [ ] AC7 - existing-theme selection and new-theme submission combine correctly
+- [ ] AC9 - multiple `new_theme` values (cloned fields) each create and attach a theme
+- [ ] AC11 - theme survives sculpture deletion; card falls back to remaining sculpture (blocked on story 31)
+- [ ] AC12 - empty theme hidden from gallery queryset; still included in form queryset
+- [ ] AC13 - edit-theme view rejects non-staff/anonymous requests (302/403/200)
+- [ ] AC15 - representative image override takes precedence over fallback, even when it wouldn't coincidentally match
+- [ ] AC16 - representative-image dropdown scoped to only this theme's sculptures, includes all of them
+- [ ] AC17 - rename validation excludes self (no false duplicate on unchanged save), rejects name matching a different theme
+- [ ] AC19 - untagging a sculpture from a theme clears a stale representative-image override (blocked on story 31)
+- [ ] AC21 - view calls `messages.success(...)` on theme-related success paths
+
 
 ---
 
@@ -321,6 +342,28 @@ Two tests were written to capture this:
 | ASP-02 | Back link presence | Back-to-gallery affordance renders at top of form | As expected | Pass | |
 | ASP-03 | Back link destination | Clicking back link navigates to gallery page | As expected | Pass | |
 | ASP-04 | Unsaved changes warning | Navigating away with unsaved input shows confirmation | | | |
+
+#### Create and Edit Theme
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| CT-01 | New theme appears in multi-select after creation | Creating a sculpture with a new theme name; visiting edit-sculpture afterward shows the new theme as an option in the multi-select | | | |
+| CT-02 | New theme correctly associated with its sculpture | Creating a sculpture with a new theme name; sculpture detail/gallery shows the new theme correctly associated | | | |
+| CT-03 | Duplicate new theme name (exact match) | Submitting a new theme name exactly matching an existing theme; no error shown, submission succeeds normally | | | |
+| CT-04 | Duplicate new theme name (different casing) | Submitting a new theme name matching an existing theme with different casing; no error shown, submission succeeds normally | | | |
+| CT-05 | Both theme fields left empty | Submitting the add-sculpture form with both theme fields empty; clear validation error shown near the right place, other entered fields preserved | | | |
+| CT-06 | Success/error feedback messages | Adding a new theme shows a success message; a theme-related validation error shows a clear error message; editing an existing theme shows a success message on save | | | |
+| CT-07 | Select multiple existing themes | Physically selecting two or more themes in the multi-select; interaction feels right, selected state is visually clear | | | |
+| CT-08 | Combine existing theme selection with a new theme | Selecting an existing theme and typing a new theme name in the same submission; both end up visible together on the sculpture and gallery | | | |
+| CT-09 | Zero themes - form state | With zero themes in the database, the themes multi-select is not displayed on the add-sculpture form, and the "new theme" field's label reflects this is the first theme(s) | | | |
+| CT-10 | "+" button clones new theme field | Clicking the "+" button adds an additional "new theme" field in the browser (one theme name per field) | | | |
+| CT-11 | New theme(s) appear as gallery cards | After adding a sculpture with one or more new themes, the gallery page shows each as its own card, displaying the sculpture's image | | | |
+| CT-12 | Edit menu visible only to staff | Staff user sees the edit menu (both labeled options) on each theme card; anonymous/non-staff users do not see it | | | |
+| CT-13 | Edit menu links navigate correctly | Clicking either "Change theme name" or "Change representative image" navigates to the correct theme's edit page | | | |
+| CT-14 | Representative image override reflected in gallery | Selecting a different sculpture as the theme's representative image and saving; gallery card shows the selected sculpture's image | | | |
+| CT-15 | Theme name field pre-populated | Theme-edit page's name field exists and is pre-populated with the current name on load | | | |
+| CT-16 | Renamed theme reflected in gallery | Renaming a theme and saving; gallery card displays the new name | | | |
+| CT-27 | Cancel link returns to gallery without saving | Theme-edit page has a "Cancel" link; following it returns to the gallery page, nothing is saved | | | |
 
 ---
 
