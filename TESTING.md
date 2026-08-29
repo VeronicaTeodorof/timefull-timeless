@@ -198,9 +198,9 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| RES-06 | Layout at mobile width | Image and details stack in a single column | | | |
-| RES-07 | Layout at desktop width (≥768px) | Image and details render in two columns (image left, details right) | | | |
-| RES-08 | Layout transition across breakpoint | Resizing across 768px switches cleanly between stacked and two-column, no overlap or broken spacing | | | |
+| RES-06 | Layout at mobile width | Image and details stack in a single column | As expected | Pass | |
+| RES-07 | Layout at desktop width (≥768px) | Image and details render in two columns (image left, details right) | As expected | Pass | |
+| RES-08 | Layout transition across breakpoint | Resizing across 768px switches cleanly between stacked and two-column, no overlap or broken spacing | As expected | Pass | |
 
 
 #### Navigation links (NAV)
@@ -271,9 +271,8 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| SDP-01 | Mobile layout matches wireframe | Field order and grouping (image, identifiers, details, actions) match the mobile wireframe | | | |
-| SDP-02 | Desktop layout matches wireframe | Field order and grouping match the desktop wireframe, with image and details in separate columns | | | |
-|---------|------|----------|--------|-------|------------|
+| SDP-01 | Mobile layout matches wireframe | Field order and grouping (image, identifiers, details, actions) match the mobile wireframe | As expected | Pass | |
+| SDP-02 | Desktop layout matches wireframe | Field order and grouping match the desktop wireframe, with image and details in separate columns | As expected | Pass | |
 | SD-03 | Click "Acquire Now"  | Navigates to the terms page | | | |
 | SD-04 | Click "Enquire about this piece" | Navigates to the contact page | | | |
 
