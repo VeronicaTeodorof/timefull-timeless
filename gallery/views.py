@@ -21,9 +21,9 @@ def add_sculpture(request):
     if request.method == "POST":
         form = SculptureForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            sculpture = form.save()
             messages.success(request, "Sculpture added.")
-            return redirect('gallery:gallery')
+            return redirect('gallery:sculpture-detail', slug=sculpture.slug)
     else:
         form = SculptureForm()
 
