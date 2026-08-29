@@ -60,6 +60,14 @@ Two tests were written to capture this:
 **Risk noted:** any code path that saves a `Sculpture` without calling `full_clean()` first (e.g. a direct `.objects.create()` or
 `.save()` call outside a `ModelForm`) could silently save a sculpture with no real image, since the database itself will not reject it.
 
+#### Tdd pass for gallery views
+- To add #### TDD pass for gallery views permission enforcement automated tests needed for each new staff-only view, mirroring the existing add-sculpture pattern (anonymous -> 302, non-staff -> 403, staff ->200):
+
+- [ ] edit_sculpture view
+- [ ] delete_sculpture view
+- [ ] edit_theme view
+- [ ] change representative image view
+
 ---
 
 ### Manual tests — code reflection in UI
@@ -251,6 +259,16 @@ Two tests were written to capture this:
 | PERM-05 | Anonymous user tries to access '/gallery/add_sculpture/' | Redirects to login page | As expected | Pass | |
 | PERM-06 | Authenticated non-staff user tries to access '/gallery/add_sculpture/' | Gets 403 response | As expected | Pass | |
 | PERM-07 | Staff user tries to access '/gallery/add_sculpture/' from url browser | Page loads successfully | As expected | Pass | |
+| PERM-XX | Anonymous user tries to access edit sculpture page | Redirects to login page | | | |
+| PERM-XX | Authenticated non-staff user tries to access edit sculpture page | Gets 403 response  | | | |
+| PERM-XX | Staff user tries to access edit sculpture page | Page loads successfully | | | |
+| PERM-XX | Anonymous user tries to see edit/delete buttons on sculpture detail | Buttons not visible/rendered | | | |
+| PERM-XX | Non-staff user tries to see edit/delete buttons on sculpture detail | Buttons not visible/rendered | | | |
+| PERM-XX | Staff user tries to see edit/delete buttons on sculpture detail | Buttons visible | | | |
+| PERM-XX | Staff user clicks delete button modal trigger on sculpture detail | Can trigger delete modal | | | |
+| PERM-XX | Anonymous user tries to access edit theme controls / change representative image (gallery) | Controls not visible/accessible | | | |
+| PERM-XX | Non-staff user tries to  edit theme / change representative image (gallery) | Controls not visible/accessible | | | |
+| PERM-XX | Staff user tries to edit theme / change representative image (gallery) | Controls visible/accessible | | | |
 
 #### Gallery page (GP)
 
@@ -376,6 +394,8 @@ Pass the limit as a **string**, not a float — `Decimal('0.01')` parses the dig
 ---
 
 ## Known Bugs / Limitations
+
+- Custom 403 error page -  not yet built; Django's default 403 page is currently shown to non-staff authenticated users blocked from staff-only controls. Functionally correct, for consistency only.
 
 ---
 
