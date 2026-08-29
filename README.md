@@ -492,13 +492,29 @@ C = could-have.
 </details>
 
 <details><summary>
-29. As the sculptor, I want to add, edit, or delete themes (with safeguards preventing deletion of a theme still assigned to sculptures), so that I can keep my thematic index accurate and up to date. (M)
+29. As the sculptor, I want to add or edit themes, so that I can keep my thematic index accurate and up to date. (M)
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
+- [ ] Given valid data is submitted in the "new theme" field, when the sculptor submits it, then a new theme is added to the theme records.
+- [ ] Given a valid, non-duplicate name is submitted in the "new theme" field, when the sculpture is saved, then the new theme is created and attached to that sculpture.
+- [ ] Given the submitted "new theme" name matches an existing theme's name (case-insensitive  - including an exact match), when the sculpture is saved, then the sculpture is attached to the existing theme rather than a new one being created, and no error is shown to the sculptor.
+- [ ] Given one or more themes exist in the database - including themes with no sculptures currently assigned - when the sculptor views the add-sculpture or edit-sculpture form, then all of them are displayed as options in the themes multi-select field.
+- [ ] Given the sculptor selects two or more existing themes in the multi-select field, when the form is submitted, then the sculpture is saved with all selected themes attached.
+- [ ] Given the sculptor selects one or more existing themes in the multi-select field and also submits a new theme name, when the form is submitted, then the sculpture is saved with all selected existing themes attached, plus the newly created theme - all present together on that sculpture.
+- [ ] Given both the "themes" multi-select and the "new theme" field are left empty, when the form is submitted, then the submission is rejected with a validation error, since a sculpture must have at least one theme.
+- [ ] Given no themes exist in the database, when the sculptor views the add-sculpture (or edit-sculpture) form, then the themes multi-select is not displayed, and the "new theme" field's label reflects that this will be their first theme.
+- [ ] Given the sculptor wants to add more than one new theme for a sculpture, when they click the "+" button, then an additional "new theme" field is cloned (one theme name per field), and upon submission, all new theme names are created as themes and attached to the sculpture.
+- [ ] Given a sculpture is deleted, when it belonged to one or more themes, then those themes are not deleted, and their gallery cards continue to display correctly if other sculptures remain assigned to them.
+- [ ] Given a theme has no sculptures currently assigned to it, when the sculptor views the gallery page, then that theme's card is not displayed; but when the sculptor views the add-sculpture or edit-sculpture form, that theme still appears as an available option in the themes multi-select.
+- [ ] Given a sculptor is logged in as a staff user, when they view the gallery page, then an edit menu is displayed near each theme card, offering two labeled options - "Change theme name" and "Change representative image"  both leading to the same theme-edit page; given an anonymous or non-staff user views the same page, this menu is not displayed.
+- [ ] Given the sculptor clicks or taps either "Change theme name" or "Change representative image" in the edit menu, when the link is followed, then they are taken to the theme-edit page for that specific theme.
+- [ ] Given the sculptor selects a different sculpture as the theme's representative image on the theme-edit page and saves, when they view the gallery page afterward, then that theme's card displays the selected sculpture's image, taking precedence over the automatic fallback.
+- [ ] Given the sculptor views the theme-edit page, then a "choose a representative image" field is displayed as a dropdown; when expanded, it lists all sculptures currently assigned to that theme, and only one can be selected at a time.
+- [ ] Given the sculptor views the theme-edit page, then a theme name field is displayed, pre-populated with the current name; when they submit a new name, the same validation rules applied at theme creation apply here too - non-empty, unique (case-insensitive, excluding the theme's own current name), whitespace stripped.
+- [ ] Given the sculptor renames a theme and saves, when they view the gallery page afterward, then the theme's card displays the new name.
+- [ ] Given a sculpture is removed from a theme (via editing the sculpture, not deleting it) while it was set as that theme's representative image, when the removal is saved, then the theme's representative image override is cleared, and the theme's card falls back to its next most recent sculpture (or hides, if none remain).
+- [ ] Given the sculptor is on the theme-edit page and decides not to save changes, then a "Cancel" link is available, returning them to the gallery page without saving anything.
 
 </details>
 
