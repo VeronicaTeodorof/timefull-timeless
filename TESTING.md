@@ -75,7 +75,6 @@ Two tests were written to capture this:
 - [ ] AC2 - new theme created and attached to the sculpture
 - [ ] AC3 - duplicate name (case-insensitive) reuses existing theme, no duplicate created - Exact-match test passing; different-case test exposed a genuine `IntegrityError` (duplicate slug), not just a clean assertion failure, since `get_or_create` only matches exact names while slug uniqueness is case-insensitive.
 - [ ] AC4 - form rejects submission when both theme fields are empty
-- [ ] AC5 - multi-select displays all existing themes, including empty ones
 - [ ] AC6 - selecting multiple existing themes attaches all of them
 - [ ] AC7 - existing-theme selection and new-theme submission combine correctly
 - [ ] AC9 - multiple `new_theme` values (cloned fields) each create and attach a theme
@@ -355,7 +354,7 @@ Two tests were written to capture this:
 | CT-06 | Success/error feedback messages | Adding a new theme shows a success message; a theme-related validation error shows a clear error message; editing an existing theme shows a success message on save | | | |
 | CT-07 | Select multiple existing themes | Physically selecting two or more themes in the multi-select; interaction feels right, selected state is visually clear | | | |
 | CT-08 | Combine existing theme selection with a new theme | Selecting an existing theme and typing a new theme name in the same submission; both end up visible together on the sculpture and gallery | | | |
-| CT-09 | Zero themes - form state | With zero themes in the database, the themes multi-select is not displayed on the add-sculpture form, and the "new theme" field's label reflects this is the first theme(s) | | | |
+| CT-09 | Zero themes - form state | With zero themes in the database, the themes multi-select is not displayed on the add-sculpture form, and the "new theme" field's placeholder reflects this is the first theme(s) | As expected | Pass | |
 | CT-10 | "+" button clones new theme field | Clicking the "+" button adds an additional "new theme" field in the browser (one theme name per field) | | | |
 | CT-11 | New theme(s) appear as gallery cards | After adding a sculpture with one or more new themes, the gallery page shows each as its own card, displaying the sculpture's image | | | |
 | CT-12 | Edit menu visible only to staff | Staff user sees the edit menu (both labeled options) on each theme card; anonymous/non-staff users do not see it | | | |
@@ -365,6 +364,7 @@ Two tests were written to capture this:
 | CT-16 | Renamed theme reflected in gallery | Renaming a theme and saving; gallery card displays the new name | | | |
 | CT-17 | Cancel link returns to gallery without saving | Theme-edit page has a "Cancel" link; following it returns to the gallery page, nothing is saved | | | |
 | CT-18 | Themes casing | Consistent casing for themes in multiselect fields and theme cards | | | |
+| CT-19 | Themes displayed in multiselect fields | All themes are displayed in multiselect fields regardless of whether there are any sculptures with that theme or not | as expected | Pass | |
 
 ---
 

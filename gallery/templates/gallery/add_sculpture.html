@@ -23,13 +23,15 @@
         <h1 class="text-center mt-4 mb-4">Add sculpture</h1>
 
         <!-- Add Sculpture Form -->
-        <form method="post" enctype="multipart/form-data">
+         <pre>{{ form.errors }}</pre>
+        <form method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
 
             <div class="row g-3">
                 <div class="col-md-6">
                     <label for="{{ form.title.id_for_label }}" class="visually-hidden">{{ form.title.label }}</label>
                     {{ form.title }}
+                    {{ form.title.errors }}
                 </div>
                 <div class="col-md-6">
                     <label for="{{ form.title_translation.id_for_label }}" class="visually-hidden">{{ form.title_translation.label }}</label>
@@ -39,15 +41,18 @@
                 <div class="col-md-6">
                     <label for="{{ form.year.id_for_label }}" class="visually-hidden">{{ form.year.label }}</label>
                     {{ form.year }}
+                    {{ form.year.errors }}
                 </div>
                 <div class="col-md-6">
                     <label for="{{ form.price.id_for_label }}" class="visually-hidden">{{ form.price.label }}</label>
                     {{ form.price }}
+                    {{ form.price.errors }}
                 </div>
 
                 <div class="col-md-6">
                     <label for="{{ form.material.id_for_label }}" class="visually-hidden">{{ form.material.label }}</label>
                     {{ form.material }}
+                    {{ form.material.errors }}
                 </div>
                 <div class="col-md-6">
                     <label for="{{ form.dimensions.id_for_label }}" class="visually-hidden">{{ form.dimensions.label }}</label>
@@ -60,7 +65,11 @@
                 </div>
             <div class="col-md-6">
                     <fieldset>
-                        <legend class="fs-6 fs-md-5">Theme(required) - choose from existing themes</legend>
+                        {% if form.themes.field.queryset.exists %}
+                            <legend class="fs-6 fs-md-5">Theme(required) - choose from existing themes</legend>
+                        {% else %}
+                            <legend class="visually-hidden">No theme added, please add one in field</legend>
+                        {% endif %}
                         {{ form.themes }}
                         {{ form.new_theme }}
                     </fieldset>

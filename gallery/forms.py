@@ -56,6 +56,19 @@ class SculptureForm(ModelForm):
             }),
         }
 
+    def __init__(self, *args, **kwargs):
+        """
+        Conditionally overrides the placeholder for the new_theme field
+        depending on whether any themes exist
+        """
+        super().__init__(*args, **kwargs)
+        if not Theme.objects.exists():
+            self.fields['new_theme'].widget.attrs[
+                'placeholder'] = 'Add your first theme (required)'
+        else:
+            self.fields['new_theme'].widget.attrs[
+                'placeholder'] = 'or add a new theme'
+
     # overriding the save method of the model form general pattern:
     # https://www.djangotricks.com/tricks/Swv44PDSrJYQ/
     # Django get_or_create() helper function:
