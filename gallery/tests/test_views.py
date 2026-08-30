@@ -196,7 +196,8 @@ class AddSculptureViewCase(TestCase):
         )
 
     @patch('cloudinary.uploader.upload_resource')
-    def test_new_theme_with_exact_duplicate_name_reuses_existing_theme(self, mock_upload):
+    def test_new_theme_with_exact_duplicate_name_reuses_existing_theme(
+            self, mock_upload):
         """
         Tests that a duplicate name in new theme field reuses the existing one,
         rather than creating a new theme or raising an error
@@ -227,3 +228,62 @@ class AddSculptureViewCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Theme.objects.filter(name='ANGELS').exists())
         self.assertIn(sculpture, existing_theme.sculptures.all())
+
+    @patch('cloudinary.uploader.upload_resource')
+    def test_all_themes_selected_or_created_on_a_sculpture_correctly_attach(
+            self, mock_upload):
+        """
+        Tests that all themes selected on a sculpture add or edit
+        form correctly attach to the respective sculpture
+        """
+        theme1 = Theme.objects.create(name='Flight')
+        theme2 = Theme.objects.create(name='Angels')
+        mock_upload.return_value, image = self.get_mocked_upload_and_image()
+        self.client.force_login(self.staff_user)
+        data = {**self.data, "image": image, "themes": [theme1.pk, theme2.pk]}
+        self.client.post(self.url, data)
+        sculpture = Sculpture.objects.get(title=self.data['title'])
+        self.assertEqual(sculpture.themes.count(), 2)
+        self.assertIn(theme1, sculpture.themes.all())
+        self.assertIn(theme2, sculpture.themes.all())
+
+    @patch('cloudinary.uploader.upload_resource')
+    def test_existing_themes_and_new_theme_combine_correctly(
+            self, mock_upload):
+        """
+        Tests that all themes selected on a sculpture add or edit
+        form correctly attach to the respective sculpture
+        """
+        theme1 = Theme.objects.create(name='Flight')
+        theme2 = Theme.objects.create(name='Angels')
+        mock_upload.return_value, image = self.get_mocked_upload_and_image()
+        self.client.force_login(self.staff_user)
+        data = {**self.data, "image": image,
+                "themes": [theme1.pk, theme2.pk],
+                "new_theme": "Seeds"}
+        self.client.post(self.url, data)
+        sculpture = Sculpture.objects.get(title=self.data['title'])
+        self.assertEqual(sculpture.themes.count(), 3)
+        self.assertIn(theme1, sculpture.themes.all())
+        self.assertIn(theme2, sculpture.themes.all())
+        self.assertTrue(sculpture.themes.filter(name="Seeds").exists())
+
+    @patch('cloudinary.uploader.upload_resource')
+    def test_submtting_theme_with_no_theme_and_no_new_theme_fails(
+            self, mock_upload):
+        """
+        Tests that submitting with no existing themes selected on a sculpture
+        and no new theme fails with validation error
+        """
+        mock_upload.return_value, image = self.get_mocked_upload_and_image()
+        self.client.force_login(self.staff_user)
+        data = {**self.data, "image": image,
+                "themes": [],
+                "new_theme": ""}
+        response = self.client.post(self.url, data)
+        self.assertEqual(
+            Sculpture.objects.count(), 0,
+            response.context["form"].errors if response.context else
+            "no context (redirect?)")
+
+
