@@ -286,4 +286,19 @@ class AddSculptureViewCase(TestCase):
             response.context["form"].errors if response.context else
             "no context (redirect?)")
 
-
+    @patch('cloudinary.uploader.upload_resource')
+    def test_multiple_new_theme_fields_all_create_and_attach_fields(
+            self, mock_upload):
+        """
+        Tests that submitting multiple new_theme values
+        (as cloned fields would produce)
+        creates and attaches each one as own theme
+        """
+        mock_upload.return_value, image = self.get_mocked_upload_and_image()
+        self.client.force_login(self.staff_user)
+        data = {**self.data, "image": image, "new_theme": ["Angels", "Seeds"]}
+        self.client.post(self.url, data)
+        sculpture = Sculpture.objects.get(title=self.data['title'])
+        self.assertEqual(sculpture.themes.count(), 2)
+        self.assertTrue(sculpture.themes.filter(name='Angels').exists())
+        self.assertTrue(sculpture.themes.filter(name='Seeds').exists())
