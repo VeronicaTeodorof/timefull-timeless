@@ -175,5 +175,19 @@ class AddSculptureViewCase(TestCase):
         sculpture = Sculpture.objects.get(title=self.data['title'])
         self.assertRedirects(
             response,
-            reverse('gallery:sculpture-detail', kwargs={'slug': sculpture.slug})
+            reverse('gallery:sculpture-detail',
+                    kwargs={'slug': sculpture.slug})
         )
+
+    @patch('cloudinary.uploader.upload_resource')
+    def test_new_theme_field_creates_theme_when_valid(self, mock_upload):
+        """
+        Tests that submitting a valid new_theme value
+        creates a new Theme record
+        """
+        mock_upload.return_value, image = self.get_mocked_upload_and_image()
+        self.client.force_login(self.staff_user)
+        data = {**self.data, "image": image, "new_theme": "Angels"}
+        self.client.post(self.url, data)
+        self.assertTrue(Theme.objects.filter(name="Angels").exists())
+        self.assertEqual(Sculpture.objects.count(), 1)
