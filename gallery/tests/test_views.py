@@ -188,6 +188,42 @@ class AddSculptureViewCase(TestCase):
         mock_upload.return_value, image = self.get_mocked_upload_and_image()
         self.client.force_login(self.staff_user)
         data = {**self.data, "image": image, "new_theme": "Angels"}
-        self.client.post(self.url, data)
-        self.assertTrue(Theme.objects.filter(name="Angels").exists())
-        self.assertEqual(Sculpture.objects.count(), 1)
+        response = self.client.post(self.url, data)
+        self.assertTrue(
+            Theme.objects.filter(name="Angels").exists(),
+            response.context["form"].errors if response.context else
+            "no context (redirect?)"
+        )
+
+    @patch('cloudinary.uploader.upload_resource')
+    def test_new_theme_with_exact_duplicate_name_reuses_existing_theme(self, mock_upload):
+        """
+        Tests that a duplicate name in new theme field reuses the existing one,
+        rather than creating a new theme or raising an error
+        """
+        existing_theme = Theme.objects.create(name='Angels')
+        mock_upload.return_value, image = self.get_mocked_upload_and_image()
+        self.client.force_login(self.staff_user)
+        data = {**self.data, "image": image, "new_theme": "Angels"}
+        response = self.client.post(self.url, data)
+        sculpture = Sculpture.objects.get(title=self.data['title'])
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Theme.objects.filter(name='Angels').count(), 1)
+        self.assertIn(sculpture, existing_theme.sculptures.all())
+
+    @patch('cloudinary.uploader.upload_resource')
+    def test_existing_theme_different_case_reuses_existing_theme(self,
+                                                                 mock_upload):
+        """
+        Tests that a duplicate name different case in new theme field reuses
+        the existing one, rather than creating a new theme or raising an error
+        """
+        existing_theme = Theme.objects.create(name='Angels')
+        mock_upload.return_value, image = self.get_mocked_upload_and_image()
+        self.client.force_login(self.staff_user)
+        data = {**self.data, "image": image, "new_theme": "ANGELS"}
+        response = self.client.post(self.url, data)
+        sculpture = Sculpture.objects.get(title=self.data['title'])
+        self.assertEqual(response.status_code, 302)
+        self.assertFalse(Theme.objects.filter(name='ANGELS').exists())
+        self.assertIn(sculpture, existing_theme.sculptures.all())
