@@ -73,7 +73,7 @@ Two tests were written to capture this:
 
 - [ ] AC1 - new theme created on valid submission
 - [ ] AC2 - new theme created and attached to the sculpture
-- [ ] AC3 - duplicate name (case-insensitive) reuses existing theme, no duplicate created
+- [ ] AC3 - duplicate name (case-insensitive) reuses existing theme, no duplicate created - Exact-match test passing; different-case test exposed a genuine `IntegrityError` (duplicate slug), not just a clean assertion failure, since `get_or_create` only matches exact names while slug uniqueness is case-insensitive.
 - [ ] AC4 - form rejects submission when both theme fields are empty
 - [ ] AC5 - multi-select displays all existing themes, including empty ones
 - [ ] AC6 - selecting multiple existing themes attaches all of them
@@ -347,10 +347,10 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| CT-01 | New theme appears in multi-select after creation | Creating a sculpture with a new theme name; visiting edit-sculpture afterward shows the new theme as an option in the multi-select | | | |
+| CT-01 | New theme appears in multi-select after creation | Creating a sculpture with a new theme name; visiting edit-sculpture afterward shows the new theme as an option in the multi-select | As expected | Pass | |
 | CT-02 | New theme correctly associated with its sculpture | Creating a sculpture with a new theme name; sculpture detail/gallery shows the new theme correctly associated | | | |
-| CT-03 | Duplicate new theme name (exact match) | Submitting a new theme name exactly matching an existing theme; no error shown, submission succeeds normally | | | |
-| CT-04 | Duplicate new theme name (different casing) | Submitting a new theme name matching an existing theme with different casing; no error shown, submission succeeds normally | | | |
+| CT-03 | Duplicate new theme name (exact match) | Submitting a new theme name exactly matching an existing theme; no error shown, no duplicate choice, submission succeeds normally | As expected | Pass | |
+| CT-04 | Duplicate new theme name (different casing) | Submitting a new theme name matching an existing theme with different casing; no error shown, submission succeeds normally | As expected | Pass | |
 | CT-05 | Both theme fields left empty | Submitting the add-sculpture form with both theme fields empty; clear validation error shown near the right place, other entered fields preserved | | | |
 | CT-06 | Success/error feedback messages | Adding a new theme shows a success message; a theme-related validation error shows a clear error message; editing an existing theme shows a success message on save | | | |
 | CT-07 | Select multiple existing themes | Physically selecting two or more themes in the multi-select; interaction feels right, selected state is visually clear | | | |
@@ -363,7 +363,8 @@ Two tests were written to capture this:
 | CT-14 | Representative image override reflected in gallery | Selecting a different sculpture as the theme's representative image and saving; gallery card shows the selected sculpture's image | | | |
 | CT-15 | Theme name field pre-populated | Theme-edit page's name field exists and is pre-populated with the current name on load | | | |
 | CT-16 | Renamed theme reflected in gallery | Renaming a theme and saving; gallery card displays the new name | | | |
-| CT-27 | Cancel link returns to gallery without saving | Theme-edit page has a "Cancel" link; following it returns to the gallery page, nothing is saved | | | |
+| CT-17 | Cancel link returns to gallery without saving | Theme-edit page has a "Cancel" link; following it returns to the gallery page, nothing is saved | | | |
+| CT-18 | Themes casing | Consistent casing for themes in multiselect fields and theme cards | | | |
 
 ---
 

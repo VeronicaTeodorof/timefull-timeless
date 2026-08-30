@@ -60,10 +60,14 @@ class SculptureForm(ModelForm):
     # https://www.djangotricks.com/tricks/Swv44PDSrJYQ/
     # Django get_or_create() helper function:
     # https://docs.djangoproject.com/en/6.1/ref/models/querysets/#get-or-create
+    # how to query case insensitive data in Django:
+    # https://www.geeksforgeeks.org/python/how-to-query-case-insensitive-data-in-django-orm/
     def save(self, commit=True):
         sculpture = super().save(commit=commit)
         new_theme_name = self.cleaned_data.get('new_theme', '')
         if new_theme_name:
-            theme, created = Theme.objects.get_or_create(name=new_theme_name)
+            theme = Theme.objects.filter(name__iexact=new_theme_name).first()
+            if not theme:
+                theme = Theme.objects.create(name=new_theme_name)
             sculpture.themes.add(theme)
         return sculpture
