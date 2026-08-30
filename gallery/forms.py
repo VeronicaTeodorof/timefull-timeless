@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from gallery.models import Sculpture
+from gallery.models import Sculpture, Theme
 from django import forms
 
 
@@ -44,8 +44,9 @@ class SculptureForm(ModelForm):
             'material': forms.TextInput(
                 attrs={'placeholder': 'Material (required)',
                        'class': 'form-control'}),
-            'price': forms.NumberInput(attrs={'placeholder': 'Price (required)',
-                                              'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={
+                'placeholder': 'Price (required)',
+                'class': 'form-control'}),
             'status': forms.Select(attrs={
                 'class': 'form-select',
             }),
@@ -54,3 +55,15 @@ class SculptureForm(ModelForm):
                 'class': 'form-control',
             }),
         }
+
+    # overriding the save method of the model form general pattern:
+    # https://www.djangotricks.com/tricks/Swv44PDSrJYQ/
+    # Django get_or_create() helper function:
+    # https://docs.djangoproject.com/en/6.1/ref/models/querysets/#get-or-create
+    def save(self, commit=True):
+        sculpture = super().save(commit=commit)
+        new_theme_name = self.cleaned_data.get('new_theme', '')
+        if new_theme_name:
+            theme, created = Theme.objects.get_or_create(name=new_theme_name)
+            sculpture.themes.add(theme)
+        return sculpture
