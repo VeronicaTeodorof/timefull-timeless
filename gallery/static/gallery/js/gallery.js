@@ -11,3 +11,19 @@ fileUpload.addEventListener('change', (e) => {
     fileName.textContent = 'Upload image (required)';
   }
 });
+
+// dynamically add input fields for new_theme when needed
+// pattern from:
+// https://www.codewithfaraz.com/content/8/how-to-create-form-fields-dynamically-with-javascript
+// used with properties instead of attributes:
+// https://gomakethings.com/articles/the-difference-between-attributes-and-properties-in-vanilla-js/
+document.getElementById("add-new-theme-btn").addEventListener("click", function(){
+  const container = document.getElementById("new-theme-fields")
+  const newInput = document.createElement('input')
+  newInput.type = 'text';
+  newInput.name = 'new_theme';
+  newInput.className = 'form-control mt-2';
+  newInput.placeholder = 'Add another theme';
+  container.appendChild(newInput);
+
+})

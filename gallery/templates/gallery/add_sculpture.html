@@ -71,7 +71,12 @@
                             <legend class="visually-hidden">No theme added, please add one in field</legend>
                         {% endif %}
                         {{ form.themes }}
-                        {{ form.new_theme }}
+                        <div id="new-theme-fields">
+                            {{ form.new_theme }}
+                        </div>
+                        <button type="button" id="add-new-theme-btn" class="btn btn-outline-secondary btn-sm mt-2">
+                            + Add another theme
+                        </button>
                     </fieldset>
                 </div>
 
