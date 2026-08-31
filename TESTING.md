@@ -365,6 +365,7 @@ Two tests were written to capture this:
 | CT-17 | Cancel link returns to gallery without saving | Theme-edit page has a "Cancel" link; following it returns to the gallery page, nothing is saved | | | |
 | CT-18 | Themes casing | Consistent casing for themes in multiselect fields and theme cards | | | |
 | CT-19 | Themes displayed in multiselect fields | All themes are displayed in multiselect fields regardless of whether there are any sculptures with that theme or not | as expected | Pass | |
+| CT-20 | Non-empty themes gallery cards | Gallery displays one card per theme when this is not empty | | | |
 
 ---
 
@@ -440,6 +441,14 @@ Pass the limit as a **string**, not a float — `Decimal('0.01')` parses the dig
 ## Known Bugs / Limitations
 
 - Custom 403 error page -  not yet built; Django's default 403 page is currently shown to non-staff authenticated users blocked from staff-only controls. Functionally correct, for consistency only.
+
+### New theme submission rejected when multi-select is empty
+
+#### The Problem
+
+Manually testing the add-sculpture form with zero existing themes and only a new_theme value filled in resulted in 'This field is required.' error message.
+
+Although the intention from the start was for the "at least one theme" requirement to accept either themes, new_theme, or both, the part that explicitly allows new_theme alone (with themes empty) was never actually written in code. Every earlier passing test happened to include a pre-existing theme selection in its data (from setUp()), so the gap was never exposed until manually testing the "new_theme only" scenario for real - at which point Django's own default form-level requirement on themes rejected the submission.
 
 ---
 
