@@ -1030,6 +1030,20 @@ Layout differences are visible in the wireframes above. Implemented with Bootstr
 
 ---
 
+#### Edit Theme Functionality
+
+**Layout**
+Each theme card on the gallery page displays a small three-dot button, visible only to staff users, with a tooltip reading "Edit theme card" on desktop; the modal itself then presents options for editing the theme name and/or changing the representative image.
+
+The Bootstrap modal is shared across every theme card, and was the preferred option when weighed against a dedicated standalone page or an inline swap of the card's own content. Given this is a small form, editing was designed to happen without leaving the gallery page or disrupting its layout, while also avoiding the added complexity of an AJAX solution.
+
+**Mechanics**
+There is one modal per page, not one per theme. Each theme card's edit button carries that theme's data as HTML attributes, and JavaScript populates the modal's form fields accordingly before it becomes visible.
+
+The added complexity comes from the list of sculptures belonging to a specific theme (from which the sculptor chooses the representative image) being a list of dictionaries, while HTML attributes can only hold plain text — so it can't be passed directly into the shared modal. This is handled by converting it into a JSON string server-side, then back into an array in JS once the modal opens.
+
+---
+
 #### Add Sculpture Page
 
 Staff-only form for adding a new sculpture to the gallery - reached via the CTA on the gallery page. Access is gated at both the template level (button visibility) and view level (login + is_staff check).
