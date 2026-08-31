@@ -436,11 +436,6 @@ Pass the limit as a **string**, not a float — `Decimal('0.01')` parses the dig
 - Never pass a bare float (or `Decimal(float)`) into a validator on a `DecimalField` — wrap the literal as `Decimal('0.01')` (string).
 - Bugs like this only surface at the exact boundary value — testing the literal minimum/maximum catches what a "typical" value won't.
 
----
-
-## Known Bugs / Limitations
-
-- Custom 403 error page -  not yet built; Django's default 403 page is currently shown to non-staff authenticated users blocked from staff-only controls. Functionally correct, for consistency only.
 
 ### New theme submission rejected when multi-select is empty
 
@@ -449,6 +444,32 @@ Pass the limit as a **string**, not a float — `Decimal('0.01')` parses the dig
 Manually testing the add-sculpture form with zero existing themes and only a new_theme value filled in resulted in 'This field is required.' error message.
 
 Although the intention from the start was for the "at least one theme" requirement to accept either themes, new_theme, or both, the part that explicitly allows new_theme alone (with themes empty) was never actually written in code. Every earlier passing test happened to include a pre-existing theme selection in its data (from setUp()), so the gap was never exposed until manually testing the "new_theme only" scenario for real - at which point Django's own default form-level requirement on themes rejected the submission.
+
+Adding a clean() method in SculptureForm didn't solve the issue, identical error messages displayed for both automated and manual tests.
+
+#### Why clean() didn't fix the bug
+
+Form validation happens in this order:
+1. Field-level validation - each field's own validators, including the automatic `required` check (this is where the error was
+   coming from).
+2. Form-level validation - the form's own `clean()` method, which only runs after all fields have already passed step 1.
+3. Model-level / database validation — separate again, happening later still (e.g. UniqueConstraints, at the actual database write).
+
+Since the `themes` field's own required check (step 1) rejected the submission first, the form's `clean()` method (step 2) never got a
+chance to run at all.
+
+#### The Solution
+
+Explicitly override themes field as not required at the form level, so that a custom cross-field check instead could run. So the solution was custom `clean()` `+` themes required override with `required=False`.
+
+#### Key Takeaways
+Given that a field's default validation runs before custom clean() logic, when the two disagree, field level validation wins unless explicitly overwritten.
+
+---
+
+## Known Bugs / Limitations
+
+- Custom 403 error page -  not yet built; Django's default 403 page is currently shown to non-staff authenticated users blocked from staff-only controls. Functionally correct, for consistency only.
 
 ---
 

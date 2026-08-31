@@ -62,9 +62,25 @@ class SculptureForm(ModelForm):
         depending on whether any themes exist
         """
         super().__init__(*args, **kwargs)
+        self.fields['themes'].required = False
         if not Theme.objects.exists():
             self.fields['new_theme'].widget.attrs[
                 'placeholder'] = 'Add your first theme (required)'
         else:
             self.fields['new_theme'].widget.attrs[
                 'placeholder'] = 'or add a new theme'
+
+    def clean(self):
+        """
+        Allows form validation with multiselect only, new_theme only,
+        or both; rejects submission only if both are empty.
+        """
+        cleaned_data = super().clean()
+        themes = cleaned_data.get('themes')
+        new_theme = cleaned_data.get('new_theme', '').strip()
+        if not (themes or new_theme):
+            raise forms.ValidationError(
+                'A sculpture must have at least one theme - select an '
+                'existing one or add a new one.'
+            )
+        return cleaned_data
