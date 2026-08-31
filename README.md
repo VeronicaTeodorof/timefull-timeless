@@ -242,6 +242,7 @@ C = could-have.
 **Acceptance Criteria:**
 - [ ] Given I look at the gallery page, when it loads, then I see sculptures grouped by theme.
 - [ ] Given I click on a theme, when the page updates, then I see the sculptures belonging to that theme.
+- [ ] Given I view the gallery page, then I never see two cards for the same theme - each theme appears exactly once, however many sculptures it contains.
 
 </details>
 
@@ -497,14 +498,15 @@ C = could-have.
 
 **Acceptance Criteria:**
 - [ ] Given valid data is submitted in the "new theme" field, when the sculptor submits it, then a new theme is added to the theme records.
-- [ ] Given a valid, non-duplicate name is submitted in the "new theme" field, when the sculpture is saved, then the new theme is created and attached to that sculpture.
+- [ ] Given a valid, non-duplicate name is submitted in the "new theme" field, when the sculpture is saved, then the new theme is created and attached to that sculpture. - redundant; covered by AC1 and AC3
 - [ ] Given the submitted "new theme" name matches an existing theme's name (case-insensitive  - including an exact match), when the sculpture is saved, then the sculpture is attached to the existing theme rather than a new one being created, and no error is shown to the sculptor.
 - [ ] Given one or more themes exist in the database - including themes with no sculptures currently assigned - when the sculptor views the add-sculpture or edit-sculpture form, then all of them are displayed as options in the themes multi-select field.
 - [ ] Given the sculptor selects two or more existing themes in the multi-select field, when the form is submitted, then the sculpture is saved with all selected themes attached.
 - [ ] Given the sculptor selects one or more existing themes in the multi-select field and also submits a new theme name, when the form is submitted, then the sculpture is saved with all selected existing themes attached, plus the newly created theme - all present together on that sculpture.
 - [ ] Given both the "themes" multi-select and the "new theme" field are left empty, when the form is submitted, then the submission is rejected with a validation error, since a sculpture must have at least one theme.
-- [ ] Given no themes exist in the database, when the sculptor views the add-sculpture (or edit-sculpture) form, then the themes multi-select is not displayed, and the "new theme" field's label reflects that this will be their first theme.
+- [ ] Given no themes exist in the database, when the sculptor views the add-sculpture (or edit-sculpture) form, then the themes multi-select is not displayed, and the "new theme" field's label reflects that this will be his first theme.
 - [ ] Given the sculptor wants to add more than one new theme for a sculpture, when they click the "+" button, then an additional "new theme" field is cloned (one theme name per field), and upon submission, all new theme names are created as themes and attached to the sculpture.
+- [ ] Given one or more new themes are created as part of adding a sculpture, when the sculptor views the gallery page, then each new theme appears as its own theme card, displaying the newly added sculpture's image as its representative image.
 - [ ] Given a sculpture is deleted, when it belonged to one or more themes, then those themes are not deleted, and their gallery cards continue to display correctly if other sculptures remain assigned to them.
 - [ ] Given a theme has no sculptures currently assigned to it, when the sculptor views the gallery page, then that theme's card is not displayed; but when the sculptor views the add-sculpture or edit-sculpture form, that theme still appears as an available option in the themes multi-select.
 - [ ] Given a sculptor is logged in as a staff user, when they view the gallery page, then an edit menu is displayed near each theme card, offering two labeled options - "Change theme name" and "Change representative image"  both leading to the same theme-edit page; given an anonymous or non-staff user views the same page, this menu is not displayed.
@@ -515,6 +517,9 @@ C = could-have.
 - [ ] Given the sculptor renames a theme and saves, when they view the gallery page afterward, then the theme's card displays the new name.
 - [ ] Given a sculpture is removed from a theme (via editing the sculpture, not deleting it) while it was set as that theme's representative image, when the removal is saved, then the theme's representative image override is cleared, and the theme's card falls back to its next most recent sculpture (or hides, if none remain).
 - [ ] Given the sculptor is on the theme-edit page and decides not to save changes, then a "Cancel" link is available, returning them to the gallery page without saving anything.
+- [ ] Given the sculptor performs a theme-related action (adding a new theme via the sculpture form, or editing an existing theme's name/representative image), when the action succeeds, then a clear success feedback message is shown; when it fails (e.g. validation error), a clear, specific error message is shown - both outcomes always communicated, not a silent redirect or a bare form re-render with no explanation
+- [ ] Given a theme's name is displayed anywhere on the site (gallery card, multi-select options, edit form), then it is shown in a consistent casing style, regardless of how it was originally typed when created.
+- [ ] Given the "new theme" field is submitted with a valid value, and no existing themes are selected in the multi-select, when the form is submitted, then the sculpture is saved successfully, since a non-empty "new theme" value alone satisfies the "at least one theme" requirement.
 
 </details>
 
@@ -762,6 +767,7 @@ Field identification and field specifications are presented together per model b
 | insurance_rate_override | DecimalFiel(max_digits=5, decimal_places=4, null=True, blank=True) | Optional per-sculpture override; global rate used if null (see Models section) |
 | themes | ManyToManyField(Theme, related_name='sculptures') | See Relationships and Constraints p.2 |
 
+
 * title_translation was added despite not being tied to a specific user story, to preserve the authenticity of the artist's original naming (in Romanian) while still making titles accessible to an English-speaking audience - a translation displayed alongside the original, not a replacement for it.
 
 
@@ -838,6 +844,8 @@ Notes:
 - `Sculpture.is_manually_reserved` was added after the ERD was finalized (not shown in diagram). Needed to distinguish reservations made manually by the artist (never auto-expire) from automatic reservations created when a sculpture is added to a buyer's selection (revert to available after 20–30 min if not purchased).
 
 - `Sculpture.reserved_by` was added after the ERD was finalized (not shown in diagram). Needed to distinguish who holds a reservation, so only that buyer can complete the purchase while others still see the sculpture as reserved.
+
+-`Sculpture.created_at` was added to support Theme.get_representative_image()'s fallback logic — determining which sculpture's image to display when a theme has no manually chosen representative sculpture, ordered by most recently added.
 
 
 #### Resources consulted

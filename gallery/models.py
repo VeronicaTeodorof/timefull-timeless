@@ -38,6 +38,14 @@ class Theme(models.Model):
             )
         ]
 
+    def get_representative_image(self):
+        """
+        Returns the image of the most recently added sculpture assigned to
+        this theme.
+        """
+        latest = self.sculptures.order_by('-created_at').first()
+        return latest.image
+
     def save(self, *args, **kwargs):
         """
         Overrides default model save
@@ -111,6 +119,7 @@ class Sculpture(models.Model):
         null=True,
         blank=True,
         )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         """

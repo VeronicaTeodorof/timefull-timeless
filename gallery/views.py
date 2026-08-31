@@ -9,7 +9,8 @@ from django.contrib import messages
 
 # Create your views here.
 def gallery(request):
-    return render(request, 'gallery/gallery.html')
+    themes = Theme.objects.all()
+    return render(request, 'gallery/gallery.html', {'themes': themes})
 
 
 @login_required

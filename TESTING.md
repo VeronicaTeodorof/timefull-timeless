@@ -366,6 +366,7 @@ Two tests were written to capture this:
 | CT-18 | Themes casing | Consistent casing for themes in multiselect fields and theme cards | | | |
 | CT-19 | Themes displayed in multiselect fields | All themes are displayed in multiselect fields regardless of whether there are any sculptures with that theme or not | as expected | Pass | |
 | CT-20 | Non-empty themes gallery cards | Gallery displays one card per theme when this is not empty | | | |
+| CT-21 | Representative image default | The image of the latest added sculpture in a theme is displayed as representative image for that theme when no other is manually selected | As expected | Pass | |
 
 ---
 
