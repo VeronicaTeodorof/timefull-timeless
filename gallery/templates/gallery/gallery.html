@@ -21,6 +21,16 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for theme in themes %}
                 <div class="col">
+                    {% if request.user.is_staff %}
+                        <div class="d-flex justify-content-end">
+                            <button type="button" title="Edit card theme" class="theme-edit-btn">
+                                <!--Bootstrap three dots icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    {% endif %}
                     <a href="" class="theme-card-link">
                         <div class="theme-card">
                             <img src="{{ theme.get_representative_image.url }}" alt="{{ theme.name }}">
