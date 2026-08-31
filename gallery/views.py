@@ -9,7 +9,7 @@ from django.contrib import messages
 
 # Create your views here.
 def gallery(request):
-    themes = Theme.objects.all()
+    themes = Theme.objects.filter(sculptures__isnull=False).distinct()
     return render(request, 'gallery/gallery.html', {'themes': themes})
 
 

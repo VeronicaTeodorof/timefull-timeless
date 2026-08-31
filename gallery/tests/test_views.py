@@ -44,6 +44,51 @@ class GalleryViewCase(TestCase):
         response = self.client.get(reverse('gallery:gallery'))
         self.assertNotContains(response, 'Add sculpture')
 
+    def test_gallery_excludes_themes_with_no_sculptures(self):
+        """
+        Tests that gallery view exculdes themes with no sculptures
+        """
+        populated_theme = Theme.objects.create(name='Time')
+        sculpture = Sculpture.objects.create(
+            title='Piece', year=2024, price=100,
+            material='Bronze', image='image/upload/v1/piece.jpg',
+        )
+        sculpture.themes.add(populated_theme)
+        empty_theme = Theme.objects.create(name="Empty")
+        response = self.client.get(reverse('gallery:gallery'))
+        themes_shown = list(response.context['themes'])
+
+        self.assertIn(populated_theme, themes_shown)
+        self.assertNotIn(empty_theme, themes_shown)
+
+    def test_gallery_shows_theme_once_even_with_multiple_sculptures(self):
+        """
+        Tests that a theme with multiple sculptures appears
+        only once in the gallery.
+        """
+        theme = Theme.objects.create(name='Angels')
+        sculpture1 = Sculpture.objects.create(
+            title='A',
+            year=2024,
+            price=100,
+            material='Bronze',
+            image='image/upload/v1/a.jpg',
+        )
+        sculpture2 = Sculpture.objects.create(
+            title='B',
+            year=2024,
+            price=100,
+            material='Bronze',
+            image='image/upload/v1/b.jpg',
+        )
+        sculpture1.themes.add(theme)
+        sculpture2.themes.add(theme)
+
+        response = self.client.get(reverse('gallery:gallery'))
+        themes_shown = list(response.context['themes'])
+
+        self.assertEqual(themes_shown.count(theme), 1)
+
 
 # Decorator overrides production STORAGES setting for staticfiles,
 # which requires an extra build step that doesn't run in tests.
