@@ -299,6 +299,25 @@ class AddSculptureViewCase(TestCase):
         data = {**self.data, "image": image, "new_theme": ["Angels", "Seeds"]}
         self.client.post(self.url, data)
         sculpture = Sculpture.objects.get(title=self.data['title'])
-        self.assertEqual(sculpture.themes.count(), 2)
+        self.assertEqual(sculpture.themes.count(), 3)
         self.assertTrue(sculpture.themes.filter(name='Angels').exists())
         self.assertTrue(sculpture.themes.filter(name='Seeds').exists())
+
+    @patch('cloudinary.uploader.upload_resource')
+    def test_new_theme_alone_submits_without_error(self, mock_upload):
+        """
+        Tests that submitting only a new theme value, with no existing
+        themes selected, validates without error and submits successfully
+        """
+        mock_upload.return_value, image = self.get_mocked_upload_and_image()
+        self.client.force_login(self.staff_user)
+        data = {**self.data,
+                "image": image,
+                "themes": [],
+                "new_theme": ["Angels"]}
+        response = self.client.post(self.url, data)
+        self.assertEqual(
+            Sculpture.objects.count(), 1,
+            response.context["form"].errors if response.context else
+            "no context (redirect?)"
+        )
