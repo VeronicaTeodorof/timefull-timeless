@@ -84,3 +84,12 @@ class SculptureForm(ModelForm):
                 'existing one or add a new one.'
             )
         return cleaned_data
+
+
+class ThemeForm(forms.ModelForm):
+    """
+    A form for editing theme records
+    """
+    class Meta:
+        model = Theme
+        fields = ['name', 'representative_sculpture']

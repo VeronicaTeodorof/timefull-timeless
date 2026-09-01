@@ -509,8 +509,8 @@ C = could-have.
 - [ ] Given one or more new themes are created as part of adding a sculpture, when the sculptor views the gallery page, then each new theme appears as its own theme card, displaying the newly added sculpture's image as its representative image.
 - [ ] Given a sculpture is deleted, when it belonged to one or more themes, then those themes are not deleted, and their gallery cards continue to display correctly if other sculptures remain assigned to them.
 - [ ] Given a theme has no sculptures currently assigned to it, when the sculptor views the gallery page, then that theme's card is not displayed; but when the sculptor views the add-sculpture or edit-sculpture form, that theme still appears as an available option in the themes multi-select.
-- [ ] Given a sculptor is logged in as a staff user, when they view the gallery page, then an edit menu is displayed near each theme card, offering two labeled options - "Change theme name" and "Change representative image"  both leading to the same theme-edit page; given an anonymous or non-staff user views the same page, this menu is not displayed.
-- [ ] Given the sculptor clicks or taps either "Change theme name" or "Change representative image" in the edit menu, when the link is followed, then they are taken to the theme-edit page for that specific theme.
+- [ ] Given a sculptor is logged in as a staff user, when they view the gallery page, then a small edit button (three dots, with a tooltip reading "Edit theme card") is displayed near each theme card; given an anonymous or non-staff user views the same page, this button is not displayed.
+- [ ] Given the sculptor clicks the three-dot button on a theme card, then the edit modal opens, populated with that specific theme's current name and representative-image edit options.
 - [ ] Given the sculptor selects a different sculpture as the theme's representative image on the theme-edit page and saves, when they view the gallery page afterward, then that theme's card displays the selected sculpture's image, taking precedence over the automatic fallback.
 - [ ] Given the sculptor views the theme-edit page, then a "choose a representative image" field is displayed as a dropdown; when expanded, it lists all sculptures currently assigned to that theme, and only one can be selected at a time.
 - [ ] Given the sculptor views the theme-edit page, then a theme name field is displayed, pre-populated with the current name; when they submit a new name, the same validation rules applied at theme creation apply here too - non-empty, unique (case-insensitive, excluding the theme's own current name), whitespace stripped.
@@ -1033,11 +1033,13 @@ Layout differences are visible in the wireframes above. Implemented with Bootstr
 #### Edit Theme Functionality
 
 **Layout**
+
 Each theme card on the gallery page displays a small three-dot button, visible only to staff users, with a tooltip reading "Edit theme card" on desktop; the modal itself then presents options for editing the theme name and/or changing the representative image.
 
 The Bootstrap modal is shared across every theme card, and was the preferred option when weighed against a dedicated standalone page or an inline swap of the card's own content. Given this is a small form, editing was designed to happen without leaving the gallery page or disrupting its layout, while also avoiding the added complexity of an AJAX solution.
 
 **Mechanics**
+
 There is one modal per page, not one per theme. Each theme card's edit button carries that theme's data as HTML attributes, and JavaScript populates the modal's form fields accordingly before it becomes visible.
 
 The added complexity comes from the list of sculptures belonging to a specific theme (from which the sculptor chooses the representative image) being a list of dictionaries, while HTML attributes can only hold plain text — so it can't be passed directly into the shared modal. This is handled by converting it into a JSON string server-side, then back into an array in JS once the modal opens.

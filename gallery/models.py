@@ -6,6 +6,7 @@ from datetime import date
 from cloudinary.models import CloudinaryField
 from django.conf import settings
 from decimal import Decimal
+import json
 # Create your models here.
 
 
@@ -45,6 +46,20 @@ class Theme(models.Model):
         """
         latest = self.sculptures.order_by('-created_at').first()
         return latest.image
+
+    # resources for json.dumps()
+    # https://docs.python.org/3/library/json.html
+    # https://www.geeksforgeeks.org/python/json-dumps-in-python/
+    def sculptures_json(self):
+        """
+        Converts Python list of sculpture dictionaries
+        into JSON formatted string
+        """
+        sculptures_list = []
+        for s in self.sculptures.all():
+            sculpture_dict = {'pk': s.pk, 'title': s.title}
+            sculptures_list.append(sculpture_dict)
+        return json.dumps(sculptures_list)
 
     def save(self, *args, **kwargs):
         """

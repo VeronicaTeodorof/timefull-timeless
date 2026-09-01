@@ -23,7 +23,12 @@
                 <div class="col">
                     {% if request.user.is_staff %}
                         <div class="d-flex justify-content-end">
-                            <button type="button" title="Edit card theme" class="theme-edit-btn">
+                            <button type="button" title="Edit card theme" class="theme-edit-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editThemeModal"
+                                    data-theme-name="{{ theme.name }}"
+                                    data-theme-slug="{{ theme.slug }}"
+                                    data-sculptures="{{ theme.sculptures_json }}">
                                 <!--Bootstrap three dots icon -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                                     <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
@@ -43,6 +48,31 @@
             {% endfor %}
         </div>
     </div>
+    <!-- Shared edit-theme modal -->
+    <div class="modal fade" id="editThemeModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" id="editThemeForm">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit theme</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label class="form-label">Theme name</label>
+                        <input type="text" name="name" id="editThemeName" class="form-control">
+
+                        <label class="form-label mt-3">Representative image</label>
+                        <select name="representative_sculpture" id="editThemeImageSelect" class="form-select"></select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-secondary">Save</button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Empty state hardcoded -->
     <!-- <div class="empty  text-center mt-5">
@@ -54,4 +84,8 @@
             <a href="{% url 'gallery:add-sculpture' %}" class="btn my-auto btn-secondary">Add sculpture</a>
         </div>
     {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'gallery/js/gallery.js' %}"></script>
 {% endblock %}

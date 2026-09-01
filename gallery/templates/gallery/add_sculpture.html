@@ -23,7 +23,6 @@
         <h1 class="text-center mt-4 mb-4">Add sculpture</h1>
 
         <!-- Add Sculpture Form -->
-         <pre>{{ form.errors }}</pre>
         <form method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
 
@@ -64,6 +63,7 @@
                     {{ form.status }}
                 </div>
             <div class="col-md-6">
+                    {{ form.non_field_errors }}
                     <fieldset>
                         {% if form.themes.field.queryset.exists %}
                             <legend class="fs-6 fs-md-5">Theme(required) - choose from existing themes</legend>
@@ -104,6 +104,6 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script src="{% static 'gallery/js/gallery.js' %}"></script>
+    <script src="{% static 'gallery/js/sculpture.js' %}"></script>
 {% endblock %}
 
