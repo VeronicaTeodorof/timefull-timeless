@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from gallery.models import Theme
+from gallery.models import Theme, Sculpture
 from .forms import SculptureForm
 from django.shortcuts import redirect
 from django.contrib import messages
@@ -65,6 +65,19 @@ def edit_theme(request, slug):
         raise PermissionDenied
     if request.method == "POST":
         theme.name = request.POST.get('name')
+        representative_sculpture_pk = request.POST.get(
+            'representative_sculpture')
+        # The modal's dropdown always has something pre-selected, so this
+        # field is unlikely to arrive empty in practice - but some of this
+        # project's own tests post only the name on purpose, to test renaming
+        # in isolation, leaving this field genuinely absent.
+        # Without the conditional check below,
+        # get_object_or_404(Sculpture, pk=None) would raise Http404 and
+        # stop theme.save() from ever running, even for an unrelated change.
+        if representative_sculpture_pk:
+            theme.representative_sculpture = get_object_or_404(
+                Sculpture,
+                pk=representative_sculpture_pk)
         theme.save()
         return HttpResponse("saved")
     return HttpResponse("ok")

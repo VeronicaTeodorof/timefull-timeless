@@ -420,3 +420,22 @@ class EditThemeViewClass(TestCase):
         self.client.post(self.url, {'name': 'Angels'})
         self.theme.refresh_from_db()
         self.assertEqual(self.theme.name, 'Angels')
+
+    def test_edit_theme_saves_representative_sculpture(self):
+        """
+        Tests that submitting a representative_sculpture PK via
+        edit-theme updates and saves the theme's representative
+        sculpture.
+        """
+        sculpture = Sculpture.objects.create(
+            title='Piece', year=2024, price=100,
+            material='Bronze', image='image/upload/v1/piece.jpg',
+        )
+        sculpture.themes.add(self.theme)
+        self.client.force_login(self.staff_user)
+        self.client.post(self.url, {
+            'name': self.theme.name,
+            'representative_sculpture': sculpture.pk,
+        })
+        self.theme.refresh_from_db()
+        self.assertEqual(self.theme.representative_sculpture, sculpture)
