@@ -95,7 +95,14 @@ class ThemeForm(forms.ModelForm):
         fields = ['name', 'representative_sculpture']
 
     def clean_name(self):
+        """
+        Checks for name duplicates excluding editing and
+        rewriting same name; strips whitespaces; raises
+        validation errors
+        """
         name = self.cleaned_data.get('name', '').strip()
-        if not name:
-            raise forms.ValidationError('Theme name cannot be empty.')
+        duplicate = Theme.objects.filter(name__iexact=name).exclude(
+            pk=self.instance.pk).exists()
+        if duplicate:
+            raise forms.ValidationError('A theme with this name already exists.')
         return name

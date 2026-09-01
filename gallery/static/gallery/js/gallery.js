@@ -7,6 +7,9 @@
 // (passed as data-* attributes) can be read, and fill in the form
 // accordingly before the user sees it.
 document.getElementById('editThemeModal').addEventListener('show.bs.modal', function(event) {
+    const errorContainer = document.getElementById('editThemeError');
+    errorContainer.classList.add('d-none');
+    errorContainer.textContent = '';
     const button = event.relatedTarget;
 
     // Fill in the theme name field
@@ -50,7 +53,9 @@ document.getElementById('editThemeForm').addEventListener('submit', function(eve
         if (data.success) {
             location.reload();
         } else {
-           console.log('Error:', data.errors);
+            const errorContainer = document.getElementById('editThemeError');
+            errorContainer.textContent = data.errors;
+            errorContainer.classList.remove('d-none');
         }
     });
 });
