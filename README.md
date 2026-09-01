@@ -511,9 +511,9 @@ C = could-have.
 - [ ] Given a theme has no sculptures currently assigned to it, when the sculptor views the gallery page, then that theme's card is not displayed; but when the sculptor views the add-sculpture or edit-sculpture form, that theme still appears as an available option in the themes multi-select.
 - [ ] Given a sculptor is logged in as a staff user, when they view the gallery page, then a small edit button (three dots, with a tooltip reading "Edit theme card") is displayed near each theme card; given an anonymous or non-staff user views the same page, this button is not displayed.
 - [ ] Given the sculptor clicks the three-dot button on a theme card, then the edit modal opens, populated with that specific theme's current name and representative-image edit options.
-- [ ] Given the sculptor selects a different sculpture as the theme's representative image on the theme-edit page and saves, when they view the gallery page afterward, then that theme's card displays the selected sculpture's image, taking precedence over the automatic fallback.
+- [ ] Given the sculptor selects a different sculpture as the theme's representative image in the edit modal and saves, when he views the gallery page afterward, then that theme's card displays the selected sculpture's image, replacing the automatic fallback.
 - [ ] Given the sculptor views the theme-edit page, then a "choose a representative image" field is displayed as a dropdown; when expanded, it lists all sculptures currently assigned to that theme, and only one can be selected at a time.
-- [ ] Given the sculptor views the theme-edit page, then a theme name field is displayed, pre-populated with the current name; when they submit a new name, the same validation rules applied at theme creation apply here too - non-empty, unique (case-insensitive, excluding the theme's own current name), whitespace stripped.
+- [ ] Given the sculptor views the theme-edit modal, then a theme name field is displayed, pre-populated with the current name; when they submit a new name, the same validation rules applied at theme creation apply here too - non-empty, unique (case-insensitive, excluding the theme's own current name), whitespace stripped.
 - [ ] Given the sculptor renames a theme and saves, when they view the gallery page afterward, then the theme's card displays the new name.
 - [ ] Given a sculpture is removed from a theme (via editing the sculpture, not deleting it) while it was set as that theme's representative image, when the removal is saved, then the theme's representative image override is cleared, and the theme's card falls back to its next most recent sculpture (or hides, if none remain).
 - [ ] Given the sculptor is on the theme-edit page and decides not to save changes, then a "Cancel" link is available, returning them to the gallery page without saving anything.
@@ -1227,6 +1227,7 @@ The project was managed in GitHub: https://github.com/VeronicaTeodorof/timefull-
 - gunicorn 26.0.0 - WSGI server used for deployment
 - cloudinary-1.46.0 - cloud based image hosting and transformation
 - whitenoise==6.12.0 - serves static files in production
+- stripe==15.6.0 - handles secure payment processing for the checkout flow
 
 ### Front-end libraries
 - Bootstrap 5.3.8: https://getbootstrap.com/
