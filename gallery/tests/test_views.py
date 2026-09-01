@@ -411,3 +411,12 @@ class EditThemeViewClass(TestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
+    def test_edit_theme_saves_new_name(self):
+        """
+        Tests that submitting a new name via edit-theme updates and
+        saves the theme's name.
+        """
+        self.client.force_login(self.staff_user)
+        self.client.post(self.url, {'name': 'Angels'})
+        self.theme.refresh_from_db()
+        self.assertEqual(self.theme.name, 'Angels')

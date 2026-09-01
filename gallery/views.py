@@ -6,6 +6,7 @@ from .forms import SculptureForm
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 
 
 # Create your views here.
@@ -59,6 +60,11 @@ def edit_theme(request, slug):
     """
     View for the theme edit functionality
     """
+    theme = get_object_or_404(Theme, slug=slug)
     if not request.user.is_staff:
         raise PermissionDenied
+    if request.method == "POST":
+        theme.name = request.POST.get('name')
+        theme.save()
+        return HttpResponse("saved")
     return HttpResponse("ok")
