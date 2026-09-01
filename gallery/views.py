@@ -5,6 +5,7 @@ from gallery.models import Theme
 from .forms import SculptureForm
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -51,3 +52,13 @@ def sculpture_detail(request, slug):
     View for the sculpture detail page
     """
     return render(request, 'gallery/sculpture_detail.html')
+
+
+@login_required
+def edit_theme(request, slug):
+    """
+    View for the theme edit functionality
+    """
+    if not request.user.is_staff:
+        raise PermissionDenied
+    return HttpResponse("ok")
