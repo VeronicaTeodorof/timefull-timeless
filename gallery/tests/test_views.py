@@ -366,3 +366,48 @@ class AddSculptureViewCase(TestCase):
             response.context["form"].errors if response.context else
             "no context (redirect?)"
         )
+
+
+class EditThemeViewClass(TestCase):
+    """
+    Tests for edit_theme view
+    """
+    def setUp(self):
+        """
+        Creates temporary theme, url, user and staff user for tests
+        """
+        self.theme = Theme.objects.create(name='Time')
+        self.url = reverse('gallery:edit-theme',
+                           kwargs={'slug': self.theme.slug})
+        self.user = get_user_model().objects.create_user(
+            username='testuser',
+            password='testpass'
+        )
+        self.staff_user = get_user_model().objects.create_user(
+            username='staffuser', password='testpass', is_staff=True
+        )
+
+    def test_anonymous_user_redirected_from_edit_theme(self):
+        """
+        Tests that an anonymous user is redirected to login when
+        trying to access edit-theme
+        """
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_non_staff_user_gets_403_for_edit_theme(self):
+        """
+        Tests that a non-staff authenticated user gets 403 for edit-theme.
+        """
+        self.client.force_login(self.user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 403)
+
+    def test_staff_user_gets_200_for_edit_theme(self):
+        """
+        Tests that a staff user can access edit-theme successfully.
+        """
+        self.client.force_login(self.staff_user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
