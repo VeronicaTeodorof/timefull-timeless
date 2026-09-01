@@ -439,3 +439,13 @@ class EditThemeViewClass(TestCase):
         })
         self.theme.refresh_from_db()
         self.assertEqual(self.theme.representative_sculpture, sculpture)
+
+    def test_edit_theme_rejects_empty_name(self):
+        """
+        Tests that empty name field is rejected and edits are not saved
+        """
+        self.client.force_login(self.staff_user)
+        response = self.client.post(self.url, {'name': ''})
+        self.assertEqual(response.status_code, 400)
+        self.theme.refresh_from_db()
+        self.assertEqual(self.theme.name, 'Time')

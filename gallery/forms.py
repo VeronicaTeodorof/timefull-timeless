@@ -93,3 +93,9 @@ class ThemeForm(forms.ModelForm):
     class Meta:
         model = Theme
         fields = ['name', 'representative_sculpture']
+
+    def clean_name(self):
+        name = self.cleaned_data.get('name', '').strip()
+        if not name:
+            raise forms.ValidationError('Theme name cannot be empty.')
+        return name

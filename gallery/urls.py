@@ -10,4 +10,7 @@ urlpatterns = [
     path('sculpture/<slug:slug>/',
          views.sculpture_detail,
          name='sculpture-detail'),
+    path('theme/<slug:slug>/edit/',
+         views.edit_theme,
+         name='edit-theme'),
 ]
