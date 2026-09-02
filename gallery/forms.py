@@ -94,6 +94,17 @@ class ThemeForm(forms.ModelForm):
         model = Theme
         fields = ['name', 'representative_sculpture']
 
+    def __init__(self, *args, **kwargs):
+        """
+        Ensures that an edit theme form filters and displays
+        only and all sculptures that have that particular theme
+        """
+        super().__init__(*args, **kwargs)
+        if self.instance.pk:
+            self.fields['representative_sculpture'].queryset = (
+                self.instance.sculptures.all()
+            )
+
     def clean_name(self):
         """
         Checks for name duplicates excluding editing and
@@ -104,5 +115,6 @@ class ThemeForm(forms.ModelForm):
         duplicate = Theme.objects.filter(name__iexact=name).exclude(
             pk=self.instance.pk).exists()
         if duplicate:
-            raise forms.ValidationError('A theme with this name already exists.')
+            raise forms.ValidationError(
+                'A theme with this name already exists.')
         return name
