@@ -15,74 +15,83 @@
             matter itself taking flight, rising beyond its own limits"<br>
             <span class="fs-6"> - Claudia Anca Moldovan, curator, Braila <br>(adapted from Romanian)</span></p>
     </div>
-    <!-- Non-empty state will come here -->
-    <!-- Themes Section -->
-   <div class="container my-4">
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            {% for theme in themes %}
-                <div class="col">
-                    {% if request.user.is_staff %}
-                        <div class="d-flex justify-content-end">
-                            <button type="button" title="Edit card theme" class="theme-edit-btn"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#editThemeModal"
-                                    data-theme-name="{{ theme.name }}"
-                                    data-theme-slug="{{ theme.slug }}"
-                                    data-sculptures="{{ theme.sculptures_json }}">
-                                <!--Bootstrap three dots icon -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
-                                </svg>
-                            </button>
-                        </div>
-                    {% endif %}
-                    <a href="" class="theme-card-link">
-                        <div class="theme-card">
-                            <img src="{{ theme.get_representative_image.url }}" alt="{{ theme.name }}">
-                            <div class="theme-footer">
-                                <h5>{{ theme.display_name }}</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-    <!-- Shared edit-theme modal -->
-    <div class="modal fade" id="editThemeModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form method="post" id="editThemeForm">
-                    {% csrf_token %}
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit theme</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="editThemeError" class="alert d-none"></div>
-                        <label class="form-label">Theme name</label>
-                        <input type="text" name="name" id="editThemeName" class="form-control">
 
-                        <label class="form-label mt-3">Representative image</label>
-                        <select name="representative_sculpture" id="editThemeImageSelect" class="form-select"></select>
+    <!-- Add sculpture button -->
+    {% if user.is_staff %}
+        <div class="add-sculpture-btn">
+            <a href="{% url 'gallery:add-sculpture' %}" class="btn my-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                </svg>
+                <span class="add-sculpture-btn-label">Add sculpture</span>
+            </a>
+        </div>
+    {% endif %}
+
+    <!-- Non-empty state -->
+    {% if themes %}
+        <!-- Themes Section -->
+        <div class="container my-4">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                {% for theme in themes %}
+                    <div class="col">
+                        {% if request.user.is_staff %}
+                            <div class="d-flex justify-content-end">
+                                <button type="button" title="Edit card theme" class="theme-edit-btn"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editThemeModal"
+                                        data-theme-name="{{ theme.name }}"
+                                        data-theme-slug="{{ theme.slug }}"
+                                        data-sculptures="{{ theme.sculptures_json }}">
+                                    <!--Bootstrap three dots icon -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        {% endif %}
+                        <a href="" class="theme-card-link">
+                            <div class="theme-card">
+                                <img src="{{ theme.get_representative_image.url }}" alt="{{ theme.name }}">
+                                <div class="theme-footer">
+                                    <h5>{{ theme.display_name }}</h5>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-secondary">Save</button>
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
+                {% endfor %}
             </div>
         </div>
-    </div>
+        <!-- Shared edit-theme modal -->
+        <div class="modal fade" id="editThemeModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="post" id="editThemeForm">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit theme</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="editThemeError" class="alert d-none"></div>
+                            <label class="form-label">Theme name</label>
+                            <input type="text" name="name" id="editThemeName" class="form-control">
 
-    <!-- Empty state hardcoded -->
-    <!-- <div class="empty  text-center mt-5">
-        <p class="display-4">No sculptures to display</p>
-    </div> -->
-
-    {% if user.is_staff %}
-        <div class="cta d-flex justify-content-center my-5">
-            <a href="{% url 'gallery:add-sculpture' %}" class="btn my-auto btn-secondary">Add sculpture</a>
+                            <label class="form-label mt-3">Representative image</label>
+                            <select name="representative_sculpture" id="editThemeImageSelect" class="form-select"></select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-secondary">Save</button>
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- Empty state -->
+        <div class="empty  text-center mt-5">
+            <p class="display-4">No sculptures to display</p>
         </div>
     {% endif %}
 {% endblock %}
