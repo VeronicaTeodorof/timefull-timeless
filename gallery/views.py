@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from gallery.models import Theme
+from gallery.models import Theme, Sculpture
 from .forms import SculptureForm, ThemeForm
 from django.shortcuts import redirect
 from django.contrib import messages
@@ -52,7 +52,10 @@ def sculpture_detail(request, slug):
     """
     View for the sculpture detail page
     """
-    return render(request, 'gallery/sculpture_detail.html')
+    sculpture = get_object_or_404(Sculpture, slug=slug)
+    return render(request,
+                  'gallery/sculpture_detail.html',
+                  {'sculpture': sculpture})
 
 
 @login_required

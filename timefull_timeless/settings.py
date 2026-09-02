@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'checkout',
     'cloudinary',
     'cloudinary_storage',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
