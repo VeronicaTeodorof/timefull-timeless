@@ -39,6 +39,10 @@ class Theme(models.Model):
             )
         ]
 
+    @property
+    def display_name(self):
+        return self.name.title()
+
     def get_representative_image(self):
         """
         Returns the image of the most recently added sculpture assigned to
@@ -74,7 +78,7 @@ class Theme(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return self.display_name
 
 
 class Sculpture(models.Model):

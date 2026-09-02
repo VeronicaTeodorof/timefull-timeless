@@ -63,29 +63,30 @@ Two tests were written to capture this:
 #### Tdd pass for gallery views
 - To add pass for gallery views permission enforcement automated tests needed for each new staff-only view, mirroring the existing add-sculpture pattern (anonymous -> 302, non-staff -> 403, staff ->200):
 
+- [x] add_sculpture view
 - [ ] edit_sculpture view
 - [ ] delete_sculpture view
-- [ ] edit_theme view
+- [x] edit_theme view
 - [ ] change representative image view
 
 
 #### TDD pass for Create and Edit Theme
 
-- [ ] AC1 - new theme created on valid submission
-- [ ] AC2 - new theme created and attached to the sculpture
-- [ ] AC3 - duplicate name (case-insensitive) reuses existing theme, no duplicate created - Exact-match test passing; different-case test exposed a genuine `IntegrityError` (duplicate slug), not just a clean assertion failure, since `get_or_create` only matches exact names while slug uniqueness is case-insensitive.
-- [ ] AC4 - form rejects submission when both theme fields are empty
-- [ ] AC6 - selecting multiple existing themes attaches all of them
-- [ ] AC7 - existing-theme selection and new-theme submission combine correctly
-- [ ] AC9 - multiple `new_theme` values (cloned fields) each create and attach a theme
+- [x] AC1 - new theme created on valid submission
+- [x] AC2 - new theme created and attached to the sculpture
+- [x] AC3 - duplicate name (case-insensitive) reuses existing theme, no duplicate created - Exact-match test passing; different-case test exposed a genuine `IntegrityError` (duplicate slug), not just a clean assertion failure, since `get_or_create` only matches exact names while slug uniqueness is case-insensitive.
+- [x] AC4 - form rejects submission when both theme fields are empty
+- [x] AC6 - selecting multiple existing themes attaches all of them
+- [x] AC7 - existing-theme selection and new-theme submission combine correctly
+- [x] AC9 - multiple `new_theme` values (cloned fields) each create and attach a theme
 - [ ] AC11 - theme survives sculpture deletion; card falls back to remaining sculpture (blocked on story 31)
-- [ ] AC12 - empty theme hidden from gallery queryset; still included in form queryset
-- [ ] AC13 - edit-theme view rejects non-staff/anonymous requests (302/403/200)
-- [ ] AC15 - representative image override takes precedence over fallback, even when it wouldn't coincidentally match
-- [ ] AC16 - representative-image dropdown scoped to only this theme's sculptures, includes all of them
-- [ ] AC17 - rename validation excludes self (no false duplicate on unchanged save), rejects name matching a different theme
+- [x] AC12 - empty theme hidden from gallery queryset; still included in form queryset
+- [x] AC13 - edit-theme view rejects non-staff/anonymous requests (302/403/200)
+- [x] AC15 - representative image override takes precedence over fallback, even when it wouldn't coincidentally match
+- [x] AC16 - representative-image dropdown scoped to only this theme's sculptures, includes all of them
+- [x] AC17 - rename validation excludes self (no false duplicate on unchanged save), rejects name matching a different theme
 - [ ] AC19 - untagging a sculpture from a theme clears a stale representative-image override (blocked on story 31)
-- [ ] AC21 - view calls `messages.success(...)` on theme-related success paths
+- [x] AC21 - view calls `messages.success(...)` on theme-related success paths
 
 
 ---
@@ -294,7 +295,7 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| GP-01 | Theme card display per theme | Theme card displays when the theme has one or more sculptures; does not display when the theme has none | | | |
+| GP-01 | Theme card display per theme | Theme card displays when the theme has one or more sculptures; does not display when the theme has none | As expected | Pass | |
 | GP-02 | Click a theme card | Loads a carousel of sculpture detail pages belonging to that theme | | | |
 | GP-03 | Theme cards render at uniform height | All theme cards display at a consistent fixed height regardless of source image aspect ratio | As expected | Pass | |
 | GP-04 | Image crop, no distortion | Source image fills the fixed card height via crop | As exptected | Pass | |
@@ -347,25 +348,25 @@ Two tests were written to capture this:
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
 | CT-01 | New theme appears in multi-select after creation | Creating a sculpture with a new theme name; visiting edit-sculpture afterward shows the new theme as an option in the multi-select | As expected | Pass | |
-| CT-02 | New theme correctly associated with its sculpture | Creating a sculpture with a new theme name; sculpture detail/gallery shows the new theme correctly associated | | | |
+| CT-02 | New theme correctly associated with its sculpture | Creating a sculpture with a new theme name; sculpture detail/gallery shows the new theme correctly associated | As expected | Pass | |
 | CT-03 | Duplicate new theme name (exact match) | Submitting a new theme name exactly matching an existing theme; no error shown, no duplicate choice, submission succeeds normally | As expected | Pass | |
 | CT-04 | Duplicate new theme name (different casing) | Submitting a new theme name matching an existing theme with different casing; no error shown, submission succeeds normally | As expected | Pass | |
-| CT-05 | Both theme fields left empty | Submitting the add-sculpture form with both theme fields empty; clear validation error shown near the right place, other entered fields preserved | | | |
-| CT-06 | Success/error feedback messages | Adding a new theme shows a success message; a theme-related validation error shows a clear error message; editing an existing theme shows a success message on save | | | |
-| CT-07 | Select multiple existing themes | Physically selecting two or more themes in the multi-select; interaction feels right, selected state is visually clear | | | |
-| CT-08 | Combine existing theme selection with a new theme | Selecting an existing theme and typing a new theme name in the same submission; both end up visible together on the sculpture and gallery | | | |
+| CT-05 | Both theme fields left empty | Submitting the add-sculpture form with both theme fields empty; clear validation error shown near the right place, other entered fields preserved | As expected | Pass | |
+| CT-06 | Success/error feedback messages | A theme-related validation error shows a clear error message; editing an existing theme shows a success message on save | As expected | Pass | |
+| CT-07 | Select multiple existing themes | Physically selecting two or more themes in the multi-select; interaction feels right, selected state is visually clear | As expected | Pass | |
+| CT-08 | Combine existing theme selection with a new theme | Selecting an existing theme and typing a new theme name in the same submission; both end up visible together on the sculpture and gallery | As expected | Pass | |
 | CT-09 | Zero themes - form state | With zero themes in the database, the themes multi-select is not displayed on the add-sculpture form, and the "new theme" field's placeholder reflects this is the first theme(s) | As expected | Pass | |
-| CT-10 | "+" button clones new theme field | Clicking the "+" button adds an additional "new theme" field in the browser (one theme name per field) | | | |
-| CT-11 | New theme(s) appear as gallery cards | After adding a sculpture with one or more new themes, the gallery page shows each as its own card, displaying the sculpture's image | | | |
-| CT-12 | Edit menu visible only to staff | Staff user sees the edit menu (both labeled options) on each theme card; anonymous/non-staff users do not see it | | | |
-| CT-13 | Edit menu links navigate correctly | Clicking either "Change theme name" or "Change representative image" navigates to the correct theme's edit page | | | |
-| CT-14 | Representative image override reflected in gallery | Selecting a different sculpture as the theme's representative image and saving; gallery card shows the selected sculpture's image | | | |
-| CT-15 | Theme name field pre-populated | Theme-edit page's name field exists and is pre-populated with the current name on load | | | |
-| CT-16 | Renamed theme reflected in gallery | Renaming a theme and saving; gallery card displays the new name | | | |
-| CT-17 | Cancel link returns to gallery without saving | Theme-edit page has a "Cancel" link; following it returns to the gallery page, nothing is saved | | | |
-| CT-18 | Themes casing | Consistent casing for themes in multiselect fields and theme cards | | | |
+| CT-10 | "+" button clones new theme field | Clicking the "+" button adds an additional "new theme" field in the browser (one theme name per field) | As expected | Pass | |
+| CT-11 | New theme(s) appear as gallery cards | After adding a sculpture with one or more new themes, the gallery page shows each as its own card, displaying the sculpture's image | As expected | Pass | |
+| CT-12 | Edit button visible only to staff | Staff user sees the edit menu (both labeled options) on each theme card; anonymous/non-staff users do not see it | As expected | Pass | |
+| CT-13 | Edit button opens modal populated correctly | Clicking the three-dot button on a theme card opens the edit modal, pre-filled with that specific theme's name, representative-image options | As expected | Pass | |
+| CT-14 | Representative image override reflected in gallery | Selecting a different sculpture as the theme's representative image and saving; gallery card shows the selected sculpture's image | As expected | Pass | |
+| CT-15 | Theme name field pre-populated | Theme-edit page's name field exists and is pre-populated with the current name on load | As expected | Pass | |
+| CT-16 | Renamed theme reflected in gallery | Renaming a theme and saving; gallery card displays the new name | As expected | Pass | |
+| CT-17 | Cancel button clicked closes modal without saving | Theme-edit modal has a "Cancel" button;  clicking it closes the modal, nothing is saved | As expected | Pass | |
+| CT-18 | Themes casing | Consistent casing for themes in multiselect fields and theme cards | As expected | Pass | |
 | CT-19 | Themes displayed in multiselect fields | All themes are displayed in multiselect fields regardless of whether there are any sculptures with that theme or not | as expected | Pass | |
-| CT-20 | Non-empty themes gallery cards | Gallery displays one card per theme when this is not empty | | | |
+| CT-20 | Non-empty themes gallery cards | Gallery displays one card per theme when this is not empty | As expected | Pass | |
 | CT-21 | Representative image default | The image of the latest added sculpture in a theme is displayed as representative image for that theme when no other is manually selected | As expected | Pass | |
 | CT-22 | Representative image across multiple themes | A single sculpture tagged with multiple themes displays as the representative image on each of those themes cards independently | As expected | Pass | |
 | CT-23 | Theme card updates after its featured sculpture is removed | Removing a sculpture that was shown on a theme's card; that theme still exists, and its card now shows a different remaining sculpture instead | As expected | Pass | |

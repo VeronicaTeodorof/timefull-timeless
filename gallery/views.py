@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from gallery.models import Theme, Sculpture
+from gallery.models import Theme
 from .forms import SculptureForm, ThemeForm
 from django.shortcuts import redirect
 from django.contrib import messages
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
 
@@ -67,6 +67,7 @@ def edit_theme(request, slug):
         form = ThemeForm(request.POST, instance=theme)
         if form.is_valid():
             form.save()
+            messages.success(request, "Theme updated.")
             # resource for json response:
             # https://docs.djangoproject.com/en/6.1/ref/request-response/#jsonresponse-objects
             return JsonResponse({'success': True})
@@ -74,4 +75,5 @@ def edit_theme(request, slug):
                              'errors': form.errors.get(
                                  'name',
                                  ['Invalid submission.'])[0]}, status=400)
-    return HttpResponse("ok")
+    return JsonResponse({'success': False,
+                         'errors': 'Invalid request method.'}, status=400)
