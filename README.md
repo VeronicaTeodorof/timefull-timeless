@@ -512,12 +512,12 @@ C = could-have.
 - [ ] Given a sculptor is logged in as a staff user, when they view the gallery page, then a small edit button (three dots, with a tooltip reading "Edit theme card") is displayed near each theme card; given an anonymous or non-staff user views the same page, this button is not displayed.
 - [ ] Given the sculptor clicks the three-dot button on a theme card, then the edit modal opens, populated with that specific theme's current name and representative-image edit options.
 - [ ] Given the sculptor selects a different sculpture as the theme's representative image in the edit modal and saves, when he views the gallery page afterward, then that theme's card displays the selected sculpture's image, replacing the automatic fallback.
-- [ ] Given the sculptor views the theme-edit page, then a "choose a representative image" field is displayed as a dropdown; when expanded, it lists all sculptures currently assigned to that theme, and only one can be selected at a time.
+- [ ] Given the sculptor views the theme-edit modal, then a "choose a representative image" field is displayed as a dropdown; when expanded, it lists all sculptures currently assigned to that theme, and only one can be selected at a time.
 - [ ] Given the sculptor views the theme-edit modal, then a theme name field is displayed, pre-populated with the current name; when they submit a new name, the same validation rules applied at theme creation apply here too - non-empty, unique (case-insensitive, excluding the theme's own current name), whitespace stripped.
-- [ ] Given the sculptor renames a theme and saves, when they view the gallery page afterward, then the theme's card displays the new name.
+- [ ] Given the sculptor renames a theme and saves, when he views the gallery page afterward, then the theme's card displays the new name.
 - [ ] Given a sculpture is removed from a theme (via editing the sculpture, not deleting it) while it was set as that theme's representative image, when the removal is saved, then the theme's representative image override is cleared, and the theme's card falls back to its next most recent sculpture (or hides, if none remain).
-- [ ] Given the sculptor is on the theme-edit page and decides not to save changes, then a "Cancel" link is available, returning them to the gallery page without saving anything.
-- [ ] Given the sculptor performs a theme-related action (adding a new theme via the sculpture form, or editing an existing theme's name/representative image), when the action succeeds, then a clear success feedback message is shown; when it fails (e.g. validation error), a clear, specific error message is shown - both outcomes always communicated, not a silent redirect or a bare form re-render with no explanation
+- [ ] Given the sculptor opened the edit theme modal and then decides not to save changes, then a "Cancel" button is available, closing the modal without saving anything.
+- [ ] Given the sculptor performs a theme-related action (adding a new theme via the sculpture form, or editing an existing theme's name/representative image), when the action succeeds, then a clear success feedback message is shown; when it fails, a clear, specific error message is shown - both outcomes always communicated.
 - [ ] Given a theme's name is displayed anywhere on the site (gallery card, multi-select options, edit form), then it is shown in a consistent casing style, regardless of how it was originally typed when created.
 - [ ] Given the "new theme" field is submitted with a valid value, and no existing themes are selected in the multi-select, when the form is submitted, then the sculpture is saved successfully, since a non-empty "new theme" value alone satisfies the "at least one theme" requirement.
 
@@ -535,14 +535,34 @@ C = could-have.
 </details>
 
 <details><summary>
-31. As the sculptor, I want to add a new sculpture, edit the details of an existing one, or remove it from the gallery (permanently deleting it if never sold, or archiving it if it has been), so that I have complete control over what's displayed in my gallery page. (M)
+31. As the sculptor, I want to add a new sculpture, edit the details of an existing one, or remove it from the gallery (permanently deleting it if never sold) so that I have complete control over what's displayed in my gallery page. (M)
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
-
+- [ ] Given the sculptor is logged in as a staff user, when  he views the gallery page, then he can see an "Add sculpture" button.
+- [ ] Given the sculptor is logged in as a staff user and views the gallery page on a mobile viewport, then the "Add sculpture" button displays as a persistent, round action button in the lower-right corner of the screen.
+- [ ] Given the sculptor is logged in as a staff user and views the gallery page on desktop, with one or more theme cards already present, then the "Add sculpture" button is positioned between the quote and the theme cards.
+- [ ] Given the sculptor clicks or taps the "Add sculpture" button, in any state or on any device, then he navigates to the add-sculpture page.
+- [ ] Given the sculptor is logged in as a staff user, when he views the add-sculpture page, then fields for title, title translation, year, material, dimensions, status, price, theme selection, and image upload are all displayed.
+- [ ] Given the sculptor is logged in as a staff user, when he views the add-sculpture page, then each form field clearly indicates whether it is required or optional.
+- [ ] Given the sculptor clicks the "Upload image" field, then his device's file picker opens, allowing him to choose a file.
+- [ ] Given the sculptor selects a file from the file picker, then the picker closes and the upload field displays the name of the chosen file.
+- [ ] Given the sculptor is logged in as a staff user and submits the add-sculpture form with valid data, then the sculpture is created and saved, a success message is shown, and they are redirected to that sculpture's detail page.
+- [ ] Given the sculptor submits the add-sculpture form with invalid or missing required data, then the submission is rejected, a clear error message is shown near the relevant field(s), and the sculptor's other entered data is preserved (with the exception of the selected image).
+- [ ] Given the sculptor successfully adds a new sculpture, when he lands on that sculpture's detail page, then the title, translation, year, material, dimensions, price, status, and image they entered are all displayed correctly.
+- [ ] Given the sculptor is logged in as a staff user, when he view a sculpture's detail page, then he can see an "Edit" button; given an anonymous or non-staff user views the same page, this button is not displayed.
+- [ ] Given the sculptor clicks the "Edit" button on a sculpture's detail page, then they navigate to that sculpture's edit page.
+- [ ] Given the sculptor is logged in as a staff user, when he views the edit-sculpture page, then fields for title, title translation, year, material, dimensions, status, price, theme selection, and image upload are all displayed.
+- [ ] Given the sculptor is logged in as a staff user and submits the edit-sculpture form with valid, changed data, then the sculpture's details are updated and saved, a success message is shown, and he is redirected to that sculpture's detail page, correctly reflecting the changes.
+- [ ] Given the sculptor submits the edit-sculpture form with invalid or missing required data, then the submission is rejected, a clear error message is shown near the relevant field(s), and the sculptor's other entered data is preserved (not lost) - with the exception of a newly selected replacement image, which cannot be retained across a failed submission.
+- [ ] Given the sculptor is on the edit-sculpture page, then the current image is shown, with the option to select a new file to replace it or leave it unchanged.
+- [ ] Given the sculptor is on the edit-sculpture page and decides not to save changes, then a "Cancel" link is available, returning them to the sculpture's detail page without saving anything.
+- [ ] Given the sculptor is logged in as a staff user, when he views a sculpture's detail page, then he can see a "Delete" button; given an anonymous or non-staff user views the same page, this button is not displayed.
+- [ ] Given the sculptor clicks the "Delete" button, then a confirmation modal opens, asking him to confirm before proceeding.
+- [ ] Given the confirmation modal is open, then it displays the specific sculpture's name/title, so the sculptor can confirm he's deleting the correct piece.
+- [ ] Given a sculpture's status is "sold" (via an online purchase), when the sculptor views that sculpture's detail page, then the "Delete" button is not displayed at all.
+- [ ] Given the confirmation modal is open, then two options are available - "Delete" (proceeds with permanent deletion) and "Cancel" (closes the modal without deleting anything).
+- [ ] Given the sculptor confirms deletion in the modal, then the sculpture is permanently deleted, a success message is shown, and he is redirected to the gallery page.
 </details>
 
 <details><summary>
