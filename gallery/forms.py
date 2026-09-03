@@ -3,6 +3,12 @@ from gallery.models import Sculpture, Theme
 from django import forms
 
 
+# custom widget to hide default Django text
+# for edit form image upload field
+class NoTextClearableFileInput(forms.ClearableFileInput):
+    template_name = 'gallery/widgets/custom_file_input.html'
+
+
 class SculptureForm(ModelForm):
     """
     A form for adding and editing Sculpture records
@@ -30,6 +36,9 @@ class SculptureForm(ModelForm):
             'status',
         ]
         widgets = {
+            'image': NoTextClearableFileInput(attrs={
+                    'class': 'form-control',
+                }),
             'title': forms.TextInput(
                 attrs={'placeholder': 'Sculpture title (required)',
                        'class': 'form-control'}),
@@ -51,9 +60,6 @@ class SculptureForm(ModelForm):
                 'class': 'form-select',
             }),
             'themes': forms.CheckboxSelectMultiple(),
-            'image': forms.ClearableFileInput(attrs={
-                'class': 'form-control',
-            }),
         }
 
     def __init__(self, *args, **kwargs):

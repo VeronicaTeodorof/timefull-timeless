@@ -16,7 +16,7 @@
             <span class="fs-6"> - Claudia Anca Moldovan, curator, Braila <br>(adapted from Romanian)</span></p>
     </div>
 
-    <!-- Add sculpture button -->
+    <!-- Staff CTA -->
     {% if user.is_staff %}
         <div class="add-sculpture-btn">
             <a href="{% url 'gallery:add-sculpture' %}" class="btn my-auto">
@@ -37,7 +37,7 @@
                     <div class="col">
                         {% if request.user.is_staff %}
                             <div class="d-flex justify-content-end">
-                                <button type="button" title="Edit card theme" class="theme-edit-btn"
+                                <button type="button" title="Edit card theme" class="edit-btn"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editThemeModal"
                                         data-theme-name="{{ theme.name }}"
