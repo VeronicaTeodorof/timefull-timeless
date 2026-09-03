@@ -18,7 +18,7 @@ def gallery(request):
 @login_required
 def add_sculpture(request):
     """
-    Handle creation of a new sculpture.
+    Handles creation of a new sculpture.
     """
     if not request.user.is_staff:
         raise PermissionDenied
@@ -80,3 +80,10 @@ def edit_theme(request, slug):
                                  ['Invalid submission.'])[0]}, status=400)
     return JsonResponse({'success': False,
                          'errors': 'Invalid request method.'}, status=400)
+
+
+def edit_sculpture(request, slug):
+    """
+    Handles editing of a sculpture object
+    """
+    return render(request, 'gallery/edit_sculpture.html',)
