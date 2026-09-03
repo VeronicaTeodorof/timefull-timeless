@@ -1,7 +1,29 @@
 {% extends 'base.html' %}
+{% load static %}
 
-
-{% block content %}
-<h1>Edit Sculpture</h1>
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
 {% endblock %}
 
+{% block extra_header %}
+    <!-- Back link affordance -->
+    <a href="{% url 'gallery:sculpture-detail' sculpture.slug %}" class="back-link ms-2 ms-lg-5 mt-2 link-body-emphasis link-underline-opacity-0 link-underline-opacity-100-hover link-offset-3">
+        <!-- Bootstrap Icon - back arrow-->
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" aria-hidden="true" class="bi bi-arrow-left back-icon" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+        </svg>
+        Back to sculpture
+    </a>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Edit sculpture</h1>
+
+    {% include 'gallery/partials/sculpture_form_fields.html' %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'gallery/js/sculpture.js' %}"></script>
+{% endblock %}

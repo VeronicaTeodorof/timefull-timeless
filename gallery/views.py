@@ -86,4 +86,17 @@ def edit_sculpture(request, slug):
     """
     Handles editing of a sculpture object
     """
-    return render(request, 'gallery/edit_sculpture.html',)
+    sculpture = get_object_or_404(Sculpture, slug=slug)
+    if not request.user.is_staff:
+        raise PermissionDenied
+    if request.method == "POST":
+        form = SculptureForm(request.POST, request.FILES, instance=sculpture)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Sculpture updated.")
+            return redirect('gallery:sculpture-detail', slug=sculpture.slug)
+    else:
+        form = SculptureForm(instance=sculpture)
+    return render(request,
+                  'gallery/edit_sculpture.html',
+                  {'form': form, 'sculpture': sculpture})
