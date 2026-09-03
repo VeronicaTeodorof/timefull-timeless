@@ -11,6 +11,16 @@
 <div class="container">
     <div class="row">
         <div class="col-12 col-md-6 py-3">
+            {% if request.user.is_staff %}
+                <div class="sculpture-controls d-flex justify-content-end">
+                    <a href="{% url 'gallery:edit-sculpture' sculpture.slug %}" class="edit-btn" title="Edit sculpture">
+                        <!--Bootstrap three dots icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="rgb(33, 37, 41)" class="bi bi-three-dots" viewBox="0 0 16 16">
+                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                        </svg>
+                    </a>
+                </div>
+            {% endif %}
             <img src="{{ sculpture.image.url }}"
                  alt="{{ sculpture.title }}"
                  class="sculpture-detail-image img-sm-fluid">
