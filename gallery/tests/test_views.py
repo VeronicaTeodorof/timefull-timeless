@@ -403,13 +403,15 @@ class EditThemeViewClass(TestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
-    def test_staff_user_gets_200_for_edit_theme(self):
+    def test_staff_user_get_request_returns_400_for_edit_theme(self):
         """
-        Tests that a staff user can access edit-theme successfully.
+        Tests that a GET request to edit-theme returns 400, since this
+        endpoint only processes POST submissions (no standalone page
+        exists - editing happens via the modal's AJAX submission).
         """
         self.client.force_login(self.staff_user)
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 400)
 
     def test_edit_theme_saves_new_name(self):
         """
@@ -449,3 +451,102 @@ class EditThemeViewClass(TestCase):
         self.assertEqual(response.status_code, 400)
         self.theme.refresh_from_db()
         self.assertEqual(self.theme.name, 'Time')
+
+
+class EditSculptureViewClass(TestCase):
+    """
+    Tests for edit_sculpture view
+    """
+    def setUp(self):
+        """
+        Creates temporary theme, sculpture, url, user and staff user for tests
+        """
+        self.theme = Theme.objects.create(name='Time')
+        self.sculpture = Sculpture.objects.create(
+            title='Original Title',
+            year=2024,
+            price=100,
+            material='Bronze',
+            image='image/upload/v1/original.jpg',
+        )
+        self.sculpture.themes.add(self.theme)
+        self.url = reverse('gallery:edit-sculpture',
+                           kwargs={'slug': self.sculpture.slug})
+        self.user = get_user_model().objects.create_user(
+            username='testuser',
+            password='testpass'
+        )
+        self.staff_user = get_user_model().objects.create_user(
+            username='staffuser', password='testpass', is_staff=True
+        )
+        self.data = {
+            "title": "Original Title",
+            "year": 2024,
+            "price": 100,
+            "material": "Bronze",
+            "dimensions": "30x20x10cm",
+            "status": "available",
+            "themes": [self.theme.pk],
+        }
+
+    def get_mocked_upload_and_image(self):
+        """
+        Returns a valid CloudinaryResource and a SimpleUploadedFile
+        built from MINIMAL_GIF, for tests simulating a successful
+        image upload.
+        """
+        mock_result = cloudinary.CloudinaryResource(
+            public_id='test_public_id_123',
+            version='1234567890',
+            format='jpg',
+            resource_type='image',
+            type='upload',
+        )
+        image = SimpleUploadedFile(
+            name='test_image.gif',
+            content=MINIMAL_GIF,
+            content_type='image/gif'
+        )
+        return mock_result, image
+
+    @patch('cloudinary.uploader.upload_resource')
+    def test_edit_sculpture_saves_valid_changes(self, mock_upload):
+        """
+        Tests that submitting valid changed data via edit-sculpture
+        updates and saves the sculpture's details.
+        """
+        mock_upload.return_value, image = self.get_mocked_upload_and_image()
+        self.client.force_login(self.staff_user)
+        data = {**self.data, "image": image, "title": "Updated Title"}
+        self.client.post(self.url, data)
+        self.sculpture.refresh_from_db()
+        self.assertEqual(self.sculpture.title, "Updated Title")
+
+    @patch('cloudinary.uploader.upload_resource')
+    def test_edit_sculpture_redirects_to_detail_page(self, mock_upload):
+        """
+        Tests that a successful edit redirects to the sculpture's
+        detail page.
+        """
+        mock_upload.return_value, image = self.get_mocked_upload_and_image()
+        self.client.force_login(self.staff_user)
+        data = {**self.data, "image": image}
+        response = self.client.post(self.url, data)
+        self.assertRedirects(
+            response,
+            reverse('gallery:sculpture-detail',
+                    kwargs={'slug': self.sculpture.slug})
+        )
+
+    def test_edit_sculpture_preserves_existing_image_when_not_changed(self):
+        """
+        Tests that submitting the edit form without a new image
+        preserves the sculpture's existing image, rather than
+        requiring a new gaupload every time.
+        """
+        self.client.force_login(self.staff_user)
+        original_image = self.sculpture.image
+        data = {**self.data, "title": "Updated Title"}
+        self.client.post(self.url, data)
+        self.sculpture.refresh_from_db()
+        self.assertEqual(self.sculpture.image, original_image)
