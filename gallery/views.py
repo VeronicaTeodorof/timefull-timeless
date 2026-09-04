@@ -100,3 +100,21 @@ def edit_sculpture(request, slug):
     return render(request,
                   'gallery/edit_sculpture.html',
                   {'form': form, 'sculpture': sculpture})
+
+
+@login_required
+def delete_sculpture(request, slug):
+    """
+    Handles deletion of a sculpture object
+    """
+    sculpture = get_object_or_404(Sculpture, slug=slug)
+    if not request.user.is_staff:
+        raise PermissionDenied
+    if sculpture.status == 'sold':
+        raise PermissionDenied
+    if request.method == "POST":
+        sculpture.delete()
+        messages.success(request, "Sculpture deleted.")
+        return redirect('gallery:gallery')
+    return redirect('gallery:sculpture-detail', slug=sculpture.slug)
+
