@@ -84,7 +84,7 @@
             {% if sculpture.status == 'available' %}
                 <div class="actions ms-2 ms-lg-5 my-4 d-flex flex-column gap-2">
                    <p>Comes with a signed Certificate of Authenticity.</p>
-                    <button class="btn btn-success">Acquire Now</button>
+                    <a href="{% url 'checkout:terms' sculpture.slug %}" class="btn btn-success">Acquire Now</a>
                     <a href="{% url 'pages/contact.html'}" class="mt-3 link-body-emphasis link-underline-opacity-75 link-underline-opacity-100-hover link-offset-3">
                         Enquire about this piece</a>
                  </div>
