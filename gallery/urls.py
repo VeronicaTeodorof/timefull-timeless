@@ -15,5 +15,9 @@ urlpatterns = [
           name='edit-theme'),
      path('sculpture/<slug:slug>/edit/',
           views.edit_sculpture,
-          name='edit-sculpture')
+          name='edit-sculpture'),
+     path('sculpture/<slug:slug>/delete/',
+          views.delete_sculpture,
+          name='delete-sculpture'),
+     path('theme/<slug:slug>/', views.theme_detail, name='theme-detail'),
 ]

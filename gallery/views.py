@@ -118,3 +118,7 @@ def delete_sculpture(request, slug):
         return redirect('gallery:gallery')
     return redirect('gallery:sculpture-detail', slug=sculpture.slug)
 
+
+def theme_detail(request, slug):
+    theme = get_object_or_404(Theme, slug=slug)
+    return render(request, 'gallery/theme_detail.html', {'theme': theme})

@@ -50,7 +50,7 @@
                                 </button>
                             </div>
                         {% endif %}
-                        <a href="" class="theme-card-link">
+                        <a href="{% url 'gallery:theme-detail' theme.slug %}" class="theme-card-link">
                             <div class="theme-card">
                                 <img src="{{ theme.get_representative_image.url }}" alt="{{ theme.name }}">
                                 <div class="theme-footer">
