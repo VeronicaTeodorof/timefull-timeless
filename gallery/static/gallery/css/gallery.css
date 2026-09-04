@@ -110,6 +110,15 @@
   max-width: 200px;
 }
 
+/* Theme detail page */
+
+.carousel .sculpture-detail-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
 /* Media queries */
 /* Tablet and desktop */
 @media (min-width: 768px) {
@@ -134,7 +143,13 @@
   /* Sculpture detail page */
   .sculpture-detail-image {
   width: 100%;
-  height: 630px;
-  object-fit:cover;
-}
+  height: 600px;
+  object-fit:fill;
+  }
+
+  /* Theme-detail page */
+  .carousel .sculpture-detail-image {
+    height: 600px;
+  }
+
 }

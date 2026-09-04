@@ -74,6 +74,9 @@
 
         <div class="col-12 d-flex gap-2 my-3 justify-content-center">
             <button type="submit" name="action" value="publish" class="btn btn-secondary px-5">Save</button>
+            {% if sculpture %}
+                <a href="{% url 'gallery:sculpture-detail' sculpture.slug %}" class="btn btn-outline-secondary">Cancel</a>
+            {% endif %}
         </div>
 
     </div>

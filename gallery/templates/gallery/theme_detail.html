@@ -1,4 +1,27 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+    <!-- Custom Gallery CSS -->
+    <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
+{% endblock %}
+
 {% block content %}
-<h1>{{ theme.display_name }}</h1>
+<div id="themeCarousel" class="carousel slide carousel" data-bs-ride="false">
+    <div class="carousel-inner">
+        {% for sculpture in sculptures %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+             {% include 'gallery/partials/sculpture_detail_content.html' %}
+        </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#themeCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#themeCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
 {% endblock %}
