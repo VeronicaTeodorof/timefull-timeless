@@ -1,0 +1,96 @@
+{% load humanize %}
+
+<!-- Delete modal -->
+<div class="modal fade" id="deleteSculptureModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete sculpture</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to permanently delete <strong>"{{ sculpture.title }}"</strong>? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <form method="post" action="{% url 'gallery:delete-sculpture' sculpture.slug %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6 py-3">
+            <div class="sculpture-controls d-flex justify-content-end">
+            {% if request.user.is_staff %}
+                <div class="dropdown">
+                    <button class="edit-btn" type="button" title="Actions"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        aria-label="Actions">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="rgb(33, 37, 41)" class="bi bi-three-dots" viewBox="0 0 16 16">
+                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                        </svg>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{% url 'gallery:edit-sculpture' sculpture.slug %}" class="dropdown-item">
+                                Edit
+                            </a>
+                        </li>
+                        {% if sculpture.status != 'sold' %}
+                        <li>
+                            <button type="button" class="dropdown-item text-danger"
+                                data-bs-toggle="modal" data-bs-target="#deleteSculptureModal">
+                                Delete
+                            </button>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            <img src="{{ sculpture.image.url }}"
+                 alt="{{ sculpture.title }}"
+                 class="sculpture-detail-image img-sm-fluid">
+        </div>
+        <div class="col-12 col-md-6 py-3">
+            <div class="title ms-2 ms-lg-5">
+                <h1 class="mt-lg-5">{{ sculpture.title }}</h1>
+
+                {% if sculpture.title_translation %}
+                    <h2 class="text-muted">{{ sculpture.title_translation }}</h2>
+                {% endif %}
+                <h3 class="year">Year: {{ sculpture.year }}</h3>
+            </div>
+            <div class="details ms-2 ms-lg-5 mt-4">
+                <p><span>Material: {{ sculpture.material }}</span><br>
+                    {% if sculpture.dimensions %}
+                        <span>Dimensions: {{ sculpture.dimensions }}</span>
+                    {% endif %}
+                </p>
+            </div>
+             <div class="cost ms-2 ms-lg-5 mt-4">
+                <p>{% if sculpture.status == 'available' %}
+                        <span class="badge text-bg-success">Available</span>
+                    {% endif %}<br>
+                   <span class="fs-5">Price: £{{ sculpture.price|floatformat:0|intcomma }}</span>
+                </p>
+            </div>
+
+            {% if sculpture.status == 'available' %}
+                <div class="actions ms-2 ms-lg-5 my-4 d-flex flex-column gap-2">
+                   <p>Comes with a signed Certificate of Authenticity.</p>
+                    <button class="btn btn-success">Acquire Now</button>
+                    <a href="{% url 'pages/contact.html'}" class="mt-3 link-body-emphasis link-underline-opacity-75 link-underline-opacity-100-hover link-offset-3">
+                        Enquire about this piece</a>
+                 </div>
+            {% elif sculpture.status == 'sold' %}
+                <p class="badge text-bg-secondary ms-lg-5">Sold</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
