@@ -538,15 +538,59 @@ class EditSculptureViewClass(TestCase):
                     kwargs={'slug': self.sculpture.slug})
         )
 
-    def test_edit_sculpture_preserves_existing_image_when_not_changed(self):
+
+@override_settings(STORAGES={
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+})
+class DeleteSculptureViewCase(TestCase):
+    """Tests for delete_sculpture view"""
+    def setUp(self):
+        self.theme = Theme.objects.create(name='Time')
+        self.sculpture = Sculpture.objects.create(
+            title='Test Piece', year=2024, price=100,
+            material='Bronze', image='image/upload/v1/test.jpg',
+        )
+        self.sculpture.themes.add(self.theme)
+        self.url = reverse('gallery:delete-sculpture',
+                           kwargs={'slug': self.sculpture.slug})
+        self.user = get_user_model().objects.create_user(
+            username='testuser', password='testpass'
+        )
+        self.staff_user = get_user_model().objects.create_user(
+            username='staffuser', password='testpass', is_staff=True
+        )
+
+    def test_anonymous_user_redirected_from_delete_sculpture(self):
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_non_staff_user_gets_403_for_delete_sculpture(self):
+        self.client.force_login(self.user)
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, 403)
+
+    def test_staff_can_delete_never_sold_sculpture(self):
         """
-        Tests that submitting the edit form without a new image
-        preserves the sculpture's existing image, rather than
-        requiring a new gaupload every time.
+        Tests that a staff user can permanently delete a sculpture
+        that has never been sold.
         """
         self.client.force_login(self.staff_user)
-        original_image = self.sculpture.image
-        data = {**self.data, "title": "Updated Title"}
-        self.client.post(self.url, data)
-        self.sculpture.refresh_from_db()
-        self.assertEqual(self.sculpture.image, original_image)
+        response = self.client.post(self.url)
+        self.assertFalse(Sculpture.objects.filter(
+            pk=self.sculpture.pk).exists())
+        self.assertRedirects(response, reverse('gallery:gallery'))
+
+    def test_sold_sculpture_cannot_be_deleted(self):
+        """
+        Tests that a sold sculpture is protected from deletion,
+        even by a staff user.
+        """
+        self.sculpture.status = 'sold'
+        self.sculpture.save()
+        self.client.force_login(self.staff_user)
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, 403)
+        self.assertTrue(Sculpture.objects.filter(
+            pk=self.sculpture.pk).exists())
