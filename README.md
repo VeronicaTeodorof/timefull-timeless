@@ -284,7 +284,7 @@ C = could-have.
 #### Cart & Checkout (including order history) Theme
 
 <details><summary>
-11. As a registered user, I want to add a sculpture to my cart, so that I can proceed to payment. (M)
+11. As a registered user, I want to click "Acquire Now" on a sculpture and proceed directly to a terms page, so that I can review purchase details before completing payment. (M)
 </summary>
 
 **Acceptance Criteria:**
@@ -549,8 +549,8 @@ C = could-have.
 - [ ] Given the sculptor selects a file from the file picker, then the picker closes and the upload field displays the name of the chosen file.
 - [ ] Given the sculptor is logged in as a staff user and submits the add-sculpture form with valid data, then the sculpture is created and saved, a success message is shown, and they are redirected to that sculpture's detail page.
 - [ ] Given the sculptor submits the add-sculpture form with invalid or missing required data, then the submission is rejected, a clear error message is shown near the relevant field(s), and the sculptor's other entered data is preserved (with the exception of the selected image).
-- [ ] Given the sculptor successfully adds a new sculpture, when he lands on that sculpture's detail page, then the title, translation, year, material, dimensions, price, status, and image they entered are all displayed correctly.
-- [ ] Given the sculptor is logged in as a staff user, when he view a sculpture's detail page, then he can see an "Edit" button; given an anonymous or non-staff user views the same page, this button is not displayed.
+- [ ] Given the sculptor successfully adds a new sculpture, when he lands on that sculpture's detail page, then the title, translation, year, material, dimensions, price, status, and image he entered are all displayed correctly.
+- [ ] Given the sculptor is logged in as a staff user, when he views a sculpture's detail page, then he can see an "Edit" button; given an anonymous or non-staff user views the same page, this button is not displayed.
 - [ ] Given the sculptor clicks the "Edit" button on a sculpture's detail page, then they navigate to that sculpture's edit page.
 - [ ] Given the sculptor is logged in as a staff user, when he views the edit-sculpture page, then fields for title, title translation, year, material, dimensions, status, price, theme selection, and image upload are all displayed.
 - [ ] Given the sculptor is logged in as a staff user and submits the edit-sculpture form with valid, changed data, then the sculpture's details are updated and saved, a success message is shown, and he is redirected to that sculpture's detail page, correctly reflecting the changes.
@@ -1116,6 +1116,20 @@ While inspired by Amazon's "Buy Now" button, "Acquire Now" is not intended to en
 **Mechanics**
 'Acquire Now' links to the terms page rather than directly into checkout, and 'Enquire about this piece' links to the contact page - both reinforcing that the intended action is an informed one, not an impulse click. Full checkout flow and terms-page behaviour are addressed separately.
 
+#### Terms Page in checkout app
+
+Reached via "Acquire Now" on a sculpture's detail page, this page sits between browsing and payment: it summarises the specific purchase (sculpture, shipping choice, cost breakdown) before the buyer is redirected to Stripe's hosted checkout.
+
+**Layout**
+
+Single column throughout, with no responsive rearrangement between breakpoints; this page contains a summary and a short form), so there's no natural split into two columns at any width. The wireframe below is shown mobile-first; desktop inherits the same structure unchanged.
+
+*Wireframe: terms page mobile*
+<p align="center">
+  <img src="readme-assets/wireframes/checkout-terms-wireframe.png" width="350" alt="Terms page, mobile, single column">
+</p>
+
+Fields and information are ordered by the sequence a buyer needs them to decide and act: sculpture summary (confirming what's being bought) -> shipping method choice -> country choice (only relevant once "Delivery" is selected) -> cost breakdown -> VAT/terms disclosure -> payment button. 
 ---
 
 ### Security Features
