@@ -288,9 +288,17 @@ C = could-have.
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
+- [ ] Given I am a logged-in user viewing a sculpture's detail page, when I click "Acquire Now," then I am taken to a terms page specific to that sculpture.
+- [ ] Given I am not logged in, when I click "Acquire Now," then I am redirected to the login page, and returned to the terms page for that sculpture once logged in.
+- [ ] Given I am on the terms page, when it loads, then I see the sculpture's name and price, matching the sculpture I clicked through from.
+- [ ] Given I am on the terms page, then a "Back to [sculpture name]" link is present, returning me to that sculpture's detail page.
+- [ ] Given I am on the terms page, then I see a choice between Studio Pickup and Delivery.
+- [ ] Given I select Delivery, when the form updates, then a country choice (United Kingdom or Romania) becomes visible, each showing its flat delivery rate.
+- [ ] Given I select Studio Pickup, then no country choice is shown, and delivery cost is excluded from the total.
+- [ ] Given I select a shipping method (and country, if Delivery), then the cost breakdown updates to show Sculpture price, Insurance, and Delivery (if applicable), followed by a Total.
+- [ ] Given I am on the terms page, then a disclosure statement is shown near the payment button, stating that the total shown does not include import VAT, with a link to the full Terms and Conditions.
+- [ ] Given I click the Terms and Conditions link from the terms page, when the static Terms page loads, then it shows a link back to my original sculpture's terms page.
+- [ ] Given the sculpture I am trying to acquire has since been marked as sold, when I try to access its terms page, then I am redirected away with a clear message, rather than being able to proceed to payment.
 
 </details>
 
@@ -1129,7 +1137,8 @@ Single column throughout, with no responsive rearrangement between breakpoints; 
   <img src="readme-assets/wireframes/checkout-terms-wireframe.png" width="350" alt="Terms page, mobile, single column">
 </p>
 
-Fields and information are ordered by the sequence a buyer needs them to decide and act: sculpture summary (confirming what's being bought) -> shipping method choice -> country choice (only relevant once "Delivery" is selected) -> cost breakdown -> VAT/terms disclosure -> payment button. 
+Fields and information are ordered by the sequence a buyer needs them to decide and act: sculpture summary (confirming what's being bought) -> shipping method choice -> country choice (only relevant once "Delivery" is selected) -> cost breakdown -> VAT/terms disclosure -> payment button.
+
 ---
 
 ### Security Features

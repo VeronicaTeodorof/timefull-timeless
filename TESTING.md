@@ -220,16 +220,18 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| GP-04 | Column count at desktop width | Theme cards arrange into 3 columns for tablet and disktop | As expected | Pass | |
-| GP-05 | Column count at mobile width | Theme cards arrange into one column for mobile | As expected | Pass | |
+| RES-06 | Column count at desktop width | Theme cards arrange into 3 columns for tablet and disktop | As expected | Pass | |
+| RES-07 | Column count at mobile width | Theme cards arrange into one column for mobile | As expected | Pass | |
+| RES-08 | "Add sculpture" button on mobile viewport | Displays as a persistent, round FAB in the lower-right corner | As expected | Pass | |
+| RES-09 | "Add sculpture" button on desktop viewport | Displays inline, centered, content-sized, positioned between quote and theme cards | As expected | Pass | |
 
 **Sculpture Detail Page**
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| RES-06 | Layout at mobile width | Image and details stack in a single column | As expected | Pass | |
-| RES-07 | Layout at desktop width (≥768px) | Image and details render in two columns (image left, details right) | As expected | Pass | |
-| RES-08 | Layout transition across breakpoint | Resizing across 768px switches cleanly between stacked and two-column, no overlap or broken spacing | As expected | Pass | |
+| RES-10 | Layout at mobile width | Image and details stack in a single column | As expected | Pass | |
+| RES-11 | Layout at desktop width (≥768px) | Image and details render in two columns (image left, details right) | As expected | Pass | |
+| RES-12 | Layout transition across breakpoint | Resizing across 768px switches cleanly between stacked and two-column, no overlap or broken spacing | As expected | Pass | |
 
 
 #### Navigation links (NAV)
@@ -280,16 +282,16 @@ Two tests were written to capture this:
 | PERM-05 | Anonymous user tries to access '/gallery/add_sculpture/' | Redirects to login page | As expected | Pass | |
 | PERM-06 | Authenticated non-staff user tries to access '/gallery/add_sculpture/' | Gets 403 response | As expected | Pass | |
 | PERM-07 | Staff user tries to access '/gallery/add_sculpture/' from url browser | Page loads successfully | As expected | Pass | |
-| PERM-XX | Anonymous user tries to access edit sculpture page | Redirects to login page | | | |
-| PERM-XX | Authenticated non-staff user tries to access edit sculpture page | Gets 403 response  | | | |
-| PERM-XX | Staff user tries to access edit sculpture page | Page loads successfully | | | |
-| PERM-XX | Anonymous user tries to see edit/delete buttons on sculpture detail | Buttons not visible/rendered | | | |
-| PERM-XX | Non-staff user tries to see edit/delete buttons on sculpture detail | Buttons not visible/rendered | | | |
-| PERM-XX | Staff user tries to see edit/delete buttons on sculpture detail | Buttons visible | | | |
-| PERM-XX | Staff user clicks delete button modal trigger on sculpture detail | Can trigger delete modal | | | |
-| PERM-XX | Anonymous user tries to access edit theme controls / change representative image (gallery) | Controls not visible/accessible | | | |
-| PERM-XX | Non-staff user tries to  edit theme / change representative image (gallery) | Controls not visible/accessible | | | |
-| PERM-XX | Staff user tries to edit theme / change representative image (gallery) | Controls visible/accessible | | | |
+| PERM-08 | Anonymous user tries to access edit sculpture page | Redirects to login page | | | |
+| PERM-09 | Authenticated non-staff user tries to access edit sculpture page | Gets 403 response  | | | |
+| PERM-10 | Staff user tries to access edit sculpture page | Page loads successfully | | | |
+| PERM-11 | Anonymous user tries to see edit/delete buttons on sculpture detail | Buttons not visible/rendered | As expected for edit | Pass for edit | |
+| PERM-12 | Non-staff user tries to see edit/delete buttons on sculpture detail | Buttons not visible/rendered | As expected for edit | Pass for edit | |
+| PERM-13 | Staff user tries to see edit/delete buttons on sculpture detail | Buttons visible | As expected for edit | Pass for edit | |
+| PERM-14 | Staff user clicks delete button modal trigger on sculpture detail | Can trigger delete modal | | | |
+| PERM-15 | Anonymous user tries to access edit theme controls / change representative image (gallery) | Controls not visible/accessible | | | |
+| PERM-16 | Non-staff user tries to  edit theme / change representative image (gallery) | Controls not visible/accessible | | | |
+| PERM-17| Staff user tries to edit theme / change representative image (gallery) | Controls visible/accessible | | | |
 
 #### Gallery page (GP)
 
@@ -302,8 +304,11 @@ Two tests were written to capture this:
 | GP-05 | Card link hover state | Hovering the card shows a visible affordance indicating it's clickable | Zoom on hover | Pass | |
 | GP-06 | Theme name renders in footer| Theme name text appears in a solid-background footer strip below the image| As expected - hardcoded | Pass | |
 | GP-07 | Footer text contrast | Theme name text is legible against the footer's solid background, regardless of the image above it | As expected | Pass | |
-| GP-08 | Footer height consistency | Footer strip height is consistent across cards regardless of image height (masonry) or theme name length | As expected | Pass | |
+| GP-08 | Footer height consistency | Footer strip height is consistent across cards regardless of image height or theme name length | As expected | Pass | |
 | GP-09 | Click 'Add sculpture' button on gallery page | Navigates to add sculpture page | As expected | Pass | |
+| GP-10 | Carousel displays multiple sculptures per theme | Each slide shows a different sculpture's full detail content (image, title, price, etc.) | As expected | Pass | |
+| GP-11 | Carousel navigation controls | Prev/next buttons visible and functional, correctly cycling through slides | As expected | Pass | |
+| GP-12| Carousel controls stay in consistent position across slides | Controls don't shift position when navigating between slides with different image aspect ratios | As expected | Pass | |
 
 
 #### Sculpture Detail
@@ -314,6 +319,17 @@ Two tests were written to capture this:
 | SDP-02 | Desktop layout matches wireframe | Field order and grouping match the desktop wireframe, with image and details in separate columns | As expected | Pass | |
 | SD-03 | Click "Acquire Now"  | Navigates to the terms page | | | |
 | SD-04 | Click "Enquire about this piece" | Navigates to the contact page | | | |
+| SD-05 | Click edit button on sculpture detail | Navigates to that sculpture's edit page | As expected | Pass | |
+| SD-06 | Submit edit-sculpture form with valid changed data | Sculpture's details update, success message shown, redirected to detail page reflecting changes | As expected | Pass | |
+| SD-07 | Edit sculpture without changing the image field | Existing image is preserved, doesn't require re-upload | As expected | Pass | |
+| SD-08 | Edit-sculpture image field shows some default Django text | "Currently: [link]" present "Change:" text are hidden; only the custom upload box is shown | As expected | Pass | |
+| SD-09 | Edit-sculpture image field label | Shows "Change image" on the edit page (not "Upload image (required)" as on add) | As expected | Pass | |
+| SD-10 | Cancel link on edit-sculpture page | Clicking "Cancel" navigates to the sculpture's detail page without saving any changes | As expected | Pass | |
+| SD-11 | Click "Delete" in the actions dropdown | Confirmation modal opens, asking to confirm before proceeding | As expected | Pass | |
+| SD-12 | Delete confirmation modal shows sculpture name | Modal displays the specific sculpture's title, confirming the correct piece before deletion | As expected | Pass | |
+| SD-13 | Confirm deletion | Sculpture is permanently deleted, success message shown, redirected to gallery page | As expected | Pass | |
+| SD-14 | Cancel deletion in modal | Modal closes, nothing is deleted, sculpture remains unchanged | | | |
+| SD-15 | Delete option hidden for sold sculptures | Actions dropdown shows "Edit" but not "Delete" when sculpture status is "sold" | As expected | Pass | |
 
 #### Forms
 ##### Add Sculpture Form
@@ -327,10 +343,11 @@ Two tests were written to capture this:
 | ASF-06 | Select an image file in the file picker | File picker closes; a visual indicator or message confirms the file was selected/attached | File name shown | Pass | |
 | ASF-07 | Hover over form buttons (Save/Save as Draft) | Each button shows a visible hover state (color/shadow/cursor change) indicating it's interactive | As expected | Pass | |
 | ASF-08 | Submit form with all valid data | Form saves; a success message/confirmation is shown to the user (not just a redirect with no feedback) | As expected | Pass | |
-| ASF-09 | Submit form with invalid/missing data | Form does not save; relevant, clear error message(s) shown next to the failing field(s) | Nothing happens | Fail | |
+| ASF-09 | Submit form with invalid/missing data | Form does not save; relevant, clear error message(s) shown next to the failing field(s) | As expected | Pass | |
 | ASF-10 | Save a valid sculpture as staff/sculptor, then view the gallery logged in as (or logged out from) a non-staff account | Newly saved sculpture appears in the public gallery | Nothing happens | Fail | |
 | ASF-11 | Save a sculpture as draft then view the gallery as a non-staff account | Sculpture does NOT appear in the public gallery | Nothing happens | Fail | |
 | ASF-12 | Save a sculpture as draft then view it via sculptor's controls (staff account) | Sculpture DOES appear in sculptor's controls | Nothing happens | Fail | |
+| ASF-13 | View detail page immediately after successful add | Title, translation, year, material, dimensions, price, status, and image all display exactly as entered | | | |
 
 
 
@@ -371,6 +388,31 @@ Two tests were written to capture this:
 | CT-22 | Representative image across multiple themes | A single sculpture tagged with multiple themes displays as the representative image on each of those themes cards independently | As expected | Pass | |
 | CT-23 | Theme card updates after its featured sculpture is removed | Removing a sculpture that was shown on a theme's card; that theme still exists, and its card now shows a different remaining sculpture instead | As expected | Pass | |
 | CT-24 | Empty theme still selectable in sculpture form | A theme with no sculptures assigned still appears as an option in the themes multi-select on the add-sculpture form | As expected | Pass | Pass |
+
+
+## Terms Page (TP)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---|---|---|---|---|---|
+| TP-01 | Click "Acquire Now" on a sculpture detail page, logged in | Navigates to terms page for that sculpture | | | |
+| TP-02 | Click "Acquire Now" while logged out | Redirected to login page | | | |
+| TP-03 | Log in after being redirected from "Acquire Now" | Redirected to the terms page for the original sculpture, not to a generic page | | | |
+| TP-04 | Terms page loads | Sculpture name and price shown correctly, matching the sculpture clicked | | | |
+| TP-05 | "Back to [sculpture]" link present | Renders near the top of the page | | | |
+| TP-06 | Click "Back to [sculpture]" link | Navigates to that sculpture's detail page | | | |
+| TP-07 | Select "Studio Pickup" | Country options hidden/not shown; delivery cost line shows £0 or is omitted from breakdown | | | |
+| TP-08 | Select "Delivery" | Country choice (UK/Romania) becomes visible | | | |
+| TP-09 | Select "Delivery" then "United Kingdom" | Delivery cost shows £40.00; total updates correctly | | | |
+| TP-10 | Select "Delivery" then "Romania" | Delivery cost shows £15.00; total updates correctly | | | |
+| TP-11 | Cost breakdown — Sculpture line | Matches the sculpture's actual price | | | |
+| TP-12 | Cost breakdown — Insurance line | Correctly calculated from sculpture price × insurance rate | | | |
+| TP-13 | Cost breakdown — Total | Equals Sculpture + Insurance + Delivery (or Sculpture + Insurance if Pickup) | | | |
+| TP-14 | VAT disclosure text present | Renders above the payment button, mentions VAT explicitly | | | |
+| TP-15 | Click "Terms and Conditions" link within VAT disclosure | Navigates to static Terms page | | | |
+| TP-19 | Anonymous user attempts to access terms page URL directly | Redirected to login | | | |
+| TP-20 | Non-staff authenticated user accesses terms page for a valid sculpture | Page loads normally | | | |
+| TP-21 | Access terms page (via button or direct URL) for a sculpture with `status='sold'` | Redirected away (e.g. to sculpture detail) with a message, rather than allowed to proceed | | | |
+
 
 ---
 
