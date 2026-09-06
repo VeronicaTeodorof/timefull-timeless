@@ -4,6 +4,7 @@ from .models import DeliveryCost
 from pages.models import BusinessSettings
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -31,3 +32,18 @@ def terms_view(request, sculpture_slug):
                    'ro_cost': ro_cost,
                    'insurance_cost': insurance_cost, })
 
+
+def create_checkout_session(request, sculpture_slug):
+    """
+    Bare version for testing form submission only - confirms the
+    sculpture and the buyer's shipping method/country selections
+    are received correctly via POST, before any Stripe logic is added.
+    """
+    sculpture = get_object_or_404(Sculpture, slug=sculpture_slug)
+    shipping_method = request.POST.get('shipping_method')
+    country = request.POST.get('country')
+    return HttpResponse(
+        f"Sculpture: {sculpture.title}, "
+        f"Method: {shipping_method}, "
+        f"Country: {country}"
+    )
