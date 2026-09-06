@@ -394,24 +394,24 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---|---|---|---|---|---|
-| TP-01 | Click "Acquire Now" on a sculpture detail page, logged in | Navigates to terms page for that sculpture | | | |
-| TP-02 | Click "Acquire Now" while logged out | Redirected to login page | | | |
-| TP-03 | Log in after being redirected from "Acquire Now" | Redirected to the terms page for the original sculpture, not to a generic page | | | |
-| TP-04 | Terms page loads | Sculpture name and price shown correctly, matching the sculpture clicked | | | |
-| TP-05 | "Back to [sculpture]" link present | Renders near the top of the page | | | |
+| TP-01 | Click "Acquire Now" on a sculpture detail page, logged in | Navigates to terms page for that sculpture | As expected | Pass | |
+| TP-02 | Click "Acquire Now" while logged out | Redirected to login page | As expected | Pass | |
+| TP-03 | Log in after being redirected from "Acquire Now" | Redirected to the terms page for the original sculpture, not to a generic page | As expected | Pass | |
+| TP-04 | Terms page loads | Sculpture name and price shown correctly, matching the sculpture clicked | As expected | Pass | |
+| TP-05 | "Back to [sculpture]" link present | Renders near the top of the page | As expected | Pass | |
 | TP-06 | Click "Back to [sculpture]" link | Navigates to that sculpture's detail page | | | |
-| TP-07 | Select "Studio Pickup" | Country options hidden/not shown; delivery cost line shows £0 or is omitted from breakdown | | | |
-| TP-08 | Select "Delivery" | Country choice (UK/Romania) becomes visible | | | |
-| TP-09 | Select "Delivery" then "United Kingdom" | Delivery cost shows £40.00; total updates correctly | | | |
-| TP-10 | Select "Delivery" then "Romania" | Delivery cost shows £15.00; total updates correctly | | | |
-| TP-11 | Cost breakdown — Sculpture line | Matches the sculpture's actual price | | | |
-| TP-12 | Cost breakdown — Insurance line | Correctly calculated from sculpture price × insurance rate | | | |
-| TP-13 | Cost breakdown — Total | Equals Sculpture + Insurance + Delivery (or Sculpture + Insurance if Pickup) | | | |
-| TP-14 | VAT disclosure text present | Renders above the payment button, mentions VAT explicitly | | | |
-| TP-15 | Click "Terms and Conditions" link within VAT disclosure | Navigates to static Terms page | | | |
-| TP-19 | Anonymous user attempts to access terms page URL directly | Redirected to login | | | |
-| TP-20 | Non-staff authenticated user accesses terms page for a valid sculpture | Page loads normally | | | |
-| TP-21 | Access terms page (via button or direct URL) for a sculpture with `status='sold'` | Redirected away (e.g. to sculpture detail) with a message, rather than allowed to proceed | | | |
+| TP-07 | Select "Studio Pickup" | Country options hidden/not shown; delivery cost line shows £0 | As expected | Pass | |
+| TP-08 | Select "Delivery" | Country choice (UK/Romania) becomes visible | As expected | Pass | |
+| TP-09 | Select "Delivery" then "United Kingdom" | Delivery cost shows £40.00; total updates correctly | As expected | Pass | |
+| TP-10 | Select "Delivery" then "Romania" | Delivery cost shows £15.00; total updates correctly | As expected | Pass | |
+| TP-11 | Cost breakdown — Sculpture line | Matches the sculpture's actual price | As expected | Pass | |
+| TP-12 | Cost breakdown — Insurance line | Insurance value equals sculpture price × BusinessSettings.insurance_rate (e.g. £100 sculpture × 1.5% = £1.50), rounded to 2 decimal places | As expected | Pass | |
+| TP-13 | Cost breakdown — Total | Equals Sculpture + Insurance + Delivery (or Sculpture + Insurance if Pickup) | As expected | Pass | |
+| TP-14 | VAT disclosure text present | Renders above the payment button, mentions VAT explicitly | As expected | Pass | |
+| TP-15 | Click "Terms and Conditions" link within VAT disclosure | Navigates to static Terms page | As expected | Pass | |
+| TP-19 | Anonymous user attempts to access terms page URL directly | Redirected to login | As expected | Pass | |
+| TP-20 | Non-staff authenticated user accesses terms page for a valid sculpture | Page loads normally | As expected | Pass | |
+| TP-21 | Access terms page (via button or direct URL) for a sculpture with `status='sold'` | Redirected away (e.g. to sculpture detail) with a message, rather than allowed to proceed | As expected | Pass | |
 
 
 ---
