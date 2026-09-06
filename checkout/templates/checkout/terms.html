@@ -62,6 +62,9 @@
                 <input class="form-check-input" type="radio" name="country" id="country-ro" value="RO">
                 <label class="form-check-label" for="country-ro">Romania - £{{ ro_cost.cost }}</label>
             </div>
+            <p class="small text-muted mt-2 mb-0">
+                For other countries <a href="{% url 'pages:contact' %}">get in touch</a> and we'll do our best to help.
+            </p>
         </div>
 
         <!-- Price breakdown -->
@@ -88,6 +91,15 @@
                 <span>Total</span>
                 <span id="cost-total">£{{ sculpture.price|add:insurance_cost }}</span>
             </div>
+            <p class="small text-muted mb-3">
+                This total doesn't include import VAT, which may apply for UK deliveries.
+                See our <a href="">Terms and Conditions</a>
+                for details on VAT, packaging, and accompanying paperwork.
+            </p>
+
+            <button type="submit" class="btn btn-secondary w-100" href="">
+                Proceed to payment
+            </button>
         </div>
     </div>
 {% endblock %}
