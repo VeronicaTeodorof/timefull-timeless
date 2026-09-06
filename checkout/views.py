@@ -1,9 +1,9 @@
-from django.shortcuts import render
 from gallery.models import Sculpture
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import DeliveryCost
 from pages.models import BusinessSettings
+from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect, render
 
 
 # Create your views here.
@@ -17,6 +17,9 @@ def terms_view(request, sculpture_slug):
     A view for terms and conditions before proceeding to checkout
     """
     sculpture = get_object_or_404(Sculpture, slug=sculpture_slug)
+    if sculpture.status == 'sold':
+        messages.info(request, "This piece has already been acquired.")
+        return redirect('gallery:sculpture-detail', sculpture_slug)
     uk_cost = DeliveryCost.objects.get(country='UK')
     ro_cost = DeliveryCost.objects.get(country='RO')
     business_settings = BusinessSettings.load()
