@@ -897,9 +897,13 @@ Code Institute - *Boutique Ado* tutorial
 - https://www.tsishipping.com/resource-center/how-do-i-ship-sculpture
 
 **Implementation:**
-- Django Singleton Model - https://www.vicentereyes.org/blog/the-django-singleton-model-how-to-manage-page-headers-without-a-cms-c47a90f8-
+- Django Singleton Model:
+ - https://www.vicentereyes.org/blog/the-django-singleton-model-how-to-manage-page-headers-without-a-cms-c47a90f8-
+ - https://globaldevgroup.medium.com/practical-application-of-singleton-design-pattern-in-django-1f053e23d864
 - Django validators - https://docs.djangoproject.com/en/6.1/ref/validators/
 - Cloudinary Field - https://cloudinary.com/documentation/django_image_and_video_upload#set_upload_options_on_a_cloudinaryfield
+- Passing data from Django templates to JavaScript via data-* attributes:
+  https://adamj.eu/tech/2022/10/06/how-to-safely-pass-data-to-javascript-in-a-django-template/
 
 ---
 

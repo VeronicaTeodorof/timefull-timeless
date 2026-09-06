@@ -65,7 +65,13 @@
         </div>
 
         <!-- Price breakdown -->
-        <div id="cost-breakdown" class="border-top pt-3 mb-3">
+        <!-- resources for translating DTL into JS:
+         - https://adamj.eu/tech/2022/10/06/how-to-safely-pass-data-to-javascript-in-a-django-template/ -->
+        <div id="cost-breakdown" class="border-top pt-3 mb-3"
+            data-sculpture-price="{{ sculpture.price }}"
+            data-insurance-cost="{{ insurance_cost }}"
+            data-uk-cost="{{ uk_cost.cost }}"
+            data-ro-cost="{{ ro_cost.cost }}">
             <div class="d-flex justify-content-between">
                 <span class="text-muted">Sculpture</span>
                 <span id="cost-sculpture">£{{ sculpture.price }}</span>
