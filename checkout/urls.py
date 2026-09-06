@@ -10,5 +10,6 @@ urlpatterns = [
     path('create-session/<slug:sculpture_slug>/',
          views.create_checkout_session,
          name='create_checkout_session'),
+    path('success/', views.checkout_success, name='checkout_success'),
 
 ]

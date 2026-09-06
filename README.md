@@ -905,6 +905,11 @@ Code Institute - *Boutique Ado* tutorial
 - Passing data from Django templates to JavaScript via data-* attributes:
   https://adamj.eu/tech/2022/10/06/how-to-safely-pass-data-to-javascript-in-a-django-template/
 
+**Checkout Session**
+- https://docs.stripe.com/payments/checkout/how-checkout-works
+- https://docs.stripe.com/api/checkout/sessions
+- https://learndjango.com/tutorials/django-stripe-tutorial#stripe-hosted-page
+
 ---
 
 ## 3. Skeleton Plane

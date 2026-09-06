@@ -4,7 +4,10 @@ from .models import DeliveryCost
 from pages.models import BusinessSettings
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
-from django.http import HttpResponse
+import stripe
+from django.conf import settings
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 # Create your views here.
@@ -24,7 +27,8 @@ def terms_view(request, sculpture_slug):
     uk_cost = DeliveryCost.objects.get(country='UK')
     ro_cost = DeliveryCost.objects.get(country='RO')
     business_settings = BusinessSettings.load()
-    insurance_cost = round(sculpture.price * business_settings.insurance_rate, 2)
+    insurance_cost = round(
+        sculpture.price * business_settings.insurance_rate, 2)
     return render(request,
                   'checkout/terms.html',
                   {'sculpture': sculpture,
@@ -35,15 +39,77 @@ def terms_view(request, sculpture_slug):
 
 def create_checkout_session(request, sculpture_slug):
     """
-    Bare version for testing form submission only - confirms the
-    sculpture and the buyer's shipping method/country selections
-    are received correctly via POST, before any Stripe logic is added.
+    Creates a Stripe Checkout Session for the given sculpture, based
+    on the buyer's shipping method (and country, if delivery) selected
+    on the terms page, then redirects to Stripe's hosted checkout page.
     """
     sculpture = get_object_or_404(Sculpture, slug=sculpture_slug)
     shipping_method = request.POST.get('shipping_method')
     country = request.POST.get('country')
-    return HttpResponse(
-        f"Sculpture: {sculpture.title}, "
-        f"Method: {shipping_method}, "
-        f"Country: {country}"
-    )
+
+    business_settings = BusinessSettings.load()
+    insurance_cost = round(
+        sculpture.price * business_settings.insurance_rate, 2)
+
+    line_items = [
+        {
+            'price_data': {
+                'currency': 'gbp',
+                'product_data': {
+                    'name': sculpture.title,
+                    'images': [sculpture.image.url],
+                },
+                'unit_amount': int(sculpture.price * 100),
+            },
+            'quantity': 1,
+        },
+        {
+            'price_data': {
+                'currency': 'gbp',
+                'product_data': {'name': 'Insurance'},
+                'unit_amount': int(insurance_cost * 100),
+            },
+            'quantity': 1,
+        },
+    ]
+
+    session_params = {
+        'payment_method_types': ['card'],
+        'line_items': line_items,
+        'mode': 'payment',
+        'success_url': request.build_absolute_uri('/checkout/success/'),
+        'cancel_url': request.build_absolute_uri(
+            f'/checkout/terms/{sculpture_slug}/'
+        ),
+        'customer_email': request.user.email,
+        'metadata': {
+            'sculpture_slug': sculpture.slug,
+            'shipping_method': shipping_method,
+            'country': country or '',
+        },
+    }
+
+    if shipping_method == 'delivery':
+        delivery_cost = DeliveryCost.objects.get(country=country).cost
+        line_items.append({
+            'price_data': {
+                'currency': 'gbp',
+                'product_data': {'name': f'Delivery ({country})'},
+                'unit_amount': int(delivery_cost * 100),
+            },
+            'quantity': 1,
+        })
+        session_params['shipping_address_collection'] = {
+            'allowed_countries': [country]
+        }
+
+    session = stripe.checkout.Session.create(**session_params)
+    return redirect(session.url, code=303)
+
+
+def checkout_success(request):
+    """
+    Bare success page for after Stripe redirects following a
+    completed payment. Displays a simple confirmation for now.
+    """
+    return render(request, 'checkout/checkout_success.html')
