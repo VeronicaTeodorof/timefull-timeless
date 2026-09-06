@@ -12,3 +12,7 @@ def about(request):
 
 def contact(request):
     return render(request, 'pages/contact.html')
+
+
+def terms_view(request):
+    return render(request, 'pages/terms.html')
