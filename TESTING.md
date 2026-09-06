@@ -413,6 +413,22 @@ Two tests were written to capture this:
 | TP-20 | Non-staff authenticated user accesses terms page for a valid sculpture | Page loads normally | As expected | Pass | |
 | TP-21 | Access terms page (via button or direct URL) for a sculpture with `status='sold'` | Redirected away (e.g. to sculpture detail) with a message, rather than allowed to proceed | As expected | Pass | |
 
+## Checkout Session Creation (CS)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---|---|---|---|---|---|
+| CS-01 | Submit terms form with "Studio Pickup" selected | Redirects to Stripe's hosted checkout page | | | |
+| CS-02 | Stripe checkout page - line items shown | Sculpture and Insurance line items appear with correct names and amounts | | | |
+| CS-03 | Stripe checkout page - total | Total matches Sculpture + Insurance (no delivery line for Pickup) | | | |
+| CS-04 | Stripe checkout page - email prefilled | Buyer's email is prefilled and matches their account email | | | |
+| CS-05 | Submit terms form with "Delivery" + "United Kingdom" selected | Redirects to Stripe's hosted checkout page, with a Delivery (UK) line item and a shipping address form | | | |
+| CS-06 | Submit terms form with "Delivery" + "Romania" selected | Redirects to Stripe's hosted checkout page, with a Delivery (RO) line item and a shipping address form | | | |
+| CS-07 | Complete payment on Stripe's hosted page using test card 4242 4242 4242 4242 | Payment succeeds; redirected to /checkout/success/ | | | |
+| CS-08 | Success page after payment | Displays confirmation message, matches site branding (nav/footer intact) | | | |
+| CS-09 | Cancel payment on Stripe's hosted page (click back/cancel) | Redirected back to the terms page for the original sculpture | | | |
+| CS-10 | Sculpture status after successful test payment | Status changes to `sold` | | | |
+| CS-11 | Attempt to POST directly to create-session URL for a sold sculpture | Redirected away with a message, rather than a Stripe session being created | | | |
+
 
 ---
 
