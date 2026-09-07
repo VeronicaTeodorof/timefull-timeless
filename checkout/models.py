@@ -62,5 +62,24 @@ class Order(models.Model):
 
     def __str__(self):
         return self.order_number
-
     # end of Boutique Ado copied code
+
+
+class OrderLineItem(models.Model):
+    """Stores data about each specific sculpture within a purchase."""
+    order = models.ForeignKey(Order,
+                              on_delete=models.CASCADE,
+                              related_name='lineitems')
+    sculpture = models.ForeignKey('gallery.Sculpture',
+                                  on_delete=models.CASCADE)
+    price_at_purchase = models.DecimalField(max_digits=6, decimal_places=2)
+    insurance_cost = models.DecimalField(max_digits=5, decimal_places=2)
+    delivery_cost = models.DecimalField(max_digits=5,
+                                        decimal_places=2,
+                                        default=0)
+    lineitem_total = models.DecimalField(max_digits=7,
+                                         decimal_places=2,
+                                         editable=False)
+
+    def __str__(self):
+        return f"Order {self.order.order_number} - {self.sculpture.title}"
