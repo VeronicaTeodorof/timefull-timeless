@@ -351,9 +351,11 @@ C = could-have.
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
+- [ ] Given I complete a successful payment, when I am redirected, then I land on a branded success page confirming my purchase.
+- [ ] Given I cancel or abandon, when I am redirected, then I land back on the terms page for that sculpture, with a clear message confirming the transaction was cancelled and no charge was made.
+- [ ] Given my payment succeeds, then a confirmation email is sent to my verified account email, containing the sculpture purchased, the total charged, and the shipping method selected.
+- [ ] Given I edited my email on Stripe's checkout page to something different from my verified account email, when the confirmation email is sent, then it is also sent to that edited address, in addition to my verified account email.
+- [ ] Given my payment was not made or was unsuccessful, then I do not receive a confirmation email, since no legitimate transaction occurred.
 
 </details>
 
@@ -578,9 +580,11 @@ C = could-have.
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
+- [ ] Given a buyer completes a successful payment, then an email is sent to the business owner containing the sculpture's name, the buyer's details, the shipping method (and country, if delivery), and the order total.
+- [ ] Given the business owner receives this email, when they log into Django admin, then they can view a list of all Order records, including the one just created.
+- [ ] Given the business owner views an order in Django admin, then they can see all its details — buyer info, sculpture, shipping method, costs, and stripe_pid - without needing to consult Stripe's own dashboard.
+- [ ] Given an order has been fulfilled, when the business owner marks its shipped_at field in Django admin, then this is saved and reflected the next time the order is viewed.
+- [ ] Given a webhook event fails signature verification, when the request is rejected, then no order is created and no email is sent — protecting against acting on unverified events.
 
 </details>
 
