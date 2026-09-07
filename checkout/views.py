@@ -44,8 +44,13 @@ def create_checkout_session(request, sculpture_slug):
     on the terms page, then redirects to Stripe's hosted checkout page.
     """
     sculpture = get_object_or_404(Sculpture, slug=sculpture_slug)
+    if sculpture.status == 'sold':
+        messages.info(request, "This piece has already been acquired.")
+        return redirect('gallery:sculpture-detail', sculpture_slug)
+
     shipping_method = request.POST.get('shipping_method')
     country = request.POST.get('country')
+    STRIPE_COUNTRY_CODES = {'UK': 'GB', 'RO': 'RO'}
 
     business_settings = BusinessSettings.load()
     insurance_cost = round(
@@ -100,7 +105,7 @@ def create_checkout_session(request, sculpture_slug):
             'quantity': 1,
         })
         session_params['shipping_address_collection'] = {
-            'allowed_countries': [country]
+            'allowed_countries': [STRIPE_COUNTRY_CODES[country]]
         }
 
     session = stripe.checkout.Session.create(**session_params)
