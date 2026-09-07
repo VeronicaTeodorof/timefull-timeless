@@ -6,7 +6,7 @@ from checkout.models import Order
 User = get_user_model()
 
 
-class OrderRawModelTests(TestCase):
+class OrderModelTests(TestCase):
 
     def setUp(self):
         """
@@ -78,3 +78,21 @@ class OrderRawModelTests(TestCase):
             )
         except IntegrityError:
             self.fail("shipped_at should allow null=True")
+
+    def test_order_number_auto_generates_on_save(self):
+        """
+        Tests that a new Order is given an order_number automatically
+        on save
+        """
+        order = Order.objects.create(
+            user=self.user,
+            full_name='Test Buyer',
+            email='buyer@example.com',
+            phone_number='07123456789',
+            country='UK',
+            town_or_city='London',
+            street_address1='123 Test Street',
+            shipping_method='pickup',
+            stripe_pid='pi_test999',
+        )
+        self.assertTrue(order.order_number)
