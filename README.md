@@ -352,7 +352,6 @@ C = could-have.
 
 **Acceptance Criteria:**
 - [ ] Given I complete a successful payment, when I am redirected, then I land on a branded success page confirming my purchase.
-- [ ] Given I cancel or abandon, when I am redirected, then I land back on the terms page for that sculpture, with a clear message confirming the transaction was cancelled and no charge was made.
 - [ ] Given my payment succeeds, then a confirmation email is sent to my verified account email, containing the sculpture purchased, the total charged, and the shipping method selected.
 - [ ] Given I edited my email on Stripe's checkout page to something different from my verified account email, when the confirmation email is sent, then it is also sent to that edited address, in addition to my verified account email.
 - [ ] Given my payment was not made or was unsuccessful, then I do not receive a confirmation email, since no legitimate transaction occurred.
@@ -827,8 +826,8 @@ Fields largely follow the structure of Code Institute's "Boutique Ado" tutorial'
 | phone_number | CharField(max_length=20) | |
 | country | CharField(max_length=2) | see Relationships and Constraints p.5 |
 | postcode | CharField(max_length=20, null=True, blank=True) | See Relationships and Constraints p.6 |
-| town_or_city | CharField(max_length=40) | |
-| street_address1 | CharField(max_length=80) | |
+| town_or_city | CharField(max_length=40, null=True, blank=True) | Nullable for studio pickup orders, where no shipping address is collected |
+| street_address1 | CharField(max_length=80, null=True, blank=True) | Nullable for studio pickup orders, where no shipping address is collected |
 | street_address2 | CharField(max_length=80, null=True, blank=True) | |
 | region | CharField(max_length=80, null=True, blank=True) | |
 | date | DateTimeField(auto_now_add=True) | |
