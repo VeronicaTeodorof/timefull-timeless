@@ -167,3 +167,17 @@ class OrderLineItemRawModelTests(TestCase):
         """
         field = OrderLineItem._meta.get_field('lineitem_total')
         self.assertFalse(field.editable)
+
+    def test_lineitem_total_calculates_correctly(self):
+        """
+        Tests that lineitem_total is calculated as
+        price_at_purchase + insurance_cost + delivery_cost.
+        """
+        lineitem = OrderLineItem.objects.create(
+            order=self.order,
+            sculpture=self.sculpture,
+            price_at_purchase=100.00,
+            insurance_cost=1.50,
+            delivery_cost=40.00,
+        )
+        self.assertEqual(lineitem.lineitem_total, 141.50)
