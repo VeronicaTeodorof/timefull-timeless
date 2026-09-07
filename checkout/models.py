@@ -15,3 +15,7 @@ class DeliveryCost(models.Model):
     cost = models.DecimalField(
         max_digits=5,
         decimal_places=2)
+
+
+class Order(models.Model):
+    pass
