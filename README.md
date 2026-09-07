@@ -878,7 +878,7 @@ Notes:
 
 - `Sculpture.reserved_by` was added after the ERD was finalized (not shown in diagram). Needed to distinguish who holds a reservation, so only that buyer can complete the purchase while others still see the sculpture as reserved.
 
--`Sculpture.created_at` was added to support Theme.get_representative_image()'s fallback logic — determining which sculpture's image to display when a theme has no manually chosen representative sculpture, ordered by most recently added.
+- `Sculpture.created_at` was added to support Theme.get_representative_image()'s fallback logic — determining which sculpture's image to display when a theme has no manually chosen representative sculpture, ordered by most recently added.
 
 
 #### Resources consulted
@@ -1147,7 +1147,7 @@ Reached via "Acquire Now" on a sculpture's detail page, this page sits between b
 
 **Layout**
 
-Single column throughout, with no responsive rearrangement between breakpoints; this page contains a summary and a short form), so there's no natural split into two columns at any width. The wireframe below is shown mobile-first; desktop inherits the same structure unchanged.
+Single column throughout, with no responsive rearrangement between breakpoints; this page contains a summary and a short form, so there's no natural split into two columns at any width. The wireframe below is shown mobile-first; desktop inherits the same structure unchanged.
 
 *Wireframe: terms page mobile*
 <p align="center">
@@ -1155,6 +1155,9 @@ Single column throughout, with no responsive rearrangement between breakpoints; 
 </p>
 
 Fields and information are ordered by the sequence a buyer needs them to decide and act: sculpture summary (confirming what's being bought) -> shipping method choice -> country choice (only relevant once "Delivery" is selected) -> cost breakdown -> VAT/terms disclosure -> payment button.
+
+**Note:**
+  An optional phone number field was added between the shipping method choice and the cost breakdown. It was decided to place it here  because Stripe's phone collection makes the field mandatory once enabled, which wasn't considered essential for this project since other ways of ensuring reliable communication were already in place. Collecting it optionally instead - with a short explanation of its use (courier coordination for delivery, arranging a pickup time for studio collection) - respects buyer choice while still making the option available. The value is passed through the Checkout Session's `metadata` (rather than through Stripe's own phone field, which stays unused) so it reaches the webhook alongside the rest of the order data.
 
 ---
 ### Payment Webhook

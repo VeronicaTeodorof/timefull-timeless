@@ -93,6 +93,8 @@ def create_checkout_session(request, sculpture_slug):
             'sculpture_slug': sculpture.slug,
             'shipping_method': shipping_method,
             'country': country or '',
+            'user_id': str(request.user.id),
+            'phone_number': request.POST.get('phone_number', ''),
         },
     }
 
