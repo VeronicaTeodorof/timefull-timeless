@@ -417,17 +417,17 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---|---|---|---|---|---|
-| CS-01 | Submit terms form with "Studio Pickup" selected | Redirects to Stripe's hosted checkout page | | | |
-| CS-02 | Stripe checkout page - line items shown | Sculpture and Insurance line items appear with correct names and amounts | | | |
-| CS-03 | Stripe checkout page - total | Total matches Sculpture + Insurance (no delivery line for Pickup) | | | |
-| CS-04 | Stripe checkout page - email prefilled | Buyer's email is prefilled and matches their account email | | | |
-| CS-05 | Submit terms form with "Delivery" + "United Kingdom" selected | Redirects to Stripe's hosted checkout page, with a Delivery (UK) line item and a shipping address form | | | |
-| CS-06 | Submit terms form with "Delivery" + "Romania" selected | Redirects to Stripe's hosted checkout page, with a Delivery (RO) line item and a shipping address form | | | |
-| CS-07 | Complete payment on Stripe's hosted page using test card 4242 4242 4242 4242 | Payment succeeds; redirected to /checkout/success/ | | | |
-| CS-08 | Success page after payment | Displays confirmation message, matches site branding (nav/footer intact) | | | |
+| CS-01 | Submit terms form with "Studio Pickup" selected | Redirects to Stripe's hosted checkout page | As expected | Pass | |
+| CS-02 | Stripe checkout page - line items shown | Sculpture and Insurance line items appear with correct names and amounts | As expected | Pass | |
+| CS-03 | Stripe checkout page - total | Total matches Sculpture + Insurance (no delivery line for Pickup) | As expected | Pass | |
+| CS-04 | Stripe checkout page - email prefilled | Buyer's email is prefilled and matches their account email | As expected | Pass | |
+| CS-05 | Submit terms form with "Delivery" + "United Kingdom" selected | Redirects to Stripe's hosted checkout page, with a Delivery (UK) line item and a shipping address form | As expected | Pass | |
+| CS-06 | Submit terms form with "Delivery" + "Romania" selected | Redirects to Stripe's hosted checkout page, with a Delivery (RO) line item and a shipping address form | As expected | Pass | |
+| CS-07 | Complete payment on Stripe's hosted page using test card 4242 4242 4242 4242 | Payment succeeds; redirected to /checkout/success/ | As expected | Pass | |
+| CS-08 | Success page after payment | Displays confirmation message, matches site branding (nav/footer intact) | As expected | Pass | |
 | CS-09 | Cancel payment on Stripe's hosted page (click back/cancel) | Redirected back to the terms page for the original sculpture | | | |
 | CS-10 | Sculpture status after successful test payment | Status changes to `sold` | | | |
-| CS-11 | Attempt to POST directly to create-session URL for a sold sculpture | Redirected away with a message, rather than a Stripe session being created | | | |
+| CS-11 | Attempt to POST directly to create-session URL for a sold sculpture | Redirected away with a message, rather than a Stripe session being created | as expected | Pass | |
 
 
 ---
@@ -533,6 +533,7 @@ Given that a field's default validation runs before custom clean() logic, when t
 ## Known Bugs / Limitations
 
 - Custom 403 error page -  not yet built; Django's default 403 page is currently shown to non-staff authenticated users blocked from staff-only controls. Functionally correct, for consistency only.
+- No user-facing email-change flow - registered users can't update their account email after signup; a stale email is a permanent gap until corrected manually via Django admin. django-allauth provides most of the underlying logic for email change and re-verification, making this a low-effort addition, but it's deliberately out of MVP scope (not in the MVP Features Index), left as a clear next-priority feature. The webhook's dual-send behaviour (see Data Schema, Relationships and Constraints) partially mitigates this gap, but isn't a substitute for the feature itself.
 
 ---
 

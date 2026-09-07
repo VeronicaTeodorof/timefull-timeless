@@ -859,6 +859,7 @@ Fields largely follow the structure of Code Institute's "Boutique Ado" tutorial'
 6. Although postcode is an important part of the delivery process in the UK, in Romania it's in practice not frequently used and buyers may not specify it - this field is therefore set to 'null=True', 'blank=True'.
 7. `dimensions` is stored as free text (CharField, null=True, blank=True) rather than structured fields, because the artist's own records are inconsistent - some pieces are documented with two measurements, others with only one. This is a concession to the real data, not a preferred design; dimensions should ideally be entered consistently, and a structured field would be the better long-term choice once that discipline is in place.
 8. `weight` is modelled (DecimalField, validated with a minimum, nullable) since it's a genuinely necessary field for the real business - shipping cost and courier requirements for metal sculptures - but the artist's existing records don't include it. The model supports weight without enforcing it, though in practice no sculpture in this dataset currently has a recorded value.
+9. `Order.email` is populated from `request.user.email` (the buyer's verified account email) rather than from the email Stripe's checkout session records. Since Stripe's hosted page shows the email field pre-filled but editable, a buyer could in principle change it before making the payment - but this would bypass the one guarantee available in this flow: allauth's email verification confirms the account email is a real, reachable address, while an edited field on Stripe's page carries no such guarantee. Given the value of these transactions, this is treated as too significant a risk to leave unaddressed — the account email, not whatever was typed at checkout, is the one Order communication should rely on.
 
 #### ERD
 
@@ -909,6 +910,9 @@ Code Institute - *Boutique Ado* tutorial
 - https://docs.stripe.com/payments/checkout/how-checkout-works
 - https://docs.stripe.com/api/checkout/sessions
 - https://learndjango.com/tutorials/django-stripe-tutorial#stripe-hosted-page
+
+**Webhooks in Django**
+- https://dev.to/aakas/webhooks-in-django-a-comprehensive-guide-44jp
 
 ---
 
@@ -1149,6 +1153,19 @@ Single column throughout, with no responsive rearrangement between breakpoints; 
 Fields and information are ordered by the sequence a buyer needs them to decide and act: sculpture summary (confirming what's being bought) -> shipping method choice -> country choice (only relevant once "Delivery" is selected) -> cost breakdown -> VAT/terms disclosure -> payment button.
 
 ---
+### Payment Webhook
+The webhook is the single point in the checkout flow that can be trusted to confirm a payment genuinely succeeded. Unlike the success_url redirect (which happens client-side, in the buyer's browser, and could in principle be reached without any payment completing at all), Stripe sends the webhook event directly, server-to-server, only once it has confirmed the transaction itself. All actions that should only ever happen for a real, completed purchase - creating the Order and OrderLineItem records, marking the sculpture sold, and notifying the business owner - are deliberately deferred to this point, rather than triggered from the redirect.
+
+**Mechanics**
+
+The actions below happen inside the same view, for the same verified event, in sequence - rather than being split across separate webhooks or views - since they all depend on the same confirmed payment.
+
+- **Identifying the purchase.**
+`metadata` set on the Checkout Session at creation time (see Cart & Checkout) carries sculpture_slug, shipping_method, country, and user_id - the four pieces of information the webhook needs to reconstruct what was bought, by whom, where and how it should ship, none of which Stripe's own session data otherwise ties together in a form directly usable here.
+- **Order.email** is sourced from the purchasing user's account (via user_id), not from Stripe's session data. Stripe's hosted checkout page pre-fills the buyer's account email but leaves it editable. Relying on that field directly would go against the one guarantee this flow actually has - that allauth's email verification confirms the account address is a real, reachable inbox - since a buyer could edit it to anything at the point of payment. Given the value of these transactions, this was judged too significant a risk to leave unaddressed.
+- **Dual-send mitigation.** This build has no user-facing email-change flow (see Known Limitations), so a verified account email can become stale over time with no way for the buyer to correct it themselves. As a partial mitigation, the order confirmation is sent to both the verified account email and any edited email left on Stripe's page, when the two differ - without reintroducing the original risk, since a typo in the address or a fake address at checkout still cannot block delivery to the verified address.
+- **Sculpture status update and Order creation happen together**, in the same event handling block, since a sold sculpture with no corresponding Order record (or vice versa) would leave the data in a state that doesn't reflect reality.
+
 
 ### Security Features
 - The sign-up form requires email to be typed twice to catch typos at registration, since email communication is essential to this website (order confirmations, availability updates, etc.).
@@ -1290,6 +1307,7 @@ The project was managed in GitHub: https://github.com/VeronicaTeodorof/timefull-
 - Git & GitHub (version control)
 - dbdiagram.io: https://dbdiagram.io/home (ERD)
 - excalidraw: https://excalidraw.com/ (wireframes)
+- Stripe CLI: https://docs.stripe.com/stripe-cli — used to forward Stripe webhook events to the local development server
 
 ## 8. Credits
 
