@@ -412,6 +412,9 @@ Two tests were written to capture this:
 | TP-19 | Anonymous user attempts to access terms page URL directly | Redirected to login | As expected | Pass | |
 | TP-20 | Non-staff authenticated user accesses terms page for a valid sculpture | Page loads normally | As expected | Pass | |
 | TP-21 | Access terms page (via button or direct URL) for a sculpture with `status='sold'` | Redirected away (e.g. to sculpture detail) with a message, rather than allowed to proceed | As expected | Pass | |
+| TP-22 | Phone number field present on terms page | Renders between shipping method choice and cost breakdown, clearly marked optional | As expected | Pass | |
+| TP-23 | Submit form with phone number field left blank | Form submits successfully (optional field, no validation error) | As expected | Pass | |
+| TP-24 | Submit form with a phone number entered | Value is passed through to the Checkout Session's metadata correctly | | | |
 
 ## Checkout Session Creation (CS)
 
@@ -428,6 +431,27 @@ Two tests were written to capture this:
 | CS-09 | Cancel payment on Stripe's hosted page (click back/cancel) | Redirected back to the terms page for the original sculpture | | | |
 | CS-10 | Sculpture status after successful test payment | Status changes to `sold` | | | |
 | CS-11 | Attempt to POST directly to create-session URL for a sold sculpture | Redirected away with a message, rather than a Stripe session being created | as expected | Pass | |
+
+## Webhook / Checkout Feedback
+
+### Order Confirmation (OC)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---|---|---|---|---|---|
+| OC-01 | Complete a successful payment on Stripe's hosted page | Redirected to branded success page | As expected | Pass | |
+| OC-02 | Webhook processes a confirmed `checkout.session.completed` event | Confirmation email sent to the buyer's verified account email | | | |
+| OC-03 | Buyer edited their email on Stripe's page to something different from their account email | Confirmation email is also sent to that edited address, in addition to the account email | | | |
+| OC-04 | Webhook event fails signature verification | No confirmation email is sent | As expected | Pass | |
+
+### Owner Notification (ON)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---|---|---|---|---|---|
+| ON-01 | Webhook processes a confirmed event | Email sent to the business owner containing sculpture name, buyer details, shipping method (and country, if delivery), and order total | | | |
+| ON-02 | Business owner logs into Django admin | Can view a list of all `Order` records, including newly created ones | | | |
+| ON-03 | Business owner views an order in Django admin | Can see all details: buyer info, sculpture, shipping method, costs, `stripe_pid`| | | |
+| ON-04 | Business owner marks an order's `shipped_at` field in Django admin | Saved and reflected next time the order is viewed | | | |
+| ON-05 | Webhook event fails signature verification | No order-notification email is sent, no Order created | As expected | Pass | |
 
 
 ---
