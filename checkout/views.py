@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 import stripe
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -118,3 +120,14 @@ def checkout_success(request):
     completed payment. Displays a simple confirmation for now.
     """
     return render(request, 'checkout/checkout_success.html')
+
+
+@csrf_exempt
+def payment_webhook(request):
+    """
+    Placeholder webhook view - always returns 200 regardless of the
+    request. Exists only to prove the signature rejection test fails
+    for the right reason before signature verification is
+    implemented.
+    """
+    return HttpResponse(status=200)

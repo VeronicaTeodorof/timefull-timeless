@@ -56,3 +56,24 @@ class CreateCheckoutSessionTests(TestCase):
 
         self.assertRedirects(response, reverse('gallery:sculpture-detail',
                                                args=[self.sculpture.slug]))
+
+
+class StripeWebhookTests(TestCase):
+
+    # Written adapting this resource:
+    # https://dev.to/aakas/webhooks-in-django-a-comprehensive-guide-44jp
+    # with help from Claude AI
+    def test_webhook_rejects_invalid_signature(self):
+        """
+        Tests that stripe_webhook returns 400 when the Stripe-Signature
+        header is invalid, rather than processing the event.
+        """
+        payload = '{"id": "evt_test", "type": "checkout.session.completed"}'
+
+        response = self.client.post(
+            reverse('checkout:payment-webhook'),
+            data=payload,
+            content_type='application/json',
+            HTTP_STRIPE_SIGNATURE='invalid_signature'
+        )
+        self.assertEqual(response.status_code, 400)
