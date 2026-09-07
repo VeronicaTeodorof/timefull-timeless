@@ -122,12 +122,33 @@ def checkout_success(request):
     return render(request, 'checkout/checkout_success.html')
 
 
+# resources:
+# - https://docs.stripe.com/webhooks/signature
+# - Code Institute: 'Boutique Ado' project
 @csrf_exempt
 def payment_webhook(request):
     """
-    Placeholder webhook view - always returns 200 regardless of the
-    request. Exists only to prove the signature rejection test fails
-    for the right reason before signature verification is
-    implemented.
+    Bare version for testing signature verification only - confirms
+    events from Stripe arrive correctly and are genuinely verified,
+    before any business logic (Order creation, sold status, email)
+    is added.
     """
+    payload = request.body
+    sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
+        )
+    except ValueError:
+        # Invalid payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError:
+        # Invalid signature
+        return HttpResponse(status=400)
+    except Exception as e:
+        # Any other unexpected error during verification
+        return HttpResponse(content=str(e), status=400)
+
+    print(f"Webhook received: {event['type']}")
     return HttpResponse(status=200)
