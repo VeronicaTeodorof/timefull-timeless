@@ -9,6 +9,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
 
 User = get_user_model()
 
@@ -208,14 +209,28 @@ def payment_webhook(request):
             delivery_cost=delivery_cost,
         )
 
+        # mark sculpture as sold after valid purchase
         sculpture.status = 'sold'
         sculpture.save()
         print("SCULPTURE STATUS SET TO:", sculpture.status)
 
-        print("USER:", user)
-        print("SCULPTURE:", sculpture)
-        print("FULL NAME:", full_name)
-        print("PHONE:", phone_number)
-        print("ADDRESS:", town_or_city, street_address1, postcode, country)
+        business_settings = BusinessSettings.load()
+        # notify business owner when a new order is created
+        send_mail(
+            subject=f'New order: {sculpture.title}',
+            message=(
+                f"A new order has been placed.\n\n"
+                f"Sculpture: {sculpture.title}\n"
+                f"Buyer: {full_name} ({user.email})\n"
+                f"Phone: {phone_number or 'Not provided'}\n"
+                f"Shipping method: {metadata.get('shipping_method')}\n"
+                f"Country: "
+                f"{metadata.get('country') or '(Studio Pickup)'}\n"
+                f"Order total: £{order.lineitems.first().lineitem_total}\n"
+                f"Order number: {order.order_number}\n"
+            ),
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[business_settings.owner_email],
+        )
 
     return HttpResponse(status=200)
