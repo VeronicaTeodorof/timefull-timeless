@@ -13,6 +13,7 @@ class BusinessSettings(models.Model):
         decimal_places=4,
         default=0.015
     )
+    owner_email = models.EmailField()
 
     def save(self, *args, **kwargs):
         self.pk = 1

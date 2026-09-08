@@ -879,6 +879,8 @@ Notes:
 
 - `Sculpture.created_at` was added to support Theme.get_representative_image()'s fallback logic — determining which sculpture's image to display when a theme has no manually chosen representative sculpture, ordered by most recently added.
 
+- `BusinessSettings.owner_email` was added after the ERD was finalized (not shown in diagram). Needed so the business owner's notification email address is configurable via Django admin.
+
 
 #### Resources consulted
 **Database design principles**
@@ -916,6 +918,7 @@ Code Institute - *Boutique Ado* tutorial
 
 **Webhooks in Django**
 - https://dev.to/aakas/webhooks-in-django-a-comprehensive-guide-44jp
+- Webhook metadata/shipping_details extraction logic: structure confirmed by inspecting real Checkout Session event payloads via the Stripe Dashboard, cross-referenced against docs.stripe.com/webhooks, written with Claude AI assistance.
 
 ---
 
