@@ -208,6 +208,10 @@ def payment_webhook(request):
             delivery_cost=delivery_cost,
         )
 
+        sculpture.status = 'sold'
+        sculpture.save()
+        print("SCULPTURE STATUS SET TO:", sculpture.status)
+
         print("USER:", user)
         print("SCULPTURE:", sculpture)
         print("FULL NAME:", full_name)
