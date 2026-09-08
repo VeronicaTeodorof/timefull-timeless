@@ -233,4 +233,19 @@ def payment_webhook(request):
             recipient_list=[business_settings.owner_email],
         )
 
+        # send order confirmation to buyer's email address
+        send_mail(
+            subject='Your order confirmation - Enel Dumitrascu / Sculptures',
+            message=(
+                f"Thank you for your purchase!\n\n"
+                f"Sculpture: {sculpture.title}\n"
+                f"Total: £{order.lineitems.first().lineitem_total}\n"
+                f"Shipping method: {metadata.get('shipping_method')}\n"
+                f"Order number: {order.order_number}\n\n"
+                f"We'll be in touch with next steps shortly."
+            ),
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[user.email],
+        )
+
     return HttpResponse(status=200)
