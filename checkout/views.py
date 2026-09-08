@@ -1,6 +1,6 @@
 from gallery.models import Sculpture
 from django.contrib.auth.decorators import login_required
-from .models import DeliveryCost
+from .models import DeliveryCost, Order
 from pages.models import BusinessSettings
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
@@ -8,6 +8,9 @@ import stripe
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -79,7 +82,6 @@ def create_checkout_session(request, sculpture_slug):
             'quantity': 1,
         },
     ]
-
     session_params = {
         'payment_method_types': ['card'],
         'line_items': line_items,
@@ -127,13 +129,13 @@ def checkout_success(request):
 # resources:
 # - https://docs.stripe.com/webhooks/signature
 # - Code Institute: 'Boutique Ado' project
+# - inspecting real Checkout Session event payloads via the Stripe Dashboard
+# - written with Claude AI assistance
 @csrf_exempt
 def payment_webhook(request):
     """
-    Bare version for testing signature verification only - confirms
-    events from Stripe arrive correctly and are genuinely verified,
-    before any business logic (Order creation, sold status, email)
-    is added.
+    Verifies incoming Stripe webhook events and processes confirmed
+    checkout.session.completed events.
     """
     payload = request.body
     sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
@@ -143,14 +145,56 @@ def payment_webhook(request):
             payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
         )
     except ValueError:
-        # Invalid payload
         return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError:
-        # Invalid signature
         return HttpResponse(status=400)
     except Exception as e:
-        # Any other unexpected error during verification
         return HttpResponse(content=str(e), status=400)
 
-    print(f"Webhook received: {event['type']}")
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object'].to_dict()
+        metadata = session.get('metadata', {})
+
+        user = User.objects.get(id=metadata.get('user_id'))
+        sculpture = Sculpture.objects.get(slug=metadata.get('sculpture_slug'))
+
+        customer_details = session.get('customer_details', {})
+        shipping_details = session.get('collected_information',
+                                       {}).get('shipping_details')
+
+        full_name = customer_details.get('name')
+        stripe_pid = session.get('payment_intent')
+        phone_number = metadata.get('phone_number', '')
+
+        if shipping_details:
+            address = shipping_details.get('address', {})
+            town_or_city = address.get('city')
+            postcode = address.get('postal_code')
+            street_address1 = address.get('line1')
+            street_address2 = address.get('line2')
+            country = address.get('country')
+        else:
+            town_or_city = street_address1 = postcode = street_address2 = None
+            country = metadata.get('country', '')
+
+        order = Order.objects.create(
+            user=user,
+            full_name=full_name,
+            email=user.email,
+            phone_number=phone_number,
+            country=country,
+            postcode=postcode,
+            town_or_city=town_or_city,
+            street_address1=street_address1,
+            street_address2=street_address2,
+            shipping_method=metadata.get('shipping_method'),
+            stripe_pid=stripe_pid,
+)
+
+        print("USER:", user)
+        print("SCULPTURE:", sculpture)
+        print("FULL NAME:", full_name)
+        print("PHONE:", phone_number)
+        print("ADDRESS:", town_or_city, street_address1, postcode, country)
+
     return HttpResponse(status=200)
