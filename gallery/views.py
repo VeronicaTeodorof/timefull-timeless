@@ -121,4 +121,6 @@ def delete_sculpture(request, slug):
 
 def theme_detail(request, slug):
     theme = get_object_or_404(Theme, slug=slug)
-    return render(request, 'gallery/theme_detail.html', {'theme': theme})
+    sculptures = theme.sculptures.all()
+    return render(request, 'gallery/theme_detail.html',
+                  {'theme': theme, 'sculptures': sculptures})

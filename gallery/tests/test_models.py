@@ -460,7 +460,9 @@ class SculptureModelCase(TestCase):
         """
         field = Sculpture._meta.get_field('status')
         self.assertIn(('available', 'Available'), field.choices)
-        self.assertIn(('reserved', 'Reserved'), field.choices)
+        # commented out as the field choice itself is commented out
+        # on the model for this MVP
+        # self.assertIn(('reserved', 'Reserved'), field.choices)
         self.assertIn(('sold', 'Sold'), field.choices)
 
     def test_sculpture_status_defaults_to_available(self):
