@@ -1209,6 +1209,14 @@ The actions below happen inside the same view, for the same verified event, in s
 
 ## 4. Surface Plane
 
+**Visual Design**
+
+The site follows a "digital gallery first, commerce second" principle - the visual language is built to feel like walking into a small sculpture gallery, with e-commerce functionality (Acquire Now, checkout) present but never the dominant visual note.
+
+**Navbar and footer texture**
+
+Nav and footer share a single dark, gold-veined marble-style texture (reminiscent of Portoro marble - black stone with bold gold veining), chosen to tie into the site's dark charcoal-and-gold palette while still keeping "marble" as a material thread running through the site — even though the physical plinths in the sculpture photos are white stone/marble.
+
 ---
 
 ## 5. Deployment and local development

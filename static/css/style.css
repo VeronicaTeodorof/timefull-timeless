@@ -1,9 +1,139 @@
+/* Navbar */
 
-/* Apply custom positioning only to desktop viewports (lg and up) */
+.navbar {
+    position: relative;
+    height: 70px;
+    background-image: url('../images/nav-marble1.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+.navbar-brand {
+    color: rgb(251, 200, 70);
+    font-size: 1.5rem;
+    font-style: oblique;
+}
+.navbar-brand:hover {
+    color: rgb(237, 207, 130);
+}
+.nav-item a,
+.nav-item button {
+    color: white;
+    font-size: 1.1rem;
+}
+
+.nav-item a:hover,
+.nav-item button:hover {
+    color: rgb(237, 207, 130);
+}
+
+/* Dropdown toggle - open state */
+.nav-item.dropdown .dropdown-toggle.show {
+    color: rgb(237, 207, 130);
+}
+
+/* Prevents Bootstrap's default focus and active states from darkening
+or adding unwanted outlines to the dropdown toggle button */
+.nav-item button:focus,
+.nav-item button:active,
+.nav-item.dropdown .dropdown-toggle:focus,
+.nav-item.dropdown .dropdown-toggle:active {
+    color: rgb(237, 207, 130);
+    background-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
+
+.dropdown-menu {
+    background-color: rgba(26, 20, 16, 0.98);
+    border: 1px solid rgba(251, 200, 70, 0.2);
+}
+
+.dropdown-menu .dropdown-item {
+    color: white;
+}
+
+/* Keeps dropdown item hover/focus states consistent with theme */
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+    background-color: rgba(251, 200, 70, 0.15);
+    color: rgb(237, 207, 130);
+}
+
+/* Footer */
+.footer {
+    position: relative;
+    background-image: url('../images/nav-marble.webp');
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+/* Creates a semi-transparent dark overlay over the background image to improve text readability */
+.footer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 8, 6, 0.35);
+}
+
+/* Ensures all direct children of the footer sit above the dark overlay rather than getting hidden behind it */
+.footer > * {
+    position: relative;
+    z-index: 1;
+}
+
+.footer nav a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer nav a:hover {
+    color: rgb(237, 207, 130);
+}
+
+
+/* Media queries - mobile */
+@media (max-width: 991px) {
+    .navbar {
+        padding: 0 15px;
+        align-items: center;
+    }
+
+    /* Force the mobile collapse wrapper out of flow so JS height changes don't shift the header
+    sorted with Gemini AI */
+    .navbar .d-lg-none:not(:first-child) {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+
+    #navDrawer {
+        background-color: rgba(26, 20, 16, 0.98);
+        padding: 15px 25px 25px 25px;
+        box-sizing: border-box;
+        border-bottom: 1px solid rgba(251, 200, 70, 0.2);
+    }
+}
+
+/* Media query - desktop */
 @media (min-width: 992px) {
     .navbar-nav .dropdown-menu-end {
         position: absolute !important;
         right: 0 !important;
         left: auto !important;
+    }
+
+    .navbar {
+        align-items: center;
     }
 }
