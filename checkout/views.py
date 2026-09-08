@@ -1,6 +1,6 @@
 from gallery.models import Sculpture
 from django.contrib.auth.decorators import login_required
-from .models import DeliveryCost, Order
+from .models import DeliveryCost, Order, OrderLineItem
 from pages.models import BusinessSettings
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
@@ -189,7 +189,24 @@ def payment_webhook(request):
             street_address2=street_address2,
             shipping_method=metadata.get('shipping_method'),
             stripe_pid=stripe_pid,
-)
+        )
+
+        business_settings = BusinessSettings.load()
+        insurance_cost = round(
+            sculpture.price * business_settings.insurance_rate, 2)
+
+        delivery_cost = 0
+        if metadata.get('shipping_method') == 'delivery':
+            delivery_cost = DeliveryCost.objects.get(
+                country=metadata.get('country')).cost
+
+        OrderLineItem.objects.create(
+            order=order,
+            sculpture=sculpture,
+            price_at_purchase=sculpture.price,
+            insurance_cost=insurance_cost,
+            delivery_cost=delivery_cost,
+        )
 
         print("USER:", user)
         print("SCULPTURE:", sculpture)
