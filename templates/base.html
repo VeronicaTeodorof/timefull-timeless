@@ -19,8 +19,7 @@
 
     {% block extra_head %}{% endblock %}
 </head>
-
-<body class="min-vh-100 d-flex flex-column">
+<body class="min-vh-100 d-flex flex-column {% block body_class %}{% endblock %}">
     <header>
         <nav class="navbar" aria-label="Main navigation">
             <div class="container-fluid">
@@ -34,6 +33,7 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'gallery:gallery' %}">Gallery</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'pages:about' %}">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'pages:contact' %}">Enquiries</a></li>
+                     <li class="nav-item"><a class="nav-link" href="{% url 'pages:terms' %}">Terms</a></li>
                 {% endpartialdef nav_links %}
 
                 {% partialdef nav_auth %}
@@ -105,7 +105,7 @@
     </header>
     {% block extra_header %}{% endblock %}
 
-    <main>
+    <main class="flex-grow-1 d-flex flex-column">
         <!-- Django messages copied from my 'got it?' project -->
         {% if messages %}
         <!-- role="status" announces messages to screen reader users without interrupting, best practice for cases where
@@ -120,35 +120,14 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="mt-auto footer">
-        <div class="container-fluid px-5">
-            <hr>
-            <div class="row">
-                <div class="col-6 col-lg-8">
-                    <address>
-                        <strong>Studio Address:</strong><br>
-                        Str. Aleea Florilor,<br class="d-lg-none">
-                        Braila,<br class="d-lg-none">
-                        Romania
-                    </address>
-                </div>
-                <nav class="col-6 col-lg-4" aria-label="Footer">
-                    <ul class="list-unstyled d-lg-flex gap-lg-4">
-                        <li><a href="">Shipping</a></li>
-                        <li><a href="">Terms</a></li>
-                        <li>Secure checkout</a>
-                    </ul>
-                </nav>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-12 mb-4">
-                    <small class="text-lg-center">
-                        &copy; 2026 Enel Dumitrascu<br class="d-lg-none">
-                        Images may not be copied without permission
-                    </small>
-                </div>
-            </div>
+    <footer class="mt-auto footer py-2">
+        <div class="container-fluid px-3 text-center">
+            <small class="d-block text-white-50 mb-1" style="font-size: 0.8rem;">
+                Studio Address: Str. Aleea Florilor, Braila, Romania
+            </small>
+            <small class="d-block text-white-50" style="font-size: 0.75rem;">
+                &copy; 2026 Enel Dumitrascu. Images may not be copied without permission.
+            </small>
         </div>
     </footer>
 

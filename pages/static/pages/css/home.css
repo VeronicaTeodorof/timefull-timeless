@@ -1,0 +1,104 @@
+/* ===== Homepage-only background ===== */
+/* Flattened marble/vein + sculpture image runs continuously behind nav, hero, and footer */
+body.home-page {
+  background-image: url('../images/timefull-hero-blend-v5.png');
+  background-size: cover;
+  background-position: bottom 25% left 75%;
+  height: 100vh;
+}
+
+/* Let home page background show through nav and footer instead of their own marble textures */
+body.home-page .navbar,
+body.home-page footer {
+  background-image: none;
+  background-color: transparent;
+}
+
+/* Nav text contrast fix - the right-hand side of the image is a light photo,
+so nav links/username need a shadow to stay legible regardless of what's behind them */
+body.home-page .navbar-nav .nav-link,
+body.home-page .navbar-brand,
+body.home-page .dropdown-toggle {
+  text-shadow: 2px 3px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* ===== Hero content ===== */
+.hero {
+  flex: 1;
+  justify-content: flex-start;
+  padding: 2rem 1.5rem;
+  box-sizing: border-box;
+}
+
+.hero-text {
+    max-width: 450px;
+  }
+
+.hero-name h2 {
+  font-size: 2.3rem;
+  font-weight: 400;
+  color: #f4ede0;
+  text-align: left;
+}
+
+.hero-sculptures {
+  font-size: 1.3rem;
+  letter-spacing: 0.3em;
+  color: #e8c674;
+  border-bottom: 1px solid #e8c674;
+  display: inline-block;
+  padding-bottom: 4px;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Tablet and larger */
+@media (min-width: 768px) {
+   .hero {
+    padding: 2.5rem 4rem;
+  }
+
+  .hero-text {
+  max-width: 640px;
+  }
+
+  .hero-poem {
+  font-style: oblique;
+  font-size: 1.1rem;
+  color: #fdf1d7;
+  line-height: 2.4;
+  text-align: left;
+  text-shadow: 5px 8px 8px rgba(0, 0, 0, 0.7);
+  }
+
+  .hero-wordmark {
+    font-style: oblique;
+    font-size: 2rem;
+    color: rgb(251, 200, 70);
+    text-align: left;
+    margin-bottom: 4rem;
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+
+  .poem-line {
+    margin: 0;
+  }
+}
+
+/* Staggered indent, desktop only */
+@media (min-width: 992px) {
+  .poem-line:nth-child(1) { margin-left: 0; }
+  .poem-line:nth-child(2) { margin-left: 2rem; }
+  .poem-line:nth-child(3) { margin-left: 3.75rem; }
+  .poem-line:nth-child(4) { margin-left: 4rem; }
+  .hero-wordmark {
+    text-align: end;
+  }
+  .hero-text {
+    margin-left: 2rem;
+  }
+  .hero-poem {
+    color: #cbb27e;
+  }
+}
