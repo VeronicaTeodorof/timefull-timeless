@@ -30,19 +30,32 @@
 
 /* Gallery page */
 
+body.dark-page {
+  background-image:
+    linear-gradient(rgba(18, 13, 10, 0.62), rgba(18, 13, 10, 0.62)),
+    url('../images/gallery-body-pattern-tile.png');
+  background-size: auto, 680px auto;
+  background-repeat: repeat, repeat;
+}
+
+.empty {
+  color: white;
+}
 .theme-card {
-  border-radius: 12px;
+  position: relative;
   overflow: hidden;
-  height: 600px;
-  display: flex;
-  flex-direction: column;
+  border-radius: 0px;
+}
+
+.row.row-cols-md-3 {
+  align-items: flex-end;
 }
 
 .theme-card img {
-  width: 100%;
-  object-fit: cover;
-  flex: 1;
-  min-height: 0;
+  height: 400px;    /* fixed target height — same for every card */
+  width: auto;       /* follows each photo's real aspect ratio */
+  max-width: 100%;   /* safety net so it never overflows a narrow column */
+  object-fit: contain;
   transition: transform 1s ease;
 }
 

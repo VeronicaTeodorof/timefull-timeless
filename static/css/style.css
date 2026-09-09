@@ -3,10 +3,8 @@
 .navbar {
     position: relative;
     height: 70px;
-    background-image: url('../images/nav-marble1.webp');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-image: none;
+    background-color: #1a1410;
     display: flex;
     align-items: center;
     justify-content: space-between;

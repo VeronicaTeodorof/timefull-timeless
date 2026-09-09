@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
 {% endblock %}
 
+{% block body_class %}dark-page{% endblock %}
 
 {% block content %}
     <!-- Common states content -->
     <div class="quote text-center mt-3">
         <p class="fs-5">"Enel Dumitrascu's sculptures are spirals in constant motion -
             matter itself taking flight, rising beyond its own limits"<br>
-            <span class="fs-6"> - Claudia Anca Moldovan, curator, Braila <br>(adapted from Romanian)</span></p>
+            <span class="fs-6"> - Claudia Anca Moldovan, curator, Braila</span></p>
     </div>
 
     <!-- Staff CTA -->
@@ -32,7 +33,7 @@
     {% if themes %}
         <!-- Themes Section -->
         <div class="container my-4">
-            <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="row row-cols-1 row-cols-md-3 g-5">
                 {% for theme in themes %}
                     <div class="col">
                         {% if request.user.is_staff %}
@@ -51,11 +52,15 @@
                             </div>
                         {% endif %}
                         <a href="{% url 'gallery:theme-detail' theme.slug %}" class="theme-card-link">
-                            <div class="theme-card">
-                                <img src="{{ theme.get_representative_image.url }}" alt="{{ theme.name }}">
-                                <div class="theme-footer">
-                                    <h5>{{ theme.display_name }}</h5>
+                            <div class="theme-stage">
+                                <div class="theme-card"
+                                     style="--card-bg-image: url('{{ theme.get_representative_image.url }}');">
+                                    <img src="{{ theme.get_representative_image.url }}" alt="{{ theme.name }}">
                                 </div>
+                            </div>
+                            <div class="theme-caption">
+                                <span class="theme-eyebrow">{{ theme.name }}</span>
+                                <h5>{{ theme.display_name }}</h5>
                             </div>
                         </a>
                     </div>
@@ -90,7 +95,7 @@
         </div>
     {% else %}
         <!-- Empty state -->
-        <div class="empty  text-center mt-5">
+        <div class="empty text-center mt-5">
             <p class="display-4">No sculptures to display</p>
         </div>
     {% endif %}
