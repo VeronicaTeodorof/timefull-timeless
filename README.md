@@ -881,6 +881,8 @@ Notes:
 
 - `BusinessSettings.owner_email` was added after the ERD was finalized (not shown in diagram). Needed so the business owner's notification email address is configurable via Django admin.
 
+- `Themes.display_order` was added after the ERD was finalized (not shown in diagram). Needed for manual curatorial control over gallery display order, since themes previously had no explicit ordering and would shift unpredictably.
+
 
 #### Resources consulted
 **Database design principles**

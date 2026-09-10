@@ -24,12 +24,14 @@ class Theme(models.Model):
         blank=True,
         related_name='representing_themes'
     )
+    display_order = models.PositiveIntegerField(default=0)
 
     class Meta:
         """
         Ensures that no duplicate theme names exist
-        regardless of case
+        regardless of case, and controls gallery display order
         """
+        ordering = ['display_order']
         constraints = [
             models.UniqueConstraint(
                 # Lower() is a database function that accepts a single text
