@@ -94,15 +94,18 @@ body.dark-page {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  color: white;
   background: transparent;
   border: none;
   display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
+  transform: translateX(-40px);
 }
 
 .edit-btn:hover {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgb(204, 193, 134);
+    color: black;
 }
 
 /* Mobile-first default: FAB */
