@@ -41,6 +41,11 @@ body.dark-page {
 .empty {
   color: white;
 }
+.gallery-y-space {
+  padding-top: 1.5rem;
+  padding-bottom:1rem;
+}
+
 .theme-card {
   position: relative;
   overflow: hidden;
@@ -52,7 +57,9 @@ body.dark-page {
 }
 
 .theme-card img {
-  height: 400px;    /* fixed target height — same for every card */
+  display: block;
+  margin: 0 auto;
+  height: 468px;    /* target height - same for every card */
   width: auto;       /* follows each photo's real aspect ratio */
   max-width: 100%;   /* safety net so it never overflows a narrow column */
   object-fit: contain;
@@ -63,11 +70,18 @@ body.dark-page {
   transform: scale(1.05);
 }
 
-.theme-footer {
-  padding: 12px 14px;
-  background: #212529;
-  color: #fff;
-  flex-shrink: 0;
+.theme-caption {
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  padding-left: 15%;
+  border-top: 1px solid rgba(234, 207, 145, 0.35);
+  text-align: left;
+}
+
+.theme-caption h5 {
+  color: rgba(234, 166, 7, 0.966);
+  font-size: 1.3rem;
+  font-weight: 400;
 }
 
 .theme-card-link {
@@ -134,7 +148,13 @@ body.dark-page {
 
 /* Media queries */
 /* Tablet and desktop */
+/* Gallery page */
 @media (min-width: 768px) {
+  .gallery-y-space {
+    padding-top: 2rem;
+    padding-bottom: 0rem;
+  }
+
   .add-sculpture-btn {
     position: static;
     width: fit-content;
@@ -149,11 +169,8 @@ body.dark-page {
       display: inline;
       margin-left: 0.5rem;
   }
-}
 
-/* Tablet and up (≥992px) */
-@media (min-width: 992px) {
-  /* Sculpture detail page */
+   /* Sculpture detail page */
   .sculpture-detail-image {
   width: 100%;
   height: 600px;
@@ -164,5 +181,4 @@ body.dark-page {
   .carousel .sculpture-detail-image {
     height: 600px;
   }
-
 }
