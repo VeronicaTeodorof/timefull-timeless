@@ -466,6 +466,7 @@ Two tests were written to capture this:
 | CF-08 | Form submited with valid data | Redirects to contact page, confirmation message shown | As expected | Pass | |
 | CF-09 | Anonymous user | Contact form loads with empty email field | As expected | Pass | |
 | CF-10 | Authenticated user | Contact form loads with email field prefilled with registered address | As expected | Pass | |
+| CF-11 | Recipient receives enquiry | Upon successful submission business owner receives email enquiry | As expected | Pass | |
 
 
 ---
