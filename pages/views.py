@@ -23,6 +23,11 @@ def contact(request):
             messages.success(request,
                              "Thank you - your message has been sent.")
             return redirect("pages:contact")
+    else:
+        initial = {}
+        if request.user.is_authenticated:
+            initial["email"] = request.user.email
+        form = ContactForm(initial=initial)
     return render(request, "pages/contact.html", {"form": form})
 
 

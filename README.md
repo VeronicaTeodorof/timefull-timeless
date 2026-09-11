@@ -1344,3 +1344,6 @@ The project was managed in GitHub: https://github.com/VeronicaTeodorof/timefull-
 - constraints: https://docs.djangoproject.com/en/6.0/ref/models/constraints/
 - database functions - Lower(): https://docs.djangoproject.com/en/6.0/ref/models/database-functions/#lower
 
+**Django forms**
+- form dynamic initial values: https://docs.djangoproject.com/en/6.0/ref/forms/api/#dynamic-initial-values
+

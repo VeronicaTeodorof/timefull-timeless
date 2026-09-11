@@ -464,6 +464,8 @@ Two tests were written to capture this:
 | CF-06 | Missing `subject` (optional) | Form submits successfully | As expected | Pass | |
 | CF-07 | All fields valid | Form submits successfully | As expected | Pass | |
 | CF-08 | Form submited with valid data | Redirects to contact page, confirmation message shown | As expected | Pass | |
+| CF-09 | Anonymous user | Contact form loads with empty email field | As expected | Pass | |
+| CF-10 | Authenticated user | Contact form loads with email field prefilled with registered address | As expected | Pass | |
 
 
 ---
