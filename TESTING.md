@@ -463,6 +463,7 @@ Two tests were written to capture this:
 | CF-05 | Missing `phone` (optional) | Form submits successfully | | | |
 | CF-06 | Missing `subject` (optional) | Form submits successfully | | | |
 | CF-07 | All fields valid | Form submits successfully | | | |
+| CF-08 | Form submited with valid data | Redirects to contact page, confirmation message shown | | | |
 
 
 ---
