@@ -1,7 +1,50 @@
-{% extends 'base.html' %}
-# home.html
+{% extends "base.html" %}
+{% load static %}
 
 {% block extra_title %} | Contact{% endblock %}
+
 {% block content %}
-    <h1 class="display-1">Contact</h1>
+<main class="contact-page">
+  <div class="container py-5" style="max-width: 600px;">
+    <h1 class="mb-4">Get in Touch</h1>
+
+    {{ form.non_field_errors }}
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+        {{ form.name }}
+        {{ form.name.errors }}
+      </div>
+
+      <div class="mb-3">
+        <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+        {{ form.email }}
+        {{ form.email.errors }}
+      </div>
+
+      <div class="mb-3">
+        <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+        {{ form.phone }}
+        {{ form.phone.errors }}
+      </div>
+
+      <div class="mb-3">
+        <label for="{{ form.subject.id_for_label }}">{{ form.subject.label }}</label>
+        {{ form.subject }}
+        {{ form.subject.errors }}
+      </div>
+
+      <div class="mb-3">
+        <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
+        {{ form.message }}
+        {{ form.message.errors }}
+      </div>
+
+      <button type="submit" class="btn btn-dark px-5">Send Message</button>
+    </form>
+  </div>
+</main>
 {% endblock %}

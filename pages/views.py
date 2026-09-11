@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .forms import ContactForm
 
 
 # Create your views here.
@@ -11,7 +12,11 @@ def about(request):
 
 
 def contact(request):
-    return render(request, 'pages/contact.html')
+    """
+    Contact page view
+    """
+    form = ContactForm()
+    return render(request, "pages/contact.html", {"form": form})
 
 
 def terms_view(request):
