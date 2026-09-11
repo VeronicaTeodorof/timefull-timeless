@@ -1,7 +1,79 @@
-{% extends 'base.html' %}
-# About.html
+{% extends "base.html" %}
+{% load static %}
 
-{% block extra_title %} | About{% endblock %}
+{% block title %}About — Enel Dumitrascu{% endblock %}
+
 {% block content %}
-    <h1 class="display-1">About</h1>
+<main class="about-page">
+  <div class="container py-5" style="max-width: 760px;">
+
+    <section class="about-bio mb-5">
+      <h1 class="visually-hidden">Enel Dumitrascu</h1>
+
+      <p class="fs-5">
+        Sculptor Enel Dumitrascu was born in Braila, Romania, in 1975. He is a member of the Romanian Fine Artists' Union. He began his art studies
+        at "H.H. Darclee" Art High School in Brăila; he then went to Bucharest to study metal sculpture at the National University of
+        Arts in Prof. Bogdan Hojbotă's class. In 2004 he moved to Italy,  where he completed a one year master's degree in sculpture at the
+        Rome University of Fine Arts (R.U.F.A.) under Prof. Alfio Mongelli.
+      </p>
+      <p class="fs-5">
+        His works use a range of materials and techniques, including stone, Carrara marble, wood, plaster casting, and hammered and joined
+        metal. He has also experimented with engraving techniques such as etching (aquaforte), aquatint, lithography, watercolor, pen-and-ink,
+        and drypoint (point-sèche), while in painting he works in both acrylic and oil. His work explores several recurring themes over
+        time: flight, knots, seed, angels - rendered both in drawing and in three-dimensional form.
+      </p>
+    </section>
+
+    <section class="about-awards mb-5">
+      <h2 class="h4 border-bottom pb-2 mb-3">Awards</h2>
+      <ul class="list-unstyled">
+        <li class="mb-2">1991 - First Prize, "America Days" competition, Brăila</li>
+        <li class="mb-2">1992 -  Second Prize for painting, "UNICEF" competition, Brăila</li>
+        <li class="mb-2">2012 - Special Prize for stainless steel sculpture, "Between Figurative and Symbolic" art competition, U.A.P. Iași branch</li>
+        <li class="mb-2">2012 - Special Prize for Sculpture, "Monique Roussel" Art Gallery, 6th edition, Iași</li>
+      </ul>
+    </section>
+
+    <section class="about-exhibitions mb-5">
+      <h2 class="h4 border-bottom pb-2 mb-3">Exhibitions</h2>
+      <ul class="list-unstyled small">
+        <li class="mb-2">1996/97 - "Violon d'Ingres" Fine Arts Salon</li>
+        <li class="mb-2">2002 - Vasby Konsthall Gallery, Stockholm, Sweden — painting, book illustration</li>
+        <li class="mb-2">2002/03 - Brăila Art Gallery — small-scale sculpture, engraving</li>
+        <li class="mb-2">2003 - Graduation exhibition, Artexpo Gallery, Round Hall, Bucharest</li>
+        <li class="mb-2">2004/05 - Sculpture exhibition, Tarquinia, Auditorium Hall, S. Pancrazio, Italy</li>
+        <li class="mb-2">2005 - Graduation exhibition, R.U.F.A. Master's program, Italy; "Lascăr Vorel" National Biennial, Piatra Neamț — sculpture</li>
+        <li class="mb-2">2006 - Moldova Salons XVI, Bacău–Chișinău — sculpture</li>
+        <li class="mb-2">2007 - Brăila Art Gallery</li>
+        <li class="mb-2">2008 - Lobby, Marriott Hotel, Constanța — sculpture</li>
+        <li class="mb-2">2009 - Sofitel Hotel, Bucharest — sculpture</li>
+        <li class="mb-2">2010 - Brăila Art Galleries — sculpture; "The Triangle" exhibition, Galați Art Gallery — sculpture; "Winter Salon", Brăila Art Galleries — sculpture; "Ion Andreescu" Biennial, Buzău</li>
+        <li class="mb-2">2011 - Slobozia Art Gallery — sculpture; "Moldova Salons", Bacău–Chișinău — sculpture; National Salon of Modern Art, Râmnicu Vâlcea — sculpture; "Gheorghe Naum" Gallery, Brăila History Museum — sculpture</li>
+        <li class="mb-2">2012 - "The Triangle" exhibition, "Gh. Naum" Gallery, Brăila; "Moldova Salons", Bacău–Chișinău — sculpture; "Ion Andreescu" Biennial, Buzău — sculpture; "Elite Prof Art" Gallery, Bucharest — sculpture; "Gh. Petrașcu" Fine Arts Biennial Competition, Târgoviște</li>
+        <li class="mb-2">2013 - Solo exhibition "Spatial Confluences", "Gh. Naum" Gallery at the History Museum, Brăila</li>
+        <li class="mb-2">2014 - "Prof-Art" Project, Hunedoara — sculpture; created the trophy for the "Johnny Răducanu" International Jazz Festival, Brăila</li>
+        <li class="mb-2">2015 - Annual Religious Art Exhibition, "Dimitrie Gusti" National Museum of the Romanian Peasant, Bucharest; created the trophy for the "Johnny Răducanu" International Jazz Festival, Brăila; group exhibition, "Orizont" Gallery, Bucharest</li>
+        <li class="mb-2">2016 - Member of the A.P.R.R. Bucharest branch; group exhibition, "Dimitrie Gusti" National Museum of the Romanian Peasant, Bucharest; National Small-Scale Sculpture Salon, 17th edition, Brăila; created two busts of Mihai Eminescu and Mircea Eliade, donated to "Panait Cerna" Theoretical High School, Brăila; created the trophy for the "Johnny Răducanu" International Jazz Festival, Brăila</li>
+        <li class="mb-2">2017 - Annual Religious Art Salon, "Dimitrie Gusti" National Museum of the Romanian Peasant, Bucharest; International Small-Scale Sculpture Salon, 18th edition, Brăila</li>
+        <li class="mb-2">2018 - Annual Religious Art Salon, "Dimitrie Gusti" National Museum of the Romanian Peasant, Bucharest; International Small-Scale Sculpture Salon, 19th edition, Brăila</li>
+        <li class="mb-2">2019 - Annual Religious Art Salon, "Dimitrie Gusti" National Museum of the Romanian Peasant, Bucharest; International Small-Scale Sculpture Salon, 20th edition, Brăila; 25th anniversary traveling exhibition "Pilgrims and Friends", Brăila and Buzău Art Galleries; A.F.A.P.R.R. Winter Salon, Orizont Gallery, Bucharest</li>
+        <li class="mb-2">2020 - National Small-Scale Sculpture Salon, 21st edition, Brăila; "Camil Ressu" Galați National Art Biennial, 1st edition; "Gh. Petrașcu" Fine Arts Biennial Competition, Târgoviște; "Ion Andreescu" International Contemporary Art Biennial, 12th edition, Buzău; book illustration for "Polichinelle's Secrets" by Liliana Toma, launched at the "Panait Istrati" County Library, Brăila</li>
+        <li class="mb-2">2021 - National Small-Scale Sculpture Salon, 22nd edition, Brăila; "Meeting Point" International Art Biennial, Arad; Annual Religious Art Salon, "Dimitrie Gusti" National Museum of the Romanian Peasant, Bucharest</li>
+        <li class="mb-2">2022 - National Small-Scale Sculpture Salon, 22nd edition, Brăila; Annual Religious Art Salon, "Dimitrie Gusti" National Museum of the Romanian Peasant, Bucharest</li>
+        <li class="mb-2">2023 - National Small-Scale Sculpture Salon, 22nd edition, Brăila</li>
+        <li class="mb-2">2024 - Solo exhibition "Ancestral Memories", "Gh. Naum" Gallery at the History Museum, Brăila; National Small-Scale Sculpture Salon, 23rd edition, Brăila; 30th anniversary edition of the Annual Religious Fine Art and Restoration Exhibition, "Dimitrie Gusti" National Museum of the Romanian Peasant, Bucharest</li>
+      </ul>
+    </section>
+
+    <section class="about-quote">
+      <blockquote class="blockquote fst-italic border-start border-3 ps-3">
+        <p>
+          "Enel Dumitrascu's works are spirals in constant motion, matter rising beyond its limits.""
+        </p>
+        <footer class="blockquote-footer mt-2">Claudia-Anca Moldovan, museum curator, Brăila</footer>
+      </blockquote>
+    </section>
+
+  </div>
+</main>
 {% endblock %}
