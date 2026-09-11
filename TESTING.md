@@ -456,14 +456,14 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---|---|---|---|---|---|
-| CF-01 | Missing `name` | Form rejected, error on `name` shown | | | |
-| CF-02 | Missing `email` | Form rejected, error on `email` shown | | | |
-| CF-03 | Malformed `email` | Form rejected, error on `email` shown | | | |
-| CF-04 | Missing `message` | Form rejected, error on `message` shown | | | |
-| CF-05 | Missing `phone` (optional) | Form submits successfully | | | |
-| CF-06 | Missing `subject` (optional) | Form submits successfully | | | |
-| CF-07 | All fields valid | Form submits successfully | | | |
-| CF-08 | Form submited with valid data | Redirects to contact page, confirmation message shown | | | |
+| CF-01 | Missing `name` | Form rejected, error on `name` shown | As expected | Pass | |
+| CF-02 | Missing `email` | Form rejected, error on `email` shown | As expected | Pass | |
+| CF-03 | Malformed `email` | Form rejected, error on `email` shown | As expected | Pass | |
+| CF-04 | Missing `message` | Form rejected, error on `message` shown | As expected | Pass | |
+| CF-05 | Missing `phone` (optional) | Form submits successfully | As expected | Pass | |
+| CF-06 | Missing `subject` (optional) | Form submits successfully | As expected | Pass | |
+| CF-07 | All fields valid | Form submits successfully | As expected | Pass | |
+| CF-08 | Form submited with valid data | Redirects to contact page, confirmation message shown | As expected | Pass | |
 
 
 ---
