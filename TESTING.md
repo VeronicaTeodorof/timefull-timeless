@@ -439,19 +439,30 @@ Two tests were written to capture this:
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---|---|---|---|---|---|
 | OC-01 | Complete a successful payment on Stripe's hosted page | Redirected to branded success page | As expected | Pass | |
-| OC-02 | Webhook processes a confirmed `checkout.session.completed` event | Confirmation email sent to the buyer's verified account email | | | |
-| OC-03 | Buyer edited their email on Stripe's page to something different from their account email | Confirmation email is also sent to that edited address, in addition to the account email | | | |
+| OC-02 | Webhook processes a confirmed `checkout.session.completed` event | Confirmation email sent to the buyer's verified account email | As expected | Pass | |
 | OC-04 | Webhook event fails signature verification | No confirmation email is sent | As expected | Pass | |
 
 ### Owner Notification (ON)
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---|---|---|---|---|---|
-| ON-01 | Webhook processes a confirmed event | Email sent to the business owner containing sculpture name, buyer details, shipping method (and country, if delivery), and order total | | | |
-| ON-02 | Business owner logs into Django admin | Can view a list of all `Order` records, including newly created ones | | | |
-| ON-03 | Business owner views an order in Django admin | Can see all details: buyer info, sculpture, shipping method, costs, `stripe_pid`| | | |
+| ON-01 | Webhook processes a confirmed event | Email sent to the business owner containing sculpture name, buyer details, shipping method (and country, if delivery), and order total | As expected | Pass | |
+| ON-02 | Business owner logs into Django admin | Can view a list of all `Order` records, including newly created ones | As expected | Pass | |
+| ON-03 | Business owner views an order in Django admin | Can see all details: buyer info, sculpture, shipping method, costs, `stripe_pid`| As expected | Pass | |
 | ON-04 | Business owner marks an order's `shipped_at` field in Django admin | Saved and reflected next time the order is viewed | | | |
 | ON-05 | Webhook event fails signature verification | No order-notification email is sent, no Order created | As expected | Pass | |
+
+## Contact Form
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---|---|---|---|---|---|
+| CF-01 | Missing `name` | Form rejected, error on `name` shown | | | |
+| CF-02 | Missing `email` | Form rejected, error on `email` shown | | | |
+| CF-03 | Malformed `email` | Form rejected, error on `email` shown | | | |
+| CF-04 | Missing `message` | Form rejected, error on `message` shown | | | |
+| CF-05 | Missing `phone` (optional) | Form submits successfully | | | |
+| CF-06 | Missing `subject` (optional) | Form submits successfully | | | |
+| CF-07 | All fields valid | Form submits successfully | | | |
 
 
 ---
