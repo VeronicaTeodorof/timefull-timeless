@@ -47,9 +47,12 @@ class Theme(models.Model):
 
     def get_representative_image(self):
         """
-        Returns the image of the most recently added sculpture assigned to
-        this theme.
+        Returns the manually chosen representative sculpture's image if
+        set, otherwise falls back to the image of the most recently
+        added sculpture assigned to this theme.
         """
+        if self.representative_sculpture:
+            return self.representative_sculpture.image
         latest = self.sculptures.order_by('-created_at').first()
         return latest.image
 
