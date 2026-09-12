@@ -23,7 +23,7 @@
 </div>
 <div class="container">
     <div class="row">
-       <div class="col-12 col-md-7 py-3">
+       <div class="col-12 col-md-7 py-lg-3">
             <div class="sculpture-image-wrapper">
                 <div class="sculpture-controls d-flex justify-content-end">
                     {% if request.user.is_staff %}
@@ -60,15 +60,15 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-5 py-3">
-            <div class="title ms-2 ms-lg-5">
-                <h1 class="mt-lg-5 title">{{ sculpture.title }}</h1>
+        <div class="col-12 col-md-5 text-center text-md-start">
+            <div class="title ms-2 ms-lg-5 mt-md-3 mt-lg-0">
+                <h1 class="mt-lg-4 title">{{ sculpture.title }}</h1>
 
                 {% if sculpture.title_translation %}
                     <h2 class="translation">{{ sculpture.title_translation }}</h2>
                 {% endif %}
             </div>
-            <dl class="sculpture-meta ms-2 ms-lg-5">
+            <dl class="sculpture-meta ms-5 ms-md-0 ms-lg-5 text-start">
                 <dt>Year</dt>
                 <dd>{{ sculpture.year }}</dd>
 
@@ -98,7 +98,7 @@
                     </p>
                 {% endif %}
 
-                <p class="enquire-note">
+                <p class="enquire-note mb-3">
                     <a href="{% url 'pages:terms' %}">What acquiring involves</a>
                     <!-- Visual separator -->
                     <span class="enquire-note__sep" aria-hidden="true"></span>

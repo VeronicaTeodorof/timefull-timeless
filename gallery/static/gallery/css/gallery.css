@@ -134,10 +134,10 @@ body.dark-page {
 body.detail-page {
   background-image:
     linear-gradient(rgba(18, 13, 10, 0.62), rgba(18, 13, 10, 0.62)),
-    url('../images/pattern-tile-7.jpg');
+    url('../images/pattern-tile-4.jpg');
   background-size: 100px, 680px auto;
   background-repeat: repeat, repeat;
-  background-position: 12%;
+  background-position: right, right -37px top 0;
 }
 
 body.detail-page .navbar,
@@ -147,16 +147,15 @@ body.detail-page footer {
 }
 
 .title {
-  font-weight: 600;
-  font-size: 3.6rem;
-  line-height: 1.02;
-  letter-spacing: 0.005em;
+  font-weight: 400;
+  font-size: 2rem;
+  margin-top: 1rem;
   color: #f3ece2;
 }
 
 .translation {
   font-style: italic;
-  font-size: 2rem;
+  font-size: 1.2rem;
   color: #e8a33d;
 }
 
@@ -170,15 +169,16 @@ body.detail-page footer {
 }
 .sculpture-image-wrapper {
   width: fit-content;
-  margin: 1rem auto;
+  margin: 0 auto;
 }
 
 .sculpture-detail-image {
-  height: 600px;
+  height: 450px;
   width: auto;
   max-width: 100%;
   object-fit: contain;
   display: block;
+  margin-top: 0.5rem;
 }
 
 .sculpture-meta {
@@ -320,4 +320,31 @@ body.detail-page footer {
       margin-left: 0.5rem;
   }
 
+  /* Sculpture detail page */
+
+  body.detail-page {
+  background-image:
+    linear-gradient(rgba(18, 13, 10, 0.62), rgba(18, 13, 10, 0.62)),
+    url('../images/pattern-tile-7.jpg');
+  background-size: 100px, 680px auto;
+  background-repeat: repeat, repeat;
+  background-position: 12%;
+  }
+  .sculpture-image-wrapper {
+    margin-top: 1rem;
+  }
+
+  .sculpture-detail-image {
+  height: 600px;
+  }
+
+  .title {
+  font-weight: 600;
+  font-size: 3.6rem;
+  line-height: 1.02;
+  text-align:left;
+  margin-top: 0;
+  letter-spacing: 0.005em;
+  color: #f3ece2;
+  }
 }
