@@ -1,7 +1,49 @@
-{% extends 'base.html' %}
-# order_history.html
+{% extends "base.html" %}
+{% load static %}
 
-{% block extra_title %} | Order History{% endblock %}
+{% block title %}Order History{% endblock %}
+
 {% block content %}
-    <h1 class="display-1">Order History</h1>
+<main class="order-history-page">
+  <div class="container py-5" style="max-width: 800px;">
+    <h1 class="mb-4">Order History</h1>
+
+    {% if orders %}
+      {% for order in orders %}
+        {% with item=order.lineitems.first %}
+          <section class="mb-5 pb-4 border-bottom">
+            <h2 class="h5 mb-2">Order {{ order.order_number }}</h2>
+            <p class="text-muted mb-2">Placed on {{ order.date|date:"d M Y" }}</p>
+
+            <div class="mb-2">
+              <strong>{{ item.sculpture.title }}</strong>
+            </div>
+
+            <p class="mb-1">
+              <strong>Shipping:</strong>
+              {% if order.shipping_method == 'pickup' %}
+                Studio Pickup
+              {% else %}
+                Delivery
+              {% endif %}
+            </p>
+
+            <p class="mb-1">
+              <strong>Status:</strong>
+              {% if order.shipped_at %}
+                Shipped on {{ order.shipped_at|date:"d M Y" }}
+              {% else %}
+                Processing
+              {% endif %}
+            </p>
+
+            <p class="fw-bold">Total: £{{ item.lineitem_total }}</p>
+          </section>
+        {% endwith %}
+      {% endfor %}
+    {% else %}
+      <p>You haven't placed any orders yet.</p>
+    {% endif %}
+  </div>
+</main>
 {% endblock %}

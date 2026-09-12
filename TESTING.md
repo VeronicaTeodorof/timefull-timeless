@@ -468,6 +468,18 @@ Two tests were written to capture this:
 | CF-10 | Authenticated user | Contact form loads with email field prefilled with registered address | As expected | Pass | |
 | CF-11 | Recipient receives enquiry | Upon successful submission business owner receives email enquiry | As expected | Pass | |
 
+## Order History Page
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---|---|---|---|---|---|
+| OH-1 | Anonymous user types in url | Redirects to login | As expected | Pass | |
+| OH-2 | Authenticated user clicks link or types in url | Order history page loads without error | As expected | Pass | |
+| OH-3 | Authenticated user accesses order history page | Sees empty message is no order has been placed, or their past orders | As expected | Pass | Pass |
+| OH-4 | Displayed info | Order number, date placed, shipping option, shipping status, and total are displayed | As expected | Pass | |
+| OH-5 | Shipping status | When shipping status is updated to shipped from the admin, it displays as such on page | As expected | Pass | |
+
+
+
 
 ---
 

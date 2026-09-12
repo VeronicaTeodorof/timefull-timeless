@@ -17,8 +17,17 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 # Create your views here.
+@login_required
 def order_history(request):
-    return render(request, 'checkout/order_history.html')
+    """
+    Displays the authenticated user's past orders, with most recent first.
+    """
+    orders = (
+        Order.objects.filter(user=request.user)
+        .prefetch_related('lineitems__sculpture')
+        .order_by('-date')
+    )
+    return render(request, "checkout/order_history.html", {"orders": orders})
 
 
 @login_required
