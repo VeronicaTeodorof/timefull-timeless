@@ -1,7 +1,60 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} |Terms of Purchase{% endblock %}
+
 {% block content %}
-<div class="container my-4">
-  <h1>Terms and Conditions</h1>
-  
-</div>
+<main class="terms-page">
+  <div class="container py-5" style="max-width: 760px;">
+    <h1 class="mb-4">Terms of Purchase</h1>
+
+    <p class="mb-4">
+      These terms apply to purchases delivered within the United Kingdom or Romania, our two established delivery destinations.
+      If you would like your sculpture delivered elsewhere, please <a href="{% url 'pages:contact' %}">contact us</a> - we are happy
+      to consider this on a case-by-case basis, but cannot guarantee insurance terms, or customs treatment described below for destinations
+      outside the UK and Romania.
+    </p>
+
+    <section class="mb-4">
+      <h2 class="h4 border-bottom pb-2 mb-3">Insurance</h2>
+      <p>
+        All sculptures are insured for the full value of your purchase while in transit, at a flat rate of 1.5% included in your
+        purchase price. There is no separate insurance charge and no opt-out, so every order is fully covered against loss or
+        damage from the moment it leaves the studio until it reaches you.
+      </p>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h4 border-bottom pb-2 mb-3">Delivery</h2>
+      <p>Orders are shipped within one business day of purchase.</p>
+      <p>You may choose between:</p>
+      <ul>
+        <li><strong>Studio pickup</strong> - no additional cost</li>
+        <li>
+          <strong>Delivery</strong> - a flat shipping fee: £40 (UK),
+          £15 (Romania)
+        </li>
+      </ul>
+      <p>
+        Each sculpture is protected in a custom-built wooden crate
+        during transit.
+      </p>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h4 border-bottom pb-2 mb-3">UK Customs &amp; Import Charges</h2>
+      <p>
+        UK orders may be subject to import VAT and courier handling fees. These charges are not included in your purchase price
+        and are the buyer's responsibility. Depending on the courier's own policy, this may be collected before delivery
+        or invoiced afterward.
+      </p>
+      <p>
+        As an original artwork, each sculpture may qualify for reduced import VAT treatment - works of this kind are
+        typically eligible for the UK's reduced 5% rate rather than the standard 20%, and may be exempt from customs duty. This
+        is determined by HM Revenue &amp; Customs at the time of import and is not guaranteed by us.
+      </p>
+    </section>
+
+  </div>
+</main>
 {% endblock %}
