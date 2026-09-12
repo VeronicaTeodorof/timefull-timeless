@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">
 {% endblock %}
 {# sculpture detail page #}
+{% block body_class %}detail-page{% endblock %}
 
 {% block content %}
 {% include 'gallery/partials/sculpture_detail_content.html' %}
