@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from gallery.models import Sculpture, Theme
 from django import forms
+from django.db.models.functions import Lower
 
 
 # custom widget to hide default Django text
@@ -75,6 +76,28 @@ class SculptureForm(ModelForm):
         else:
             self.fields['new_theme'].widget.attrs[
                 'placeholder'] = 'or add a new theme'
+
+    def clean_title(self):
+        """
+        Rejects case-insensitive duplicate titles with a friendly,
+        field-specific error (the DB-level UniqueConstraint alone gives an
+        unfriendly generic message not tied to the title field).
+        Excludes this sculpture's own record so edits don't self-flag.
+        """
+        title = self.cleaned_data.get('title', '').strip()
+
+        duplicates = Sculpture.objects.annotate(
+            title_lower=Lower('title')
+        ).filter(title_lower=title.lower())
+
+        if self.instance.pk:
+            duplicates = duplicates.exclude(pk=self.instance.pk)
+
+        if duplicates.exists():
+            raise forms.ValidationError(
+                "A sculpture with this title already exists. Please choose a different title."
+            )
+        return title
 
     def clean(self):
         """
