@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth import get_user_model
 
 from gallery.models import Sculpture, Theme
-from checkout.models import DeliveryCost
+from checkout.models import DeliveryCost, Order, OrderLineItem
 from pages.models import BusinessSettings
 
 User = get_user_model()
@@ -77,3 +77,82 @@ class StripeWebhookTests(TestCase):
             HTTP_STRIPE_SIGNATURE='invalid_signature'
         )
         self.assertEqual(response.status_code, 400)
+
+
+class OrderHistoryViewTests(TestCase):
+    """Tests for the order history view."""
+
+    def setUp(self):
+        """
+        Creates temporary test data
+        """
+        self.user = User.objects.create_user(
+            username="buyer1", password="testpass123"
+        )
+        self.other_user = User.objects.create_user(
+            username="buyer2", password="testpass123"
+        )
+
+        self.theme = Theme.objects.create(name='Test Theme')
+
+        self.sculpture = Sculpture.objects.create(
+            title='Test Sculpture',
+            material='Bronze',
+            price=Decimal('100.00'),
+            year=2025,
+            image='image/upload/v1/original.jpg',
+        )
+        self.sculpture.themes.add(self.theme)
+
+        self.own_order = Order.objects.create(
+            user=self.user,
+            full_name="Buyer One",
+            email="buyer1@example.com",
+            country="UK",
+            shipping_method="pickup",
+            stripe_pid="pid_123",
+        )
+        OrderLineItem.objects.create(
+            order=self.own_order,
+            sculpture=self.sculpture,
+            price_at_purchase=500,
+            insurance_cost=7.50,
+        )
+
+        self.other_order = Order.objects.create(
+            user=self.other_user,
+            full_name="Buyer Two",
+            email="buyer2@example.com",
+            country="UK",
+            shipping_method="pickup",
+            stripe_pid="pid_456",
+        )
+        OrderLineItem.objects.create(
+            order=self.other_order,
+            sculpture=self.sculpture,
+            price_at_purchase=500,
+            insurance_cost=7.50,
+        )
+
+    def test_anonymous_user_redirected_to_login(self):
+        """
+        Tests that an anonymous request is redirected (not shown order data)
+        """
+        response = self.client.get(reverse("checkout:order_history"))
+        self.assertEqual(response.status_code, 302)
+
+    def test_authenticated_user_sees_own_order(self):
+        """
+        Tests that a logged-in user's own order appears in their history
+        """
+        self.client.login(username="buyer1", password="testpass123")
+        response = self.client.get(reverse("checkout:order_history"))
+        self.assertContains(response, self.own_order.order_number)
+
+    def test_authenticated_user_does_not_see_others_orders(self):
+        """
+        Tests that a logged-in user cannot see another user's order
+        """
+        self.client.login(username="buyer1", password="testpass123")
+        response = self.client.get(reverse("checkout:order_history"))
+        self.assertNotContains(response, self.other_order.order_number)
