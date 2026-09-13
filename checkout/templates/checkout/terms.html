@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
 {% load static %}
- {% block extra_head %}
-       <!-- Custom Terms CSS -->
-    <link rel="stylesheet" href="{% static 'checkout/css/terms.css' %}">
- {% endblock %}
+{% block extra_head %}
+    <!-- Custom Terms CSS -->
+<link rel="stylesheet" href="{% static 'checkout/css/terms.css' %}">
+{% endblock %}
+
+{% block body_class %}info-page{% endblock %}
 {% block extra_header %}
     <!-- Back link affordance -->
     <a href="{% url 'gallery:sculpture-detail' sculpture.slug %}"

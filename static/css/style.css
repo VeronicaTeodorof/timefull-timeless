@@ -1,3 +1,16 @@
+/* Variables */
+:root {
+    --warm-paper: F6F1E7;
+    --ink: #2B231B;
+}
+
+/* Info pages */
+body.info-page {
+    background-color: var(--warm-paper);
+    color: var(--ink);
+}
+
+
 /* Navbar */
 
 .navbar {

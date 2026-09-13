@@ -11,10 +11,11 @@
 
 {% block content %}
 <div class="gallery-y-space">
+    <h1 class="visually-hidden">Gallery</h1>
     <!-- Staff CTA -->
     {% if user.is_staff %}
         <div class="add-sculpture-btn">
-            <a href="{% url 'gallery:add-sculpture' %}" class="btn my-auto">
+            <a href="{% url 'gallery:add-sculpture' %}" class="btn my-auto" aria-label="Add sculpture">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                 </svg>
@@ -27,12 +28,12 @@
     {% if themes %}
         <!-- Themes Section -->
         <div class="container my-lg-4">
-            <div class="row row-cols-1 row-cols-md-3 g-5">
+            <div class="row row-cols-1 row-cols-md-3 g-5 gy-md-1">
                 {% for theme in themes %}
                     <div class="col">
                         {% if request.user.is_staff %}
                             <div class="d-flex justify-content-end">
-                                <button type="button" title="Edit card theme" class="edit-btn"
+                                <button type="button" title="Edit card theme" class="edit-btn" aria-label="Edit {{ theme.name }} theme"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editThemeModal"
                                         data-theme-name="{{ theme.name }}"
@@ -50,7 +51,7 @@
                                 <img src="{{ theme.get_representative_image.url }}" alt="{{ theme.name }}">
                             </div>
                             <div class="theme-caption">
-                                <h5>{{ theme.display_name }}</h5>
+                                <h2>{{ theme.display_name }}</h2>
                             </div>
                         </a>
                     </div>
@@ -65,14 +66,14 @@
                         {% csrf_token %}
                         <div class="modal-header">
                             <h5 class="modal-title">Edit theme</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div id="editThemeError" class="alert d-none"></div>
-                            <label class="form-label">Theme name</label>
+                            <label for="editThemeName" class="form-label">Theme name</label>
                             <input type="text" name="name" id="editThemeName" class="form-control">
 
-                            <label class="form-label mt-3">Representative image</label>
+                            <label for="editThemeImageSelect" class="form-label mt-3">Representative image</label>
                             <select name="representative_sculpture" id="editThemeImageSelect" class="form-select"></select>
                         </div>
                         <div class="modal-footer">
