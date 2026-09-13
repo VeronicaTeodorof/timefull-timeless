@@ -160,6 +160,28 @@ Two tests were written to capture this:
 | MGF-03 | 'title', 'title_translation', 'dimensions', 'year', 'material', 'price', 'themes', 'image', 'status'  fields | Present | | | |
 | MGF-04 | placeholders | Correct placeholders on each input | | | |
 
+#### Accessibility - cross-apps
+
+**Non-text content**
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---|---|---|---|---|---|
+| A11Y-01 | Homepage hero background image has screen-reader-accessible description (manual) | Visually-hidden text describing image is present | As expected | Pass | Pass |
+| A11Y-02 | Theme cards alt text | Present for each them card | As expected | Pass | Pass |
+| A11Y-03 | Sculpture image alt text | Present for each sculpture image | As expected | Pass | Pass |
+| A11Y-04 | Alt="" on purely decorative images | No decorative images only except for background tiles, set as background images | As expected | Pass | Pass |
+| A11Y-05 | Add sculpture button on mobile | Aria-label present on <a> | As expected | Pass | Pass |
+| A11Y-06 | Burger menu icon | Aria-label present on icon | As expected | Pass | Pass |
+| A11Y-07 | Three dots edit theme button | Aria-label added | As expected | Pass | Pass |
+| A11Y-08 | Three dots edit sculpture button | Aria-label present | As expected | Pass | Pass |
+| A11Y-09 | Upload image SVG paired with text | Aria-hidden true added | As expected | Pass | Pass |
+| A11Y-10 | Add sculpture form labels | Visually hidden labels for matching fields present | As expected | Pass | Pass |
+| A11Y-11 | Edit theme and delete sculpture close modal buttons | Aria-label added | As expected | Pass | Pass |
+| A11Y-12 | All forms labels | Matching `for` attributes added to labels on all forms | As expected | Pass | Pass |
+| A11Y-13 | Heading hierarchy | All pages have a <h1> heading and no skip susequent headings | As expected | Pass | Pass |
+| A11Y-14 | Lists | All lists are properly marked as such | As expected | Pass | Pass |
+| A11Y-15 | Fieldsets | Form fields are wrapped in fieldsets with `legend` when logically grouped | As expected | Pass | Pass |
+
 
 
 ---

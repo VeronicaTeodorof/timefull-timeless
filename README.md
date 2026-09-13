@@ -674,9 +674,14 @@ C = could-have.
 </summary>
 
 **Acceptance Criteria:**
-- [ ]
-- [ ]
-- [ ]
+- [ ] Given an image conveys information, when the page is rendered, then it has descriptive alt text.
+- [ ] Given an image is purely decorative, when the page is rendered, then it has alt="" so screen readers skip it.
+- [ ] Given an icon-only button or link has no visible text, when a screen reader encounters it, then it has an accessible name via aria-label.
+- [ ] Given an icon sits next to visible text that already describes it, when a screen reader encounters it, then the icon is hidden from screen readers via aria-hidden="true".
+- [ ] Given a form field is rendered, when the page is rendered, then its <label> is linked to the input via matching for / id.
+- [ ] Given a page has sections and subsections, when the page is rendered, then headings use <h1>-<h6> in a logical, non-skipping order reflecting actual structure, not visual size alone.
+- [ ] Given content is a set of related items, when the page is rendered, then it is marked up as <ul>/<ol>, not paragraphs.
+- [ ] Given form fields are logically grouped, when the page is rendered, then they are wrapped in <fieldset> with a <legend>.
 
 </details>
 

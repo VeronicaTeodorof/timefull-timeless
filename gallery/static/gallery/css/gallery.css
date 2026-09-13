@@ -52,10 +52,6 @@ body.dark-page {
   border-radius: 0px;
 }
 
-.row.row-cols-md-3 {
-  align-items: flex-end;
-}
-
 .theme-card img {
   display: block;
   margin: 0 auto;
@@ -78,7 +74,7 @@ body.dark-page {
   text-align: left;
 }
 
-.theme-caption h5 {
+.theme-caption h2 {
   color: rgba(234, 166, 7, 0.966);
   font-size: 1.3rem;
   font-weight: 400;
@@ -144,6 +140,10 @@ body.detail-page .navbar,
 body.detail-page footer {
   background-color: #120e0b;
   background-image: none;
+}
+
+.carousel-item {
+  transition: transform 3s ease-in-out;
 }
 
 .title {
@@ -301,10 +301,15 @@ body.detail-page footer {
 /* Gallery page */
 @media (min-width: 768px) {
   .gallery-y-space {
-    padding-top: 2rem;
+    padding-top: 4rem;
     padding-bottom: 0rem;
   }
-
+  .row.g-5 {
+    row-gap: 1rem;
+  }
+  .row.row-cols-md-3 {
+  align-items: flex-end;
+  }
   .add-sculpture-btn {
     position: static;
     width: fit-content;
@@ -340,11 +345,18 @@ body.detail-page footer {
 
   .title {
   font-weight: 600;
-  font-size: 3.6rem;
+  font-size: 3.2rem;
   line-height: 1.02;
   text-align:left;
   margin-top: 0;
   letter-spacing: 0.005em;
   color: #f3ece2;
+  }
+}
+
+/* Desktop only */
+@media (min-width: 992px) {
+  .row.g-5 {
+    row-gap: 4rem;
   }
 }

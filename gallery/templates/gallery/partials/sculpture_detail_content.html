@@ -6,7 +6,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Delete sculpture</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to permanently delete <strong>"{{ sculpture.title }}"</strong>? This action cannot be undone.</p>
@@ -62,10 +62,16 @@
 
         <div class="col-12 col-md-5 text-center text-md-start">
             <div class="title ms-2 ms-lg-5 mt-md-3 mt-lg-0">
-                <h1 class="mt-lg-4 title">{{ sculpture.title }}</h1>
-
-                {% if sculpture.title_translation %}
-                    <h2 class="translation">{{ sculpture.title_translation }}</h2>
+                {% if heading_tag == 'h2' %}
+                    <h2 class="mt-lg-4 title">{{ sculpture.title }}</h2>
+                    {% if sculpture.title_translation %}
+                        <h3 class="translation">{{ sculpture.title_translation }}</h3>
+                    {% endif %}
+                {% else %}
+                    <h1 class="mt-lg-4 title">{{ sculpture.title }}</h1>
+                    {% if sculpture.title_translation %}
+                        <h2 class="translation">{{ sculpture.title_translation }}</h2>
+                    {% endif %}
                 {% endif %}
             </div>
             <dl class="sculpture-meta ms-5 ms-md-0 ms-lg-5 text-start">

@@ -9,11 +9,12 @@
 {% block body_class %}detail-page{% endblock %}
 
 {% block content %}
-<div id="themeCarousel" class="carousel slide carousel" data-bs-ride="false">
+<h1 class="visually-hidden">{{ theme.display_name }}</h1>
+<div id="themeCarousel" class="carousel slide carousel-fade" data-bs-ride="false">
     <div class="carousel-inner">
         {% for sculpture in sculptures %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-             {% include 'gallery/partials/sculpture_detail_content.html' %}
+            {% include 'gallery/partials/sculpture_detail_content.html' with heading_tag='h2' %}
         </div>
         {% endfor %}
     </div>
