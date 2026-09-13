@@ -682,6 +682,8 @@ C = could-have.
 - [ ] Given a page has sections and subsections, when the page is rendered, then headings use <h1>-<h6> in a logical, non-skipping order reflecting actual structure, not visual size alone.
 - [ ] Given content is a set of related items, when the page is rendered, then it is marked up as <ul>/<ol>, not paragraphs.
 - [ ] Given form fields are logically grouped, when the page is rendered, then they are wrapped in <fieldset> with a <legend>.
+- [ ] Given a link appears within body text, when the page is rendered, then it is distinguishable by something other than color alone (e.g. underline, weight).
+- [ ] Given a form field is marked required or optional, when the page is rendered, then this is conveyed by text or a non-color symbol, not by color alone.
 
 </details>
 

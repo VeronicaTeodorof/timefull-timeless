@@ -14,6 +14,8 @@ class CustomLoginForm(LoginForm):
             else:
                 field.widget.attrs['class'] = 'form-control'
             field.widget.attrs.pop('placeholder', None)
+            if field.required:
+                field.label = f"{field.label} (required)"
 
 
 class CustomSignupForm(SignupForm):
@@ -27,4 +29,3 @@ class CustomSignupForm(SignupForm):
             field.widget.attrs.pop('placeholder', None)
         if 'password1' in self.fields:
             self.fields['password1'].help_text = ''
-

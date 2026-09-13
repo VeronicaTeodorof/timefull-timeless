@@ -14,13 +14,13 @@
       {% csrf_token %}
 
       <div class="mb-3">
-        <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+        <label for="{{ form.name.id_for_label }}">{{ form.name.label }} (required)</label>
         {{ form.name }}
         {{ form.name.errors }}
       </div>
 
       <div class="mb-3">
-        <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+        <label for="{{ form.email.id_for_label }}">{{ form.email.label }} (required)</label>
         {{ form.email }}
         {{ form.email.errors }}
       </div>
@@ -38,7 +38,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
+        <label for="{{ form.message.id_for_label }}">{{ form.message.label }} (required)</label>
         {{ form.message }}
         {{ form.message.errors }}
       </div>
