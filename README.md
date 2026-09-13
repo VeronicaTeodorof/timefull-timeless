@@ -684,6 +684,8 @@ C = could-have.
 - [ ] Given form fields are logically grouped, when the page is rendered, then they are wrapped in <fieldset> with a <legend>.
 - [ ] Given a link appears within body text, when the page is rendered, then it is distinguishable by something other than color alone (e.g. underline, weight).
 - [ ] Given a form field is marked required or optional, when the page is rendered, then this is conveyed by text or a non-color symbol, not by color alone.
+- [ ] Given a page has interactive elements, when navigating with Tab, then focus moves through them in a logical order, reaching every link, button, and form field.
+- [ ] Given a page is rendered,when the page loads, then the <title> element contains a distinct, descriptive title identifying that specific page's content or purpose.
 
 </details>
 

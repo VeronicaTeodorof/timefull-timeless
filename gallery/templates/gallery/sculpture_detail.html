@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
+{% block extra_title %} | {{ sculpture.title }}{% endblock %}
 {% block extra_head %}
     <!-- Custom Gallery CSS -->
     <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">

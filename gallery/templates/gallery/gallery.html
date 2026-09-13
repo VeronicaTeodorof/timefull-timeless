@@ -2,6 +2,8 @@
 {% extends 'base.html' %}
 
 {% load static %}
+
+{% block extra_title %} | Gallery{% endblock %}
 {% block extra_head %}
     <!-- Custom Gallery CSS -->
     <link rel="stylesheet" href="{% static 'gallery/css/gallery.css' %}">

@@ -162,8 +162,6 @@ Two tests were written to capture this:
 
 #### Accessibility - cross-apps
 
-**Non-text content**
-
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---|---|---|---|---|---|
 | A11Y-01 | Homepage hero background image has screen-reader-accessible description (manual) | Visually-hidden text describing image is present | As expected | Pass | Pass |
@@ -181,6 +179,11 @@ Two tests were written to capture this:
 | A11Y-13 | Heading hierarchy | All pages have a <h1> heading and no skip susequent headings | As expected | Pass | Pass |
 | A11Y-14 | Lists | All lists are properly marked as such | As expected | Pass | Pass |
 | A11Y-15 | Fieldsets | Form fields are wrapped in fieldsets with `legend` when logically grouped | As expected | Pass | Pass |
+| A11Y-16 | Links | Distinguishable by more than colour | As expected | Pass | Pass |
+| A11Y-17 | Required fields in forms | Distinguishable by text or non-colour symbol | As expected | Pass | |
+| A11Y-18 | Tab order | All interactive elements reachable in logical order by tab navigation | As expected | Pass | Pass |
+| A11Y-19 | <title> on every page | Accurately describes page content | As expected | Pass | Pass |
+
 
 
 
