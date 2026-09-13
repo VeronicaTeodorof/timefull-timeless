@@ -10,7 +10,6 @@ body.info-page {
     color: var(--ink);
 }
 
-
 /* Navbar */
 
 .navbar {
@@ -77,6 +76,18 @@ or adding unwanted outlines to the dropdown toggle button */
     color: rgb(237, 207, 130);
 }
 
+/* Messages */
+
+.feedback {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  color: var(--warm-paper);
+}
+
+body.info-pagev.feedback {
+  color: var(--ink);
+}
 /* Footer */
 .footer {
     position: relative;
