@@ -685,8 +685,7 @@ C = could-have.
 - [ ] Given a link appears within body text, when the page is rendered, then it is distinguishable by something other than color alone (e.g. underline, weight).
 - [ ] Given a form field is marked required or optional, when the page is rendered, then this is conveyed by text or a non-color symbol, not by color alone.
 - [ ] Given a page has interactive elements, when navigating with Tab, then focus moves through them in a logical order, reaching every link, button, and form field.
-- [ ] Given a page is rendered,when the page loads, then the <title> element contains a distinct, descriptive title identifying that specific page's content or purpose.
-
+- [ ] Given a page is rendered,when the page loads, then the `title` element contains a distinct, descriptive title identifying that specific page's content or purpose.
 </details>
 
 <details><summary>
@@ -1220,13 +1219,122 @@ The actions below happen inside the same view, for the same verified event, in s
 
 ## 4. Surface Plane
 
-**Visual Design**
+**Two distinct treatments by page type**
 
-The site follows a "digital gallery first, commerce second" principle - the visual language is built to feel like walking into a small sculpture gallery, with e-commerce functionality (Acquire Now, checkout) present but never the dominant visual note.
+Given time constraints, styling effort was prioritized toward the gallery-facing pages (Homepage, Gallery, Sculpture Detail, Theme Detail), which carry the primary visual identity of the site. Info pages (About, Contact, Terms, Order History) received a simpler, functional styling pass, consistent and legible, but without the same level of visual polish.
 
-**Navbar and footer texture**
+**Gallery-adjacent pages**
 
-Nav and footer share a single dark, gold-veined marble-style texture (reminiscent of Portoro marble - black stone with bold gold veining), chosen to tie into the site's dark charcoal-and-gold palette while still keeping "marble" as a material thread running through the site — even though the physical plinths in the sculpture photos are white stone/marble.
+Gallery-adjacent pages (Homepage, Gallery, Sculpture Detail, Theme Detail) use a dark, gallery-like atmosphere: a dark body background, echoing the stone/metal materiality of Enel's sculptures.
+
+**Homepage - design journey**
+
+The starting point was Enel's recurring sculptural themes: time, flight, angels, vision. An early idea was a four-frame animation — time / flies / on angel wings / timefull, timeless — with the wordmark itself designed as a branching word sharing a common "time" stem, splitting into "full" and "less." On actually designing the logo, this read awkwardly as one garbled word ("timefullless"), so that execution was dropped. The animation concept itself was later given up entirely due to time constraints.
+
+Three independent lines of thought eventually converged into the final design: a marbled texture, a photo of the spiral sculpture "Temporal Expansion" ("Expansiune temporală"), and a poem.
+
+The poem is personal in origin - written from the thought of possibly never seeing a very dear friend again (the friend
+was, fortunately, seen again, but the poem remained) - while still tying thematically into time and recurrence.
+
+The wordmark itself ended up serving three roles at once: the nav logo, the poem's title, and the poem's closing line - a very fortunate arrangement, since on the homepage the wordmark's position in the nav corner naturally reads as
+sitting above the poem, functioning as its title, while the same wordmark reappears again as the poem's final line further down the page. No further imagery for the logo itself was needed, despite many other directions being tried along the way.
+
+The marble texture was initially intended for the nav and footer only. It started as a white marble, which didn't fit the site's dark atmosphere, then moved to a dark, gold-veined, Portoro-inspired marble instead. This background was designed through a collaboration between Claude and Gemini: Gemini proved the better visual designer but didn't fully grasp the intent, while Claude understood the intent but couldn't design as well — so Claude was used to turn the intent into design instructions, which were then given to Gemini, refined
+over many iterations.
+
+A representative sculpture image felt essential for a sculpture portfolio homepage. The spiral sculpture was chosen specifically because it embodies both the time theme and the recurrence theme from the poem, tying concept and image together rather than being purely decorative. The hardest part was integrating marble texture, sculpture photo, and text into one coherent image rather than
+three separately layered elements.
+
+Claude Design was eventually the tool that could both understand the intent and execute the visual well, and produced the final background image through iteration. The text itself (poem, wordmark) is layered on top separately via HTML/CSS, not baked into the image.
+
+<p align="center">
+  <img src="readme-assets/surface/hero-no-nav.png" alt="Final marble plate texture" width="500">
+  <br>
+  <em>The final marble plate texture, after iterating with Claude and Gemini.</em>
+</p>
+
+
+<p align="center">
+  <img src="readme-assets/surface/expansiune-temporala.jpg" alt="Temporal Expansion sculpture by Enel Dumitrascu" width="400">
+  <br>
+  <em>Temporal Expansion sculpture by Enel Dumitrascu.</em>
+</p>
+
+
+<p align="center">
+  <img src="readme-assets/surface/timefull-hero-blend-v5.png" alt="Claude Design's homepage background iteration" width="500">
+  <br>
+  <em>The homepage background as designed by Claude Design, before text was layered on.</em>
+</p>
+
+
+<p align="center">
+  <img src="readme-assets/surface/home-page.png" alt="Final homepage, desktop view" width="700">
+  <br>
+  <em>The completed homepage.</em>
+</p>
+
+
+**Gallery and Sculpture Detail - design journey**
+
+Unlike the homepage, the same marble background couldn't be reused here - the gallery and sculpture-detail pages need the sculpture images themselves to hold focus, not compete with a busy full-bleed texture behind them.
+
+The eventual pattern came about as a happy accident. While iterating on a design with Claude Design, an intermediate, not-yet-fully-cleared step was caught partway through - one section hadn't been cleared yet, and it happened to form a vertical pattern that filled the void between the theme cards while also visually tying them together. That in-progress file was retrieved before
+Claude Design had finished clearing it.
+
+The retrieved background came through as a tile. The pattern itself needed further work — several attempts were tried before it was finished with Gemini, producing variations used differently across the gallery page and the
+sculpture-detail page.
+
+Text color (gold and white) carries over from the homepage's original palette, tying the gallery-adjacent pages together as one consistent visual family despite the different background treatment.
+
+<p align="center">
+  <img src="readme-assets/surface/gallery-body-pattern-tile.png" alt="Initial retrieved tile pattern" width="400">
+  <br>
+  <em>The initial, not-yet-cleared tile retrieved from Claude Design.</em>
+</p>
+
+<p align="center">
+  <img src="readme-assets/surface/pattern-tile-5.jpg" alt="Finished tile pattern used on the gallery page" width="400">
+  <img src="readme-assets/surface/pattern-tile-4.jpg" alt="Finished tile pattern used on the sculpture detail page" width="400">
+  <br>
+  <em>The two finished tile variations, refined with Gemini — one used on the gallery page, one on sculpture detail.</em>
+</p>
+
+<p align="center">
+  <img src="readme-assets/surface/gallery.png" alt="Final gallery page" width="700">
+  <br>
+  <em>The completed gallery page.</em>
+</p>
+
+<p align="center">
+  <img src="readme-assets/surface/sculpture-detail.png" alt="Final sculpture detail page" width="700">
+  <br>
+  <em>The completed sculpture detail page.</em>
+</p>
+
+**Info pages**
+
+Info pages (About, Contact, Terms, Order History) use a lighter, warmer palette (`--warm-paper` / `--ink`), chosen to feel more like reading a printed page than browsing a dark gallery — appropriate for text-heavy content (biography, terms, order records) rather than image-led browsing. Styling here is basic and functional: consistent spacing, Bootstrap utility classes, and the light
+color palette, without further visual refinement.
+
+<p align="center">
+  <img src="readme-assets/surface/info-page.png" alt="Terms page" width="700">
+  <br>
+  <em>Terms page.</em>
+</p>
+
+**Color palette**
+
+<p align="center">
+  <img src="readme-assets/surface/timefull-timeless-palette.png" alt="Colour palette" width="600">
+  <br>
+  <em>Colour palette</em>
+</p>
+
+
+**Typography**
+
+Typography has not yet been deliberately chosen - the site currently uses browser/Bootstrap defaults. This was a conscious deprioritization given time constraints, judged the least critical visual decision relative to layout, color, and imagery.
 
 ---
 

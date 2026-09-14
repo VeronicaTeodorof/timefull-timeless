@@ -1,6 +1,6 @@
 /* Variables */
 :root {
-    --warm-paper: #F6F1E7;
+    --warm-paper: #f9f7f2;
     --ink: #2B231B;
 }
 
@@ -9,6 +9,12 @@ body.info-page {
     background-color: var(--warm-paper);
     color: var(--ink);
 }
+
+body.info-page footer {
+  background-color: #120e0b;
+  background-image: none;
+}
+
 
 /* Navbar */
 
@@ -25,7 +31,7 @@ body.info-page {
 }
 
 .navbar-brand {
-    color: rgb(251, 200, 70);
+    color: #fbc846;
     font-size: 1.5rem;
     font-style: oblique;
 }
@@ -99,10 +105,6 @@ body.info-page .feedback {
 /* Footer */
 .footer {
     position: relative;
-    background-image: url('../images/nav-marble.webp');
-    background-size: cover;
-    background-position: center bottom;
-    background-repeat: no-repeat;
     color: white;
 }
 
@@ -114,21 +116,10 @@ body.info-page .feedback {
     background: rgba(10, 8, 6, 0.35);
 }
 
-/* Ensures all direct children of the footer sit above the dark overlay rather than getting hidden behind it */
-.footer > * {
-    position: relative;
-    z-index: 1;
+footer.blockquote-footer {
+  background-color: var(--warm-paper) !important;
+  padding: 10px;
 }
-
-.footer nav a {
-    color: white;
-    text-decoration: none;
-}
-
-.footer nav a:hover {
-    color: rgb(237, 207, 130);
-}
-
 
 /* Media queries - mobile */
 @media (max-width: 991px) {
