@@ -11,7 +11,8 @@ from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def gallery(request):
-    themes = Theme.objects.filter(sculptures__isnull=False).distinct()
+    themes = Theme.objects.filter(
+        sculptures__isnull=False).distinct().order_by('display_order')
     return render(request, 'gallery/gallery.html', {'themes': themes})
 
 
@@ -81,7 +82,7 @@ def edit_theme(request, slug):
     return JsonResponse({'success': False,
                          'errors': 'Invalid request method.'}, status=400)
 
-
+@login_required
 def edit_sculpture(request, slug):
     """
     Handles editing of a sculpture object
@@ -93,6 +94,14 @@ def edit_sculpture(request, slug):
         form = SculptureForm(request.POST, request.FILES, instance=sculpture)
         if form.is_valid():
             form.save()
+            new_theme_names = request.POST.getlist('new_theme')
+            for name in new_theme_names:
+                name = name.strip()
+                if name:
+                    theme = Theme.objects.filter(name__iexact=name).first()
+                    if not theme:
+                        theme = Theme.objects.create(name=name)
+                    sculpture.themes.add(theme)
             messages.success(request, "Sculpture updated.")
             return redirect('gallery:sculpture-detail', slug=sculpture.slug)
     else:
