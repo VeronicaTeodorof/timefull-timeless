@@ -275,20 +275,6 @@ Two tests were written to capture this:
 | NAV-09 | Shipping link on footer | Navigates to policies page, shipping section | | | |
 | NAV-10 | Terms link on footer | Navigates to policies page, terms section | | | |
 
-
-#### Search function (SEA)
-
-| Test ID | Test | Expected | Actual | Local | Deployment |
-|---------|------|----------|--------|-------|------------|
-| SEA-01 | Match by title | Sculpture appears in results | | | |
-| SEA-02 | Match by description | Sculpture(s) appear(s) in results | | | |
-| SEA-03 | Match by theme | All sculptures in that theme appear | | | |
-| SEA-04 | Case insensitivity | Matches regardless of case | | | |
-| SEA-05 | No results | Empty-state message + link back to gallery shown | | | |
-| SEA-06 | Empty submission | Returns no results, not full catalogue | | | |
-| SEA-07 | Duplicate prevention | Sculpture appears only once in results | | | |
-| SEA-08 | Enter key submits | Same result as clicking submit button | | | |
-
 #### Empty states (EMPTY)
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
@@ -356,26 +342,6 @@ Two tests were written to capture this:
 | SD-14 | Cancel deletion in modal | Modal closes, nothing is deleted, sculpture remains unchanged | | | |
 | SD-15 | Delete option hidden for sold sculptures | Actions dropdown shows "Edit" but not "Delete" when sculpture status is "sold" | As expected | Pass | |
 
-#### Forms
-##### Add Sculpture Form
-| Test ID | Test | Expected | Actual | Local | Deployment |
-|---------|------|----------|--------|-------|------------|
-| ASF-01 | All form fields present | Title, title translation, dimensions, year, material, price, status, theme (dropdown + new-theme text), image upload all render | As expected | Pass | Pass |
-| ASF-02 | Save buttons present | "Save" and "Save as draft" buttons both render | As expected | Pass | Pass |
-| ASF-03 | Required fields | Clearly marked as such | Consistent marking | Pass | |
-| ASF-04 | Click the status dropdown on create/edit form | Dropdown opens showing tow choices (Available, Sold); hovering over an option shows a visible hover state; clicking an option selects it and closes the dropdown, showing the selected value in the field | As expected | Pass | Pass |
-| ASF-05 | Click the image upload box/button on create form | File picker dialog opens, allowing the user to select an image from their device | As exptected | Pass | Pass |
-| ASF-06 | Select an image file in the file picker | File picker closes; a visual indicator or message confirms the file was selected/attached | File name shown | Pass | |
-| ASF-07 | Hover over form buttons (Save/Save as Draft) | Each button shows a visible hover state (color/shadow/cursor change) indicating it's interactive | As expected | Pass | |
-| ASF-08 | Submit form with all valid data | Form saves; a success message/confirmation is shown to the user (not just a redirect with no feedback) | As expected | Pass | |
-| ASF-09 | Submit form with invalid/missing data | Form does not save; relevant, clear error message(s) shown next to the failing field(s) | As expected | Pass | |
-| ASF-10 | Save a valid sculpture as staff/sculptor, then view the gallery logged in as (or logged out from) a non-staff account | Newly saved sculpture appears in the public gallery | Nothing happens | Fail | |
-| ASF-11 | Save a sculpture as draft then view the gallery as a non-staff account | Sculpture does NOT appear in the public gallery | Nothing happens | Fail | |
-| ASF-12 | Save a sculpture as draft then view it via sculptor's controls (staff account) | Sculpture DOES appear in sculptor's controls | Nothing happens | Fail | |
-| ASF-13 | View detail page immediately after successful add | Title, translation, year, material, dimensions, price, status, and image all display exactly as entered | | | |
-
-
-
 #### Add Sculpture Page
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
@@ -385,33 +351,73 @@ Two tests were written to capture this:
 | ASP-03 | Back link destination | Clicking back link navigates to gallery page | As expected | Pass | |
 | ASP-04 | Unsaved changes warning | Navigating away with unsaved input shows confirmation | | | |
 
+
+#### Add Sculpture Form
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| ASF-01 | All form fields present | Title, title translation, dimensions, year, material, price, status, theme (dropdown + new-theme text), image upload all render | As expected | Pass | Pass |
+| ASF-02 | Save buttons present | "Save" button present | As expected | Pass | Pass |
+| ASF-03 | Required fields | Clearly marked as such | Consistent marking | Pass | Pass |
+| ASF-04 | Click the status dropdown on create/edit form | Dropdown opens showing two choices (Available, Sold); hovering over an option shows a visible hover state; clicking an option selects it and closes the dropdown, showing the selected value in the field | As expected | Pass | Pass |
+| ASF-05 | Click the image upload box/button on create form | File picker dialog opens, allowing the user to select an image from their device | As exptected | Pass | Pass |
+| ASF-06 | Select an image file in the file picker | File picker closes; a visual indicator or message confirms the file was selected/attached | File name shown | Pass | Pass |
+| ASF-07 | Hover over form button (Save) | Button shows a visible hover state indicating it's interactive | As expected | Pass | Pass |
+| ASF-08 | Submit form with all valid data | Form saves; a success message/confirmation is shown to the user | As expected | Pass | Pass |
+| ASF-09 | Submit form with invalid/missing data | Form does not save; relevant, clear error message(s) shown next to the failing field(s) | As expected | Pass | Pass |
+| ASF-10 | Save a valid sculpture as staff/sculptor, then view the gallery | Newly saved sculpture appears in the public gallery | As expected | Pass | Pass |
+| ASF-11 | View detail page immediately after successful add | Title, translation, year, material, dimensions, price, status, and image all display exactly as entered | As expected | Pass | Pass |
+
+#### Edit Sculpture Form
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---|---|---|---|---|---|
+| ESF-01 | All form fields present, pre-populated | Title, title translation, dimensions, year, material, price, status, themes, image all render, pre-filled with the sculpture's current values | As expected | Pass | Pass |
+| ESF-02 | Save button present | "Save" button renders | As expected | Pass | Pass |
+| ESF-03 | Required fields | All required fields prefilled with current values on load; if cleared, placeholder text indicates the field is required, consistent with Add Sculpture form | As expected | Pass | Pass |
+| ESF-04 | Click the status dropdown | Dropdown opens showing choices; hovering shows a visible hover state; clicking an option selects it and closes the dropdown, showing the selected value | As expected | Pass | Pass |
+| ESF-05 | Click the image upload/change box | File picker dialog opens, allowing selection of a new image | As expected | Pass | Pass |
+| ESF-06 | Select a new image file in the file picker | File picker closes; a visual indicator confirms the new file was selected | As expected | Pass | Pass |
+| ESF-07 | Leave image field untouched, submit other valid changes | Existing image is preserved; submission succeeds without requiring re-upload | As expected | Pass | Pass |
+| ESF-08 | Hover over Save button | Button shows a visible hover state indicating it's interactive | As expected | Pass | Pass |
+| ESF-09 | Submit form with all valid changed data | Form saves; success message shown; redirected to sculpture's detail page reflecting the changes | As expected  | Pass | Pass |
+| ESF-10 | Submit form with invalid/missing data | Form does not save; relevant, clear error message(s) shown next to the failing field(s) | As expected | Pass | Pass |
+| ESF-11 | Change title to one matching another existing sculpture's title (same casing) | Form rejects submission; validation error shown | As expected | Pass | Pass |
+| ESF-12 | Change title to one matching another existing sculpture's title (different casing) | Form rejects submission; validation error shown | As expected | Pass | Pass |
+| ESF-13 | Submit with title unchanged (same as sculpture's own current title) | Form saves successfully; no false "duplicate title" error against itself | As expected | Pass | Pass |
+| ESF-14 | View detail page immediately after successful edit | Title, translation, year, material, dimensions, price, status, and image all display exactly as edited | As expected | Pass | Pass |
+| ESF-15 | Cancel link | Clicking "Cancel" navigates to the sculpture's detail page without saving any changes | As expected | Pass | Pass |
+| ESF-16 | Unselect the sculpture's existing theme, submit a new theme name instead | Sculpture ends up attached only to the new theme; old theme association is removed | Bug found and fixed; now works as expected | Pass | |
+| ESF-17 | Leave the sculpture's existing theme selected, also submit a new theme name | Sculpture ends up attached to both the existing theme and the new one | As expected | Pass | |
+
+
 #### Create and Edit Theme
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| CT-01 | New theme appears in multi-select after creation | Creating a sculpture with a new theme name; visiting edit-sculpture afterward shows the new theme as an option in the multi-select | As expected | Pass | |
-| CT-02 | New theme correctly associated with its sculpture | Creating a sculpture with a new theme name; sculpture detail/gallery shows the new theme correctly associated | As expected | Pass | |
-| CT-03 | Duplicate new theme name (exact match) | Submitting a new theme name exactly matching an existing theme; no error shown, no duplicate choice, submission succeeds normally | As expected | Pass | |
-| CT-04 | Duplicate new theme name (different casing) | Submitting a new theme name matching an existing theme with different casing; no error shown, submission succeeds normally | As expected | Pass | |
-| CT-05 | Both theme fields left empty | Submitting the add-sculpture form with both theme fields empty; clear validation error shown near the right place, other entered fields preserved | As expected | Pass | |
-| CT-06 | Success/error feedback messages | A theme-related validation error shows a clear error message; editing an existing theme shows a success message on save | As expected | Pass | |
-| CT-07 | Select multiple existing themes | Physically selecting two or more themes in the multi-select; interaction feels right, selected state is visually clear | As expected | Pass | |
-| CT-08 | Combine existing theme selection with a new theme | Selecting an existing theme and typing a new theme name in the same submission; both end up visible together on the sculpture and gallery | As expected | Pass | |
-| CT-09 | Zero themes - form state | With zero themes in the database, the themes multi-select is not displayed on the add-sculpture form, and the "new theme" field's placeholder reflects this is the first theme(s) | As expected | Pass | |
-| CT-10 | "+" button clones new theme field | Clicking the "+" button adds an additional "new theme" field in the browser (one theme name per field) | As expected | Pass | |
-| CT-11 | New theme(s) appear as gallery cards | After adding a sculpture with one or more new themes, the gallery page shows each as its own card, displaying the sculpture's image | As expected | Pass | |
-| CT-12 | Edit button visible only to staff | Staff user sees the edit menu (both labeled options) on each theme card; anonymous/non-staff users do not see it | As expected | Pass | |
-| CT-13 | Edit button opens modal populated correctly | Clicking the three-dot button on a theme card opens the edit modal, pre-filled with that specific theme's name, representative-image options | As expected | Pass | |
-| CT-14 | Representative image override reflected in gallery | Selecting a different sculpture as the theme's representative image and saving; gallery card shows the selected sculpture's image | As expected | Pass | |
-| CT-15 | Theme name field pre-populated | Theme-edit page's name field exists and is pre-populated with the current name on load | As expected | Pass | |
+| CT-01 | New theme appears in multi-select after creation | Creating a sculpture with a new theme name; visiting edit-sculpture afterward shows the new theme as an option in the multi-select | As expected | Pass | Pass |
+| CT-02 | New theme correctly associated with its sculpture | Creating a sculpture with a new theme name; sculpture detail/gallery shows the new theme correctly associated | As expected | Pass | Pass |
+| CT-03 | Duplicate new theme name (exact match) | Submitting a new theme name exactly matching an existing theme; no error shown, no duplicate choice, submission succeeds normally | As expected | Pass | Pass |
+| CT-04 | Duplicate new theme name (different casing) | Submitting a new theme name matching an existing theme with different casing; no error shown, submission succeeds normally | As expected | Pass | Pass |
+| CT-05 | Both theme fields left empty | Submitting the add-sculpture form with both theme fields empty; clear validation error shown near the right place, other entered fields preserved | As expected | Pass | Pass |
+| CT-06 | Success/error feedback messages | A theme-related validation error shows a clear error message; editing an existing theme shows a success message on save | As expected | Pass | Pass |
+| CT-07 | Select multiple existing themes | Physically selecting two or more themes in the multi-select; interaction feels right, selected state is visually clear | As expected | Pass | Pass |
+| CT-08 | Combine existing theme selection with a new theme | Selecting an existing theme and typing a new theme name in the same submission; both end up visible together on the sculpture and gallery | As expected | Pass | Pass |
+| CT-09 | Zero themes - form state | With zero themes in the database, the themes multi-select is not displayed on the add-sculpture form, and the "new theme" field's placeholder reflects this is the first theme(s) | As expected | Pass | Pass |
+| CT-10 | "+" button clones new theme field | Clicking the "+" button adds an additional "new theme" field in the browser (one theme name per field) | As expected | Pass | Pass |
+| CT-11 | New theme(s) appear as gallery cards | After adding a sculpture with one or more new themes, the gallery page shows each as its own card, displaying the sculpture's image | As expected | Pass | Pass |
+| CT-12 | Edit button visible only to staff | Staff user sees the edit menu (both labeled options) on each theme card; anonymous/non-staff users do not see it | As expected | Pass | Pass |
+| CT-13 | Edit button opens modal populated correctly | Clicking the three-dot button on a theme card opens the edit modal, pre-filled with that specific theme's name, representative-image options | As expected | Pass | Pass |
+| CT-14 | Representative image override reflected in gallery | Selecting a different sculpture as the theme's representative image and saving; gallery card shows the selected sculpture's image | As expected | Pass |Pass |
+| CT-15 | Theme name field pre-populated | Theme-edit page's name field exists and is pre-populated with the current name on load | As expected | Pass | Pass |
 | CT-16 | Renamed theme reflected in gallery | Renaming a theme and saving; gallery card displays the new name | As expected | Pass | |
-| CT-17 | Cancel button clicked closes modal without saving | Theme-edit modal has a "Cancel" button;  clicking it closes the modal, nothing is saved | As expected | Pass | |
+| CT-17 | Cancel button clicked closes modal without saving | Theme-edit modal has a "Cancel" button;  clicking it closes the modal, nothing is saved | As expected | Pass | Pass |
 | CT-18 | Themes casing | Consistent casing for themes in multiselect fields and theme cards | As expected | Pass | |
-| CT-19 | Themes displayed in multiselect fields | All themes are displayed in multiselect fields regardless of whether there are any sculptures with that theme or not | as expected | Pass | |
-| CT-20 | Non-empty themes gallery cards | Gallery displays one card per theme when this is not empty | As expected | Pass | |
-| CT-21 | Representative image default | The image of the latest added sculpture in a theme is displayed as representative image for that theme when no other is manually selected | As expected | Pass | |
-| CT-22 | Representative image across multiple themes | A single sculpture tagged with multiple themes displays as the representative image on each of those themes cards independently | As expected | Pass | |
-| CT-23 | Theme card updates after its featured sculpture is removed | Removing a sculpture that was shown on a theme's card; that theme still exists, and its card now shows a different remaining sculpture instead | As expected | Pass | |
+| CT-19 | Themes displayed in multiselect fields | All themes are displayed in multiselect fields regardless of whether there are any sculptures with that theme or not | as expected | Pass | Pass |
+| CT-20 | Non-empty themes gallery cards | Gallery displays one card per theme when this is not empty | As expected | Pass | Pass |
+| CT-21 | Representative image default | The image of the latest added sculpture in a theme is displayed as representative image for that theme when no other is manually selected | As expected | Pass | Pass |
+| CT-22 | Representative image across multiple themes | A single sculpture tagged with multiple themes displays as the representative image on each of those themes cards independently | As expected | Pass | Pass |
+| CT-23 | Theme card updates after its featured sculpture is removed | Removing a sculpture that was shown on a theme's card; that theme still exists, and its card now shows a different remaining sculpture instead | As expected | Pass | Pass |
 | CT-24 | Empty theme still selectable in sculpture form | A theme with no sculptures assigned still appears as an option in the themes multi-select on the add-sculpture form | As expected | Pass | Pass |
 
 
@@ -481,17 +487,17 @@ Two tests were written to capture this:
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---|---|---|---|---|---|
-| CF-01 | Missing `name` | Form rejected, error on `name` shown | As expected | Pass | |
-| CF-02 | Missing `email` | Form rejected, error on `email` shown | As expected | Pass | |
-| CF-03 | Malformed `email` | Form rejected, error on `email` shown | As expected | Pass | |
-| CF-04 | Missing `message` | Form rejected, error on `message` shown | As expected | Pass | |
-| CF-05 | Missing `phone` (optional) | Form submits successfully | As expected | Pass | |
-| CF-06 | Missing `subject` (optional) | Form submits successfully | As expected | Pass | |
-| CF-07 | All fields valid | Form submits successfully | As expected | Pass | |
-| CF-08 | Form submited with valid data | Redirects to contact page, confirmation message shown | As expected | Pass | |
-| CF-09 | Anonymous user | Contact form loads with empty email field | As expected | Pass | |
-| CF-10 | Authenticated user | Contact form loads with email field prefilled with registered address | As expected | Pass | |
-| CF-11 | Recipient receives enquiry | Upon successful submission business owner receives email enquiry | As expected | Pass | |
+| CF-01 | Missing `name` | Form rejected, error on `name` shown | As expected | Pass | Pass |
+| CF-02 | Missing `email` | Form rejected, error on `email` shown | As expected | Pass | Pass |
+| CF-03 | Malformed `email` | Form rejected, error on `email` shown | As expected | Pass | Pass |
+| CF-04 | Missing `message` | Form rejected, error on `message` shown | As expected | Pass | Pass |
+| CF-05 | Missing `phone` (optional) | Form submits successfully | As expected | Pass | Pass |
+| CF-06 | Missing `subject` (optional) | Form submits successfully | As expected | Pass | Pass |
+| CF-07 | All fields valid | Form submits successfully | As expected | Pass | Pass |
+| CF-08 | Form submited with valid data | Redirects to contact page, confirmation message shown | As expected | Pass | Pass |
+| CF-09 | Anonymous user | Contact form loads with empty email field | As expected | Pass | Pass |
+| CF-10 | Authenticated user | Contact form loads with email field prefilled with registered address | As expected | Pass | Pass |
+| CF-11 | Recipient receives enquiry | Upon successful submission business owner receives email enquiry | As expected | Pass | Pass |
 
 ## Order History Page
 
@@ -502,8 +508,6 @@ Two tests were written to capture this:
 | OH-3 | Authenticated user accesses order history page | Sees empty message is no order has been placed, or their past orders | As expected | Pass | Pass |
 | OH-4 | Displayed info | Order number, date placed, shipping option, shipping status, and total are displayed | As expected | Pass | |
 | OH-5 | Shipping status | When shipping status is updated to shipped from the admin, it displays as such on page | As expected | Pass | |
-
-
 
 
 ---
