@@ -16,6 +16,24 @@ def gallery(request):
     return render(request, 'gallery/gallery.html', {'themes': themes})
 
 
+def attach_new_themes(request, sculpture):
+    """
+    Creates and/or attaches themes submitted via the new_theme field(s),
+    reusing an existing theme if one with a matching name (case-insensitive)
+    already exists.
+    """
+    # retrieving lists from Query Dict
+    # https://vonkunesnewton.medium.com/getting-lists-from-querydicts-django-bf648daead42
+    new_theme_names = request.POST.getlist('new_theme')
+    for name in new_theme_names:
+        name = name.strip()
+        if name:
+            theme = Theme.objects.filter(name__iexact=name).first()
+            if not theme:
+                theme = Theme.objects.create(name=name)
+            sculpture.themes.add(theme)
+
+
 @login_required
 def add_sculpture(request):
     """
@@ -31,22 +49,37 @@ def add_sculpture(request):
             sculpture = form.save(commit=False)
             sculpture.save()
             form.save_m2m()
-            # retrieving lists from Query Dict
-            # https://vonkunesnewton.medium.com/getting-lists-from-querydicts-django-bf648daead42
-            new_theme_names = request.POST.getlist('new_theme')
-            for name in new_theme_names:
-                name = name.strip()
-                if name:
-                    theme = Theme.objects.filter(name__iexact=name).first()
-                    if not theme:
-                        theme = Theme.objects.create(name=name)
-                    sculpture.themes.add(theme)
+            attach_new_themes(request, sculpture)
             messages.success(request, "Sculpture added.")
             return redirect('gallery:sculpture-detail', slug=sculpture.slug)
     else:
         form = SculptureForm()
 
     return render(request, 'gallery/add_sculpture.html', {'form': form})
+
+
+@login_required
+def edit_sculpture(request, slug):
+    """
+    Handles editing of a sculpture object
+    """
+    sculpture = get_object_or_404(Sculpture, slug=slug)
+    if not request.user.is_staff:
+        raise PermissionDenied
+    if request.method == "POST":
+        form = SculptureForm(request.POST, request.FILES, instance=sculpture)
+        if form.is_valid():
+            sculpture = form.save(commit=False)
+            sculpture.save()
+            form.save_m2m()
+            attach_new_themes(request, sculpture)
+            messages.success(request, "Sculpture updated.")
+            return redirect('gallery:sculpture-detail', slug=sculpture.slug)
+    else:
+        form = SculptureForm(instance=sculpture)
+    return render(request,
+                  'gallery/edit_sculpture.html',
+                  {'form': form, 'sculpture': sculpture})
 
 
 def sculpture_detail(request, slug):
@@ -81,34 +114,6 @@ def edit_theme(request, slug):
                                  ['Invalid submission.'])[0]}, status=400)
     return JsonResponse({'success': False,
                          'errors': 'Invalid request method.'}, status=400)
-
-@login_required
-def edit_sculpture(request, slug):
-    """
-    Handles editing of a sculpture object
-    """
-    sculpture = get_object_or_404(Sculpture, slug=slug)
-    if not request.user.is_staff:
-        raise PermissionDenied
-    if request.method == "POST":
-        form = SculptureForm(request.POST, request.FILES, instance=sculpture)
-        if form.is_valid():
-            form.save()
-            new_theme_names = request.POST.getlist('new_theme')
-            for name in new_theme_names:
-                name = name.strip()
-                if name:
-                    theme = Theme.objects.filter(name__iexact=name).first()
-                    if not theme:
-                        theme = Theme.objects.create(name=name)
-                    sculpture.themes.add(theme)
-            messages.success(request, "Sculpture updated.")
-            return redirect('gallery:sculpture-detail', slug=sculpture.slug)
-    else:
-        form = SculptureForm(instance=sculpture)
-    return render(request,
-                  'gallery/edit_sculpture.html',
-                  {'form': form, 'sculpture': sculpture})
 
 
 @login_required
