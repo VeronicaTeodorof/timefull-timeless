@@ -1464,3 +1464,21 @@ The project was managed in GitHub: https://github.com/VeronicaTeodorof/timefull-
 **Django forms**
 - form dynamic initial values: https://docs.djangoproject.com/en/6.0/ref/forms/api/#dynamic-initial-values
 
+## 9. Acknowledgements
+
+Did she manage to complete the challenge? Well, not really! She did submit, late of course, and the project is far from what she wanted it to be.
+
+But she did submit.
+
+And I do thank you all for helping me achive this. A big, big thank you to:
+- Enel Dumitrascu, for letting me build a modest digital home for his artworks;
+- Elena Dumitrascu, for kindly providing the images, the content of the about page, and the descriptions for every sculpture;
+- Luisa Evans, my friend and collegue who walked with me on this path and kindly offered her help;
+- my son and husband for not firing me yet;
+- Meg Bamber, for expanding time for me;
+
+And if you allow me, I want to thank a very dear friend, who I was honored to have as a tutor, who brought out the best in me, who had faith in me and cheered for me when I finished my first project, when I sorted the pseudocode for my mastermind game, when I managed to build the nested navigation tree in my note taking app, when I almost finished the course. Now it's my turn to cheer for him and for his future. Thank you, Kevin Loughrey!
+
+I planted the seeds...
+Hope to see you in the next iteration!
+
