@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% block extra_head %}
-    <!-- Custom Terms CSS -->
-<link rel="stylesheet" href="{% static 'checkout/css/terms.css' %}">
-{% endblock %}
+{% block extra_title %} | Checkout Terms{% endblock %}
 
 {% block body_class %}info-page{% endblock %}
 {% block extra_header %}
@@ -19,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container my-4 terms-container">
+    <div class="container my-4 terms-container" style="max-width: 600px;">
         <h1 class="h3 text-center">Terms of Purchase</h1>
 
         <!-- Sculpture summary -->
