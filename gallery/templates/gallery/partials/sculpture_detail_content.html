@@ -1,26 +1,5 @@
 {% load humanize %}
 
-<!-- Delete modal -->
-<div class="modal fade" id="deleteSculptureModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Delete sculpture</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to permanently delete <strong>"{{ sculpture.title }}"</strong>? This action cannot be undone.</p>
-            </div>
-            <div class="modal-footer">
-                <form method="post" action="{% url 'gallery:delete-sculpture' sculpture.slug %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="container">
     <div class="row">
        <div class="col-12 col-md-7 py-lg-3">
@@ -45,7 +24,9 @@
                                 {% if sculpture.status != 'sold' %}
                                 <li>
                                     <button type="button" class="dropdown-item"
-                                        data-bs-toggle="modal" data-bs-target="#deleteSculptureModal">
+                                        data-bs-toggle="modal" data-bs-target="#deleteSculptureModal"
+                                        data-sculpture-title="{{ sculpture.title }}"
+                                        data-delete-url="{% url 'gallery:delete-sculpture' sculpture.slug %}">
                                         Delete
                                     </button>
                                 </li>

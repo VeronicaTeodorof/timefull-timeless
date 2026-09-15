@@ -28,4 +28,10 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
+
+{% include 'gallery/partials/delete_sculpture_modal.html' %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'gallery/js/delete-sculpture.js' %}"></script>
 {% endblock %}
