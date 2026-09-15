@@ -757,7 +757,7 @@ Given that a field's default validation runs before custom clean() logic, when t
 
 ### W3C
 
-The following pages have been validated with https://validator.w3.org/:
+The following pages have been validated with [W3C Validator](https://validator.w3.org/)
 - [about page](readme-assets/w3c/about-validation.png)
 - [add sculpture](readme-assets/w3c/add-sculpture-validation.png)
 - [checkout-terms](readme-assets/w3c/checkout-terms-validation.png)
@@ -770,5 +770,53 @@ The following pages have been validated with https://validator.w3.org/:
 - [sculpture detail](readme-assets/w3c/sculpture-detail-validation.png)
 - [success page](readme-assets/w3c/success-validation.png)
 - [theme detail](readme-assets/w3c/theme-detail-validation.png)
+
+
+### Jigsaw
+
+The following pages have been validated with [Jigsaw Validator](https://jigsaw.w3.org/css-validator/)
+- [gallery.css](readme-assets/jigsaw/gallery-css-validation.png)
+- [home.css](readme-assets/jigsaw/home-css-validation.png)
+- [style.css](readme-assets/jigsaw/style-css-validation.png)
+
+
+### CI Python Linter
+
+The following pages have been validated with [CI Python Linter](https://pep8ci.herokuapp.com/#)
+- accounts:
+  - [forms.py](readme-assets/ci-python-linter/accounts-forms-validation.png)
+
+- checkout:
+  - [admin.py](readme-assets/ci-python-linter/checkout-admin.png)
+  - [apps.py](readme-assets/ci-python-linter/checkout-apps.png)
+  - [models.py](readme-assets/ci-python-linter/checkout-models.png)
+  - [test_models.py](readme-assets/ci-python-linter/checkout-test-models.png)
+  - [test_views.py](readme-assets/ci-python-linter/checkout-test-views.png)
+  - [urls.py](readme-assets/ci-python-linter/checkout-urls.png)
+  - [views.py](readme-assets/ci-python-linter/checkout-views.png)
+
+- gallery:
+  - [admin.py](readme-assets/ci-python-linter/gallery-admin.png)
+  - [apps.py](readme-assets/ci-python-linter/gallery-apps.png)
+  - [forms.py](readme-assets/ci-python-linter/gallery-forms.png)
+  - [models.py](readme-assets/ci-python-linter/gallery-models.png)
+  - [test_forms.py](readme-assets/ci-python-linter/gallery-test-forms.png)
+  - [test_models.py](readme-assets/ci-python-linter/gallery-test-models.png)
+  - [test_views.py](readme-assets/ci-python-linter/gallery-test-views.png)
+  - [urls.py](readme-assets/ci-python-linter/gallery-urls.png)
+  - [views.py](readme-assets/ci-python-linter/gallery-views.png)
+
+- pages:
+  - [admin.py](readme-assets/ci-python-linter/pages-admin.png)
+  - [apps.py](readme-assets/ci-python-linter/pages-apps.png)
+  - [test_forms.py](readme-assets/ci-python-linter/pages-test-forms.png)
+  - [test_models.py](readme-assets/ci-python-linter/pages-test-models.png)
+  - [test_views.py](readme-assets/ci-python-linter/pages-test-views.png)
+  - [urls.py](readme-assets/ci-python-linter/pages-urls.png)
+  - [views.py](readme-assets/ci-python-linter/pages-views.png)
+
+- [urls.py](readme-assets/ci-python-linter/urls.png)
+
+
 
 ---
