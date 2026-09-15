@@ -17,14 +17,30 @@
      - [Pages App - Contact View](#pages-app--contact-view) - `pages/tests/test_views.py`
 2. [Pass 2 — Manual Tests](#pass-2--manual-tests)
    - [Accessibility](#accessibility)
-   - [Per-feature tests](#per-feature-tests)
-     - [Authentication (AUTH)](#authentication-auth)
-     - [Responsiveness (RES)](#responsiveness-res)
-     - [Navigation links (NAV)](#navigation-links-nav)
-     - [Search function (SEA)](#search-function-sea)
-     - [Empty states (EMPTY)](#empty-states-empty)
-     - [Permissions (PERM)](#permissions-perm)
-     - [Gallery page (GP)](#gallery-page-gp)
+   - [Authentication (AUTH)](#authentication-auth)
+   - [Responsiveness (RES)](#responsiveness-res)
+     - [Navbar](#res--navbar)
+     - [Homepage](#res--homepage)
+     - [Gallery Page](#res--gallery-page)
+     - [Sculpture Detail Page](#res--sculpture-detail-page)
+     - [Add Sculpture Page](#res--add-sculpture-page)
+   - [Navigation Links (NAV)](#navigation-links-nav)
+   - [Gallery Page (GP)](#gallery-page-gp)
+   - [Sculpture Detail (SD)](#sculpture-detail-sd)
+   - [Theme Detail (TD)](#theme-detail-td)
+   - [Permissions (PERM)](#permissions-perm)
+   - [Empty States (EMPTY)](#empty-states-empty)
+   - [Add Sculpture Form (ASF)](#add-sculpture-form-asf)
+   - [Edit Sculpture Form (ESF)](#edit-sculpture-form-esf)
+   - [Create and Edit Theme (CT)](#create-and-edit-theme-ct)
+   - [Delete Sculpture Modal (DSM)](#delete-sculpture-modal-dsm)
+   - [Terms Page (TP)](#terms-page-tp)
+   - [Checkout Session Creation (CS)](#checkout-session-creation-cs)
+   - [Webhook / Checkout Feedback](#webhook--checkout-feedback)
+     - [Order Confirmation (OC)](#order-confirmation-oc)
+     - [Owner Notification (ON)](#owner-notification-on)
+   - [Contact Form (CF)](#contact-form-cf)
+   - [Order History Page (OH)](#order-history-page-oh)
 3. [Story-to-Test Mapping](#story-to-test-mapping)
 4. [Solved Bugs](#solved-bugs)
 5. [Known Bugs / Limitations](#known-bugs--limitations)
@@ -445,8 +461,8 @@ Responsiveness is checked per page across breakpoints, with screenshots included
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| EMPTY-01 | Gallery page empty state content | Quote and empty message for regular users, plus Add Sculpture button for staff controls | As expected | Pass | |
-| EMPTY-02 | Gallery page non-empty state content | Quote, filter row, and theme card grid render when at least one sculpture exists | | | |
+| EMPTY-01 | Gallery page empty state content | Empty message for regular users, plus Add Sculpture button for staff controls | As expected | Pass | |
+| EMPTY-02 | Gallery page non-empty state content | theme card grid renders when at least one sculpture exists | As exptected  | Pass | Pass |
 
 
 #### Add Sculpture Page
@@ -459,7 +475,7 @@ Responsiveness is checked per page across breakpoints, with screenshots included
 | ASP-04 | Unsaved changes warning | Navigating away with unsaved input shows confirmation | | | |
 
 
-#### Add Sculpture Form
+#### Add Sculpture Form (ASF)
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
@@ -475,7 +491,7 @@ Responsiveness is checked per page across breakpoints, with screenshots included
 | ASF-10 | Save a valid sculpture as staff/sculptor, then view the gallery | Newly saved sculpture appears in the public gallery | As expected | Pass | Pass |
 | ASF-11 | View detail page immediately after successful add | Title, translation, year, material, dimensions, price, status, and image all display exactly as entered | As expected | Pass | Pass |
 
-#### Edit Sculpture Form
+#### Edit Sculpture Form (ESF)
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---|---|---|---|---|---|
@@ -498,7 +514,7 @@ Responsiveness is checked per page across breakpoints, with screenshots included
 | ESF-17 | Leave the sculpture's existing theme selected, also submit a new theme name | Sculpture ends up attached to both the existing theme and the new one | As expected | Pass | |
 
 
-#### Create and Edit Theme
+#### Create and Edit Theme (CT)
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
@@ -526,71 +542,21 @@ Responsiveness is checked per page across breakpoints, with screenshots included
 | CT-22 | Representative image across multiple themes | A single sculpture tagged with multiple themes displays as the representative image on each of those themes cards independently | As expected | Pass | Pass |
 | CT-23 | Theme card updates after its featured sculpture is removed | Removing a sculpture that was shown on a theme's card; that theme still exists, and its card now shows a different remaining sculpture instead | As expected | Pass | Pass |
 | CT-24 | Empty theme still selectable in sculpture form | A theme with no sculptures assigned still appears as an option in the themes multi-select on the add-sculpture form | As expected | Pass | Pass |
+| CT-25 | Representative image respects manual selection over most-recent fallback | Manually selecting an *older* sculpture as a theme's representative image and saving; gallery card shows the manually selected (older) sculpture, not the most recent one | Bug found and fixed (`get_representative_image` previously ignored `representative_sculpture`); now works as expected | Pass | Pass |
 
+---
 
-## Terms Page (TP)
-
-| Test ID | Test | Expected | Actual | Local | Deployment |
-|---|---|---|---|---|---|
-| TP-01 | Click "Acquire Now" on a sculpture detail page, logged in | Navigates to terms page for that sculpture | As expected | Pass | |
-| TP-02 | Click "Acquire Now" while logged out | Redirected to login page | As expected | Pass | |
-| TP-03 | Log in after being redirected from "Acquire Now" | Redirected to the terms page for the original sculpture, not to a generic page | As expected | Pass | |
-| TP-04 | Terms page loads | Sculpture name and price shown correctly, matching the sculpture clicked | As expected | Pass | |
-| TP-05 | "Back to [sculpture]" link present | Renders near the top of the page | As expected | Pass | |
-| TP-06 | Click "Back to [sculpture]" link | Navigates to that sculpture's detail page | | | |
-| TP-07 | Select "Studio Pickup" | Country options hidden/not shown; delivery cost line shows £0 | As expected | Pass | |
-| TP-08 | Select "Delivery" | Country choice (UK/Romania) becomes visible | As expected | Pass | |
-| TP-09 | Select "Delivery" then "United Kingdom" | Delivery cost shows £40.00; total updates correctly | As expected | Pass | |
-| TP-10 | Select "Delivery" then "Romania" | Delivery cost shows £15.00; total updates correctly | As expected | Pass | |
-| TP-11 | Cost breakdown — Sculpture line | Matches the sculpture's actual price | As expected | Pass | |
-| TP-12 | Cost breakdown — Insurance line | Insurance value equals sculpture price × BusinessSettings.insurance_rate (e.g. £100 sculpture × 1.5% = £1.50), rounded to 2 decimal places | As expected | Pass | |
-| TP-13 | Cost breakdown — Total | Equals Sculpture + Insurance + Delivery (or Sculpture + Insurance if Pickup) | As expected | Pass | |
-| TP-14 | VAT disclosure text present | Renders above the payment button, mentions VAT explicitly | As expected | Pass | |
-| TP-15 | Click "Terms and Conditions" link within VAT disclosure | Navigates to static Terms page | As expected | Pass | |
-| TP-19 | Anonymous user attempts to access terms page URL directly | Redirected to login | As expected | Pass | |
-| TP-20 | Non-staff authenticated user accesses terms page for a valid sculpture | Page loads normally | As expected | Pass | |
-| TP-21 | Access terms page (via button or direct URL) for a sculpture with `status='sold'` | Redirected away (e.g. to sculpture detail) with a message, rather than allowed to proceed | As expected | Pass | |
-| TP-22 | Phone number field present on terms page | Renders between shipping method choice and cost breakdown, clearly marked optional | As expected | Pass | |
-| TP-23 | Submit form with phone number field left blank | Form submits successfully (optional field, no validation error) | As expected | Pass | |
-| TP-24 | Submit form with a phone number entered | Value is passed through to the Checkout Session's metadata correctly | | | |
-
-## Checkout Session Creation (CS)
+### Delete Sculpture Modal (DSM)
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
-|---|---|---|---|---|---|
-| CS-01 | Submit terms form with "Studio Pickup" selected | Redirects to Stripe's hosted checkout page | As expected | Pass | |
-| CS-02 | Stripe checkout page - line items shown | Sculpture and Insurance line items appear with correct names and amounts | As expected | Pass | |
-| CS-03 | Stripe checkout page - total | Total matches Sculpture + Insurance (no delivery line for Pickup) | As expected | Pass | |
-| CS-04 | Stripe checkout page - email prefilled | Buyer's email is prefilled and matches their account email | As expected | Pass | |
-| CS-05 | Submit terms form with "Delivery" + "United Kingdom" selected | Redirects to Stripe's hosted checkout page, with a Delivery (UK) line item and a shipping address form | As expected | Pass | |
-| CS-06 | Submit terms form with "Delivery" + "Romania" selected | Redirects to Stripe's hosted checkout page, with a Delivery (RO) line item and a shipping address form | As expected | Pass | |
-| CS-07 | Complete payment on Stripe's hosted page using test card 4242 4242 4242 4242 | Payment succeeds; redirected to /checkout/success/ | As expected | Pass | |
-| CS-08 | Success page after payment | Displays confirmation message, matches site branding (nav/footer intact) | As expected | Pass | |
-| CS-09 | Cancel payment on Stripe's hosted page (click back/cancel) | Redirected back to the terms page for the original sculpture | | | |
-| CS-10 | Sculpture status after successful test payment | Status changes to `sold` | | | |
-| CS-11 | Attempt to POST directly to create-session URL for a sold sculpture | Redirected away with a message, rather than a Stripe session being created | as expected | Pass | |
+|---------|------|----------|--------|-------|------------|
+| DSM-01 | Modal shows the correct sculpture name | Modal displays the specific sculpture's title, confirming the correct piece before deletion | As expected | Pass | Pass |
+| DSM-02 | Confirm deletion | Sculpture is permanently deleted, success message shown, redirected to gallery page | As expected | Pass | Pass |
+| DSM-03 | Cancel deletion in modal | Modal closes, nothing is deleted, sculpture remains unchanged | As expected | Pass | Pass |
 
-## Webhook / Checkout Feedback
+---
 
-### Order Confirmation (OC)
-
-| Test ID | Test | Expected | Actual | Local | Deployment |
-|---|---|---|---|---|---|
-| OC-01 | Complete a successful payment on Stripe's hosted page | Redirected to branded success page | As expected | Pass | |
-| OC-02 | Webhook processes a confirmed `checkout.session.completed` event | Confirmation email sent to the buyer's verified account email | As expected | Pass | |
-| OC-04 | Webhook event fails signature verification | No confirmation email is sent | As expected | Pass | |
-
-### Owner Notification (ON)
-
-| Test ID | Test | Expected | Actual | Local | Deployment |
-|---|---|---|---|---|---|
-| ON-01 | Webhook processes a confirmed event | Email sent to the business owner containing sculpture name, buyer details, shipping method (and country, if delivery), and order total | As expected | Pass | |
-| ON-02 | Business owner logs into Django admin | Can view a list of all `Order` records, including newly created ones | As expected | Pass | |
-| ON-03 | Business owner views an order in Django admin | Can see all details: buyer info, sculpture, shipping method, costs, `stripe_pid`| As expected | Pass | |
-| ON-04 | Business owner marks an order's `shipped_at` field in Django admin | Saved and reflected next time the order is viewed | | | |
-| ON-05 | Webhook event fails signature verification | No order-notification email is sent, no Order created | As expected | Pass | |
-
-## Contact Form
+## Contact Form (CF)
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---|---|---|---|---|---|
@@ -606,15 +572,78 @@ Responsiveness is checked per page across breakpoints, with screenshots included
 | CF-10 | Authenticated user | Contact form loads with email field prefilled with registered address | As expected | Pass | Pass |
 | CF-11 | Recipient receives enquiry | Upon successful submission business owner receives email enquiry | As expected | Pass | Pass |
 
-## Order History Page
+---
+
+## Terms Page (TP)
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---|---|---|---|---|---|
-| OH-1 | Anonymous user types in url | Redirects to login | As expected | Pass | |
-| OH-2 | Authenticated user clicks link or types in url | Order history page loads without error | As expected | Pass | |
+| TP-01 | Click "Acquire Now" on a sculpture detail page, logged in | Navigates to terms page for that sculpture | As expected | Pass | Pass |
+| TP-02 | Click "Acquire Now" while logged out | Redirected to login page | As expected | Pass | Pass |
+| TP-03 | Log in after being redirected from "Acquire Now" | Redirected to the terms page for the original sculpture, not to a generic page | As expected | Pass | Pass |
+| TP-04 | Terms page loads | Sculpture name and price shown correctly, matching the sculpture clicked | As expected | Pass | Pass |
+| TP-05 | "Back to [sculpture]" link present | Renders near the top of the page | As expected | Pass | Pass |
+| TP-06 | Click "Back to [sculpture]" link | Navigates to that sculpture's detail page | As expected | Pass | Pass |
+| TP-07 | Select "Studio Pickup" | Country options hidden/not shown; delivery cost line shows £0 | As expected | Pass | Pass |
+| TP-08 | Select "Delivery" | Country choice (UK/Romania) becomes visible | As expected | Pass | Pass |
+| TP-09 | Select "Delivery" then "United Kingdom" | Delivery cost shows £40.00; total updates correctly | As expected | Pass | Pass
+| TP-10 | Select "Delivery" then "Romania" | Delivery cost shows £15.00; total updates correctly | As expected | Pass | Pass |
+| TP-11 | Cost breakdown - Sculpture line | Matches the sculpture's actual price | As expected | Pass | Pass |
+| TP-12 | Cost breakdown - Insurance line | Insurance value equals sculpture price × BusinessSettings.insurance_rate (e.g. £100 sculpture × 1.5% = £1.50), rounded to 2 decimal places | As expected | Pass | Pass |
+| TP-13 | Cost breakdown — Total | Equals Sculpture + Insurance + Delivery (or Sculpture + Insurance if Pickup) | As expected | Pass | Pass |
+| TP-14 | VAT disclosure text present | Renders above the payment button, mentions VAT explicitly | As expected | Pass | Pass |
+| TP-15 | Click "Terms and Conditions" link within VAT disclosure | Navigates to static Terms page | As expected | Pass | Pass |
+| TP-19 | Anonymous user attempts to access terms page URL directly | Redirected to login | As expected | Pass | Pass |
+| TP-20 | Non-staff authenticated user accesses terms page for a valid sculpture | Page loads normally | As expected | Pass | Pass|
+| TP-21 | Access terms page (via button or direct URL) for a sculpture with `status='sold'` | Redirected away to sculpture detail with a message, rather than allowed to proceed | As expected | Pass | Pass |
+| TP-22 | Phone number field present on terms page | Renders between shipping method choice and cost breakdown, clearly marked optional | As expected | Pass | Pass |
+| TP-23 | Submit form with phone number field left blank | Form submits successfully (optional field, no validation error) | As expected | Pass | Pass |
+| TP-24 | Submit form with a phone number entered | Value is passed through to the Checkout Session's metadata correctly | As expected | Pass | Pass |
+
+## Checkout Session Creation (CS)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---|---|---|---|---|---|
+| CS-01 | Submit terms form with "Studio Pickup" selected | Redirects to Stripe's hosted checkout page | As expected | Pass | Pass |
+| CS-02 | Stripe checkout page - line items shown | Sculpture and Insurance line items appear with correct names and amounts | As expected | Pass | Pass |
+| CS-03 | Stripe checkout page - total | Total matches Sculpture + Insurance (no delivery line for Pickup) | As expected | Pass | Pass |
+| CS-04 | Stripe checkout page - email prefilled | Buyer's email is prefilled and matches their account email | As expected | Pass | Pass |
+| CS-05 | Submit terms form with "Delivery" + "United Kingdom" selected | Redirects to Stripe's hosted checkout page, with a Delivery (UK) line item and a shipping address form | As expected | Pass | Pass |
+| CS-06 | Submit terms form with "Delivery" + "Romania" selected | Redirects to Stripe's hosted checkout page, with a Delivery (RO) line item and a shipping address form | As expected | Pass | Pass |
+| CS-07 | Complete payment on Stripe's hosted page using test card 4242 4242 4242 4242 | Payment succeeds; redirected to /checkout/success/ | As expected | Pass | Pass |
+| CS-08 | Success page after payment | Displays confirmation message, matches site branding (nav/footer intact) | As expected | Pass | Pass |
+| CS-09 | Sculpture status after successful test payment | Status changes to `sold` | | | |
+| CS-10 | Attempt to POST directly to create-session URL for a sold sculpture | Redirected away with a message, rather than a Stripe session being created | as expected | Pass | Pass |
+
+## Webhook / Checkout Feedback
+
+### Order Confirmation (OC)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---|---|---|---|---|---|
+| OC-01 | Complete a successful payment on Stripe's hosted page | Redirected to branded success page | As expected | Pass | |
+| OC-02 | Webhook processes a confirmed `checkout.session.completed` event | Confirmation email sent to the buyer's verified account email | As expected | Pass | |
+| OC-04 | Webhook event fails signature verification | No confirmation email is sent | As expected | Pass | |
+
+### Owner Notification (ON)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---|---|---|---|---|---|
+| ON-01 | Webhook processes a confirmed event | Email sent to the business owner containing sculpture name, buyer details, shipping method (and country, if delivery), and order total | As expected | Pass | Pass |
+| ON-02 | Business owner logs into Django admin | Can view a list of all `Order` records, including newly created ones | As expected | Pass | Pass |
+| ON-03 | Business owner views an order in Django admin | Can see all details: buyer info, sculpture, shipping method, costs, `stripe_pid`| As expected | Pass | Pass |
+| ON-04 | Business owner marks an order's `shipped_at` field in Django admin | Saved and reflected next time the order is viewed | As expected | Pass | Pass |
+
+
+## Order History Page (OH)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---|---|---|---|---|---|
+| OH-1 | Anonymous user types in url | Redirects to login | As expected | Pass | Pass |
+| OH-2 | Authenticated user clicks link or types in url | Order history page loads without error | As expected | Pass | Pass |
 | OH-3 | Authenticated user accesses order history page | Sees empty message is no order has been placed, or their past orders | As expected | Pass | Pass |
-| OH-4 | Displayed info | Order number, date placed, shipping option, shipping status, and total are displayed | As expected | Pass | |
-| OH-5 | Shipping status | When shipping status is updated to shipped from the admin, it displays as such on page | As expected | Pass | |
+| OH-4 | Displayed info | Order number, date placed, shipping option, shipping status, and total are displayed | As expected | Pass | Pass |
+| OH-5 | Shipping status | When shipping status is updated to shipped from the admin, it displays as such on page | As expected | Pass | Pass |
 
 
 ---
