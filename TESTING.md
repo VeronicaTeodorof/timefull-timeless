@@ -774,7 +774,7 @@ The following pages have been validated with [W3C Validator](https://validator.w
 
 ### Jigsaw
 
-The following pages have been validated with [Jigsaw Validator](https://jigsaw.w3.org/css-validator/)
+The following files have been validated with [Jigsaw Validator](https://jigsaw.w3.org/css-validator/)
 - [gallery.css](readme-assets/jigsaw/gallery-css-validation.png)
 - [home.css](readme-assets/jigsaw/home-css-validation.png)
 - [style.css](readme-assets/jigsaw/style-css-validation.png)
@@ -782,7 +782,7 @@ The following pages have been validated with [Jigsaw Validator](https://jigsaw.w
 
 ### CI Python Linter
 
-The following pages have been validated with [CI Python Linter](https://pep8ci.herokuapp.com/#)
+The following files have been validated with [CI Python Linter](https://pep8ci.herokuapp.com/#)
 - accounts:
   - [forms.py](readme-assets/ci-python-linter/accounts-forms-validation.png)
 
@@ -818,5 +818,15 @@ The following pages have been validated with [CI Python Linter](https://pep8ci.h
 - [urls.py](readme-assets/ci-python-linter/urls.png)
 
 
+### JS Lint
+
+The following files have been validated with [JS Lint](https://www.jslint.com/)
+- gallery:
+  - [delete-sculpture.js](readme-assets/js-lint/delete-sculpture-js.png)
+  - [gallery.js](readme-assets/js-lint/gallery-js.png)
+  - [sculpture.js](readme-assets/js-lint/sculpture-js.png)
+
+- checkout:
+  - [terms.js](readme-assets/js-lint/terms-js-validation.png)
 
 ---

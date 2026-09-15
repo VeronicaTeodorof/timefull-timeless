@@ -19,13 +19,12 @@ document.getElementById('editThemeModal').addEventListener('show.bs.modal', func
     document.getElementById('editThemeForm').action = `/gallery/theme/${button.getAttribute('data-theme-slug')}/edit/`;
 
     // Parse the sculptures JSON string back into a usable array
-    const raw = button.getAttribute('data-sculptures');
     const sculptures = JSON.parse(button.getAttribute('data-sculptures'));
 
     // Rebuild the representative-image dropdown's options
     const select = document.getElementById('editThemeImageSelect');
     select.innerHTML = '';
-    sculptures.forEach(s => {
+    sculptures.forEach((s) => {
         const option = document.createElement('option');
         option.value = s.pk;
         option.textContent = s.title;
@@ -48,8 +47,8 @@ document.getElementById('editThemeForm').addEventListener('submit', function(eve
         body: formData,
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
     })
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
         if (data.success) {
             location.reload();
         } else {
