@@ -354,17 +354,49 @@ Responsiveness is checked per page across breakpoints, with screenshots included
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| NAV-00 | Logo | Navigates to home page | As expected | Pass | |
-| NAV-01 | Home link | Navigates to home page | As expected | Pass | |
-| NAV-02 | Gallery link | Navigates to gallery page | As expected | Pass | |
-| NAV-03 | About link | Navigates to about page | As expected | Pass | |
-| NAV-04 | Enquiries link | Navigates to enquiries page | As expected | Pass | |
-| NAV-05 | Sign in link (guest) | Navigates to login page | As expected | Pass | |
-| NAV-06 | Sign up link (guest) | Navigates to signup page | As expected | Pass | |
-| NAV-07 | Order History link (authenticated) | Navigates to order history | As expected | Pass | |
-| NAV-08 | Log out link (authenticated) | Logs out, redirects to home page | As expected | Pass | |
-| NAV-09 | Shipping link on footer | Navigates to policies page, shipping section | | | |
-| NAV-10 | Terms link on footer | Navigates to policies page, terms section | | | |
+| NAV-00 | Logo | Navigates to home page | As expected | Pass | Pass |
+| NAV-01 | Home link | Navigates to home page | As expected | Pass | Pass |
+| NAV-02 | Gallery link | Navigates to gallery page | As expected | Pass | Pass |
+| NAV-03 | About link | Navigates to about page | As expected | Pass | Pass |
+| NAV-04 | Enquiries link | Navigates to enquiries page | As expected | Pass | Pass |
+| NAV-05 | Sign in link (guest) | Navigates to login page | As expected | Pass | Pass |
+| NAV-06 | Sign up link (guest) | Navigates to signup page | As expected | Pass | Pass |
+| NAV-07 | Order History link (authenticated) | Navigates to order history | As expected | Pass | Pass |
+| NAV-08 | Log out link (authenticated) | Logs out, redirects to home page | As expected | Pass | Pass |
+| NAV-09 | Terms link | Navigates to terms page | As expected | Pass | Pass |
+| HP-01 | Click "SCULPTURES" text on home page | Navigates to gallery page | As expected | Pass | Pass |
+
+
+### Gallery page (GP)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| GP-01 | Click "Add sculpture" button (staff) | Navigates to add sculpture page | As expected | Pass | Pass |
+| GP-02 | Hover over "Add sculpture" button (staff) | Pointer cursor confirms interactivity; no additional hover state (color/shadow) — accepted, given clear text label | As expected | Pass | Pass |
+| GP-03 | Hover over theme-card edit button (staff) | Color and background change on hover, confirming interactivity | As expected | Pass | Pass |
+| GP-04 | Click theme-card edit button (staff) | Opens edit theme modal | As expected | Pass | Pass |
+| GP-05 | Hover over theme card image | Image scales up (zoom), pointer cursor shown, confirming card is clickable | As expected | Pass | Pass |
+| GP-06 | Click theme card image/link | Navigates to that theme's detail (carousel) page | As expected | Pass | Pass |
+| GP-07 | Hover/click theme name caption text | Pointer cursor shown; click navigates to that theme's detail (carousel) page | As expected | Pass | Pass |
+
+
+### Sculpture Detail (SD)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| SD-01 | Hover over actions dropdown button (staff) | Color and background change on hover, confirming interactivity — same as theme-card edit button | As expected | Pass | Pass |
+| SD-02 | Click actions dropdown button (staff) | Dropdown opens, showing Edit (and Delete, if not sold) | As expected | Pass | Pass |
+| SD-03 | Dropdown contents for an available sculpture (staff) | Both "Edit" and "Delete" options present | As expected | Pass | Pass |
+| SD-04 | Dropdown contents for a sold sculpture (staff) | Only "Edit" option present; "Delete" hidden | As expected | Pass | Pass |
+| SD-05 | Click "Edit" in the actions dropdown | Navigates to that sculpture's edit page | As expected | Pass | Pass |
+| SD-06 | Click "Delete" in the actions dropdown | Confirmation modal opens, asking to confirm before proceeding | As expected | Pass | Pass |
+| SD-07 | Hover over "Acquire Now" link | Text color and border color both change, confirming interactivity | As expected | Pass | Pass |
+| SD-08 | Click "What acquiring involves" link | Navigates to the static Terms page | As expected | Pass | Pass |
+| SD-09 | Click "Enquire about this piece" link | Navigates to the contact page | As expected | Pass | Pass |
+| SD-10 | "Acquire Now" button visibility by status | Shown when sculpture is available; hidden when sculpture is sold | As expected | Pass | Pass |
+| SD-11 | Title translation display | Shown when `title_translation` is set; hidden entirely when not set | As expected | Pass | Pass |
+| SD-12 | Meta fields display (year, material, dimensions) | Year and material always shown; dimensions shown only when set, hidden entirely when not | As expected | Pass | Pass |
+| SD-13 | Price formatting | Displayed with comma separator for large values (e.g. £3,000, not £3000) | As expected | Pass | Pass |
 
 #### Empty states (EMPTY)
 
@@ -395,43 +427,6 @@ Responsiveness is checked per page across breakpoints, with screenshots included
 | PERM-16 | Non-staff user tries to  edit theme / change representative image (gallery) | Controls not visible/accessible | | | |
 | PERM-17| Staff user tries to edit theme / change representative image (gallery) | Controls visible/accessible | | | |
 
-#### Gallery page (GP)
-
-| Test ID | Test | Expected | Actual | Local | Deployment |
-|---------|------|----------|--------|-------|------------|
-| GP-01 | Theme card display per theme | Theme card displays when the theme has one or more sculptures; does not display when the theme has none | As expected | Pass | |
-| GP-02 | Click a theme card | Loads a carousel of sculpture detail pages belonging to that theme | | | |
-| GP-03 | Theme cards render at uniform height | All theme cards display at a consistent fixed height regardless of source image aspect ratio | As expected | Pass | |
-| GP-04 | Image crop, no distortion | Source image fills the fixed card height via crop | As exptected | Pass | |
-| GP-05 | Card link hover state | Hovering the card shows a visible affordance indicating it's clickable | Zoom on hover | Pass | |
-| GP-06 | Theme name renders in footer| Theme name text appears in a solid-background footer strip below the image| As expected - hardcoded | Pass | |
-| GP-07 | Footer text contrast | Theme name text is legible against the footer's solid background, regardless of the image above it | As expected | Pass | |
-| GP-08 | Footer height consistency | Footer strip height is consistent across cards regardless of image height or theme name length | As expected | Pass | |
-| GP-09 | Click 'Add sculpture' button on gallery page | Navigates to add sculpture page | As expected | Pass | |
-| GP-10 | Carousel displays multiple sculptures per theme | Each slide shows a different sculpture's full detail content (image, title, price, etc.) | As expected | Pass | |
-| GP-11 | Carousel navigation controls | Prev/next buttons visible and functional, correctly cycling through slides | As expected | Pass | |
-| GP-12| Carousel controls stay in consistent position across slides | Controls don't shift position when navigating between slides with different image aspect ratios | As expected | Pass | |
-
-
-#### Sculpture Detail
-
-| Test ID | Test | Expected | Actual | Local | Deployment |
-|---------|------|----------|--------|-------|------------|
-| SDP-01 | Mobile layout matches wireframe | Field order and grouping (image, identifiers, details, actions) match the mobile wireframe | As expected | Pass | |
-| SDP-02 | Desktop layout matches wireframe | Field order and grouping match the desktop wireframe, with image and details in separate columns | As expected | Pass | |
-| SD-03 | Click "Acquire Now"  | Navigates to the terms page | | | |
-| SD-04 | Click "Enquire about this piece" | Navigates to the contact page | | | |
-| SD-05 | Click edit button on sculpture detail | Navigates to that sculpture's edit page | As expected | Pass | |
-| SD-06 | Submit edit-sculpture form with valid changed data | Sculpture's details update, success message shown, redirected to detail page reflecting changes | As expected | Pass | |
-| SD-07 | Edit sculpture without changing the image field | Existing image is preserved, doesn't require re-upload | As expected | Pass | |
-| SD-08 | Edit-sculpture image field shows some default Django text | "Currently: [link]" present "Change:" text are hidden; only the custom upload box is shown | As expected | Pass | |
-| SD-09 | Edit-sculpture image field label | Shows "Change image" on the edit page (not "Upload image (required)" as on add) | As expected | Pass | |
-| SD-10 | Cancel link on edit-sculpture page | Clicking "Cancel" navigates to the sculpture's detail page without saving any changes | As expected | Pass | |
-| SD-11 | Click "Delete" in the actions dropdown | Confirmation modal opens, asking to confirm before proceeding | As expected | Pass | |
-| SD-12 | Delete confirmation modal shows sculpture name | Modal displays the specific sculpture's title, confirming the correct piece before deletion | As expected | Pass | |
-| SD-13 | Confirm deletion | Sculpture is permanently deleted, success message shown, redirected to gallery page | As expected | Pass | |
-| SD-14 | Cancel deletion in modal | Modal closes, nothing is deleted, sculpture remains unchanged | | | |
-| SD-15 | Delete option hidden for sold sculptures | Actions dropdown shows "Edit" but not "Delete" when sculpture status is "sold" | As expected | Pass | |
 
 #### Add Sculpture Page
 
