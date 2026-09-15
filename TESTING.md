@@ -226,13 +226,13 @@ Uses a test data builder pattern (`valid_data(**overrides)`) to isolate one vari
 | A11Y-10 | Add sculpture form labels | Visually hidden labels for matching fields present | As expected | Pass | Pass |
 | A11Y-11 | Edit theme and delete sculpture close modal buttons | Aria-label added | As expected | Pass | Pass |
 | A11Y-12 | All forms labels | Matching `for` attributes added to labels on all forms | As expected | Pass | Pass |
-| A11Y-13 | Heading hierarchy | All pages have a <h1> heading and no skip susequent headings | As expected | Pass | Pass |
+| A11Y-13 | Heading hierarchy | All pages have a `h1` heading and no skip subsequent headings | As expected | Pass | Pass |
 | A11Y-14 | Lists | All lists are properly marked as such | As expected | Pass | Pass |
 | A11Y-15 | Fieldsets | Form fields are wrapped in fieldsets with `legend` when logically grouped | As expected | Pass | Pass |
 | A11Y-16 | Links | Distinguishable by more than colour | As expected | Pass | Pass |
 | A11Y-17 | Required fields in forms | Distinguishable by text or non-colour symbol | As expected | Pass | |
 | A11Y-18 | Tab order | All interactive elements reachable in logical order by tab navigation | As expected | Pass | Pass |
-| A11Y-19 | <title> on every page | Accurately describes page content | As expected | Pass | Pass |
+| A11Y-19 | `title` on every page | Accurately describes page content | As expected | Pass | Pass |
 
 ---
 
@@ -258,7 +258,7 @@ Uses a test data builder pattern (`valid_data(**overrides)`) to isolate one vari
 | AUTH-13 | Sign up with a username shorter than the minimum length | Form rejected with validation error; no account created | As expected | Pass | Pass |
 | AUTH-14 | Sign up with an email already registered to an existing account | Form rejected with validation error; no account created | As expected | Pass | Pass |
 | AUTH-15 | Sign up with a username already taken by an existing account | Form rejected with validation error; no account created | As expected | Pass | Pass |
-| AUTH-16 | Sign up with valid data using a real, accessible inbox, check that inbox | Confirmation email arrives in the real inbox, addressed to the exact email entered, with a working confirmation link | As expected | | Pass |
+| AUTH-16 | Sign up with valid data using a real, accessible inbox, check that inbox | Confirmation email arrives in the real inbox, addressed to the exact email entered, with a working confirmation link | As expected | Pass | Pass |
 | AUTH-17 | Click confirmation link from a real email client | Link opens and loads the Confirm Email Address page correctly, showing the right email/username | As expected | | Pass |
 | AUTH-18 | Submit login with valid username but wrong password | Login rejected; clear error shown; user remains logged out | As expected | Pass | Pass |
 | AUTH-20 | Submit login with a username/email that doesn't exist | Login rejected; clear error shown; user remains logged out | As expected | Pass | Pass |
@@ -271,38 +271,83 @@ Uses a test data builder pattern (`valid_data(**overrides)`) to isolate one vari
 | AUTH-27 | Logged-in/logged-out flash messages | Suppressed; no default allauth message shown after login or logout | As expected | Pass | Pass |
 
 
-#### Responsiveness (RES)
+### Responsiveness (RES)
+
+Responsiveness is checked per page across breakpoints, with screenshots included as evidence
 
 **Navbar**
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| RES-01 | Burger visible on mobile (<992px) | Burger icon shown, links hidden | As expected | Pass | |
-| RES-02 | Burger hidden on desktop (≥992px) | Burger hidden, links inline | As expected | Pass | |
-| RES-03 | Burger drawer opens on tap | Collapse expands, links + auth block visible | As expected | Pass | |
-| RES-04 | Burger drawer closes on second tap | Collapses drawer | As expected | Pass  | |
-| RES-05 | Search modal opens - mobile | Fullscreen modal opens | As expected | Pass | |
-| RES-06 | Search modal opens - desktop | Centred modal opens | As expected | Pass | |
-| RES-07 | Username shown when authenticated (desktop) | Username replaces Sign in/Sign up | As expected | Pass | |
-| RES-08 | Dropdown opens on username click/tap (mobile + desktop) | Order History / Log out appear | As expected | Pass | |
-| RES-09 | Dropdown closes on second click/tap (mobile + desktop) | Dropdown closes | As expected | Pass | |
+| RES-01 | Burger visible on mobile (<992px) | Burger icon shown, links hidden | As expected | Pass | Pass |
+| RES-02 | Burger hidden on desktop (≥992px) | Burger hidden, links inline | As expected | Pass | Pass |
+| RES-03 | Burger drawer opens on tap | Collapse expands, links + auth block visible | As expected | Pass |Pass |
+| RES-04 | Burger drawer closes on second tap | Collapses drawer | As expected | Pass  | Pass |
+| RES-05 | Username shown when authenticated (desktop) | Username replaces Sign in/Sign up | As expected | Pass | Pass |
+| RES-06 | Dropdown opens on username click/tap (mobile + desktop) | Order History / Log out appear | As expected | Pass | Pass |
+| RES-07 | Dropdown closes on second click/tap (mobile + desktop) | Dropdown closes | As expected | Pass | Pass |
 
-**Gallery Page**
+<p align="center">
+  <img src="readme-assets/responsiveness//navbar-mobile.png" alt="Navbar at mobile width" width="200">
+  <img src="readme-assets/responsiveness/navbar-desktop.png" alt="Navbar at desktop width" width="700">
+</p>
 
-| Test ID | Test | Expected | Actual | Local | Deployment |
-|---------|------|----------|--------|-------|------------|
-| RES-06 | Column count at desktop width | Theme cards arrange into 3 columns for tablet and disktop | As expected | Pass | |
-| RES-07 | Column count at mobile width | Theme cards arrange into one column for mobile | As expected | Pass | |
-| RES-08 | "Add sculpture" button on mobile viewport | Displays as a persistent, round FAB in the lower-right corner | As expected | Pass | |
-| RES-09 | "Add sculpture" button on desktop viewport | Displays inline, centered, content-sized, positioned between quote and theme cards | As expected | Pass | |
 
-**Sculpture Detail Page**
+#### Homepage
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
-| RES-10 | Layout at mobile width | Image and details stack in a single column | As expected | Pass | |
-| RES-11 | Layout at desktop width (≥768px) | Image and details render in two columns (image left, details right) | As expected | Pass | |
-| RES-12 | Layout transition across breakpoint | Resizing across 768px switches cleanly between stacked and two-column, no overlap or broken spacing | As expected | Pass | |
+| RES-08 | Hero poem visibility on mobile (<768px) | Poem hidden (`d-none`), hero wordmark and name block still shown | As expected | Pass | Pass |
+| RES-09 | Hero poem visibility on desktop (≥768px) | Poem visible above the wordmark | As expected | Pass | Pass |
+| RES-10 | Layout at mobile width | Hero content remains legible, no overlap with background image | As expected | Pass | Pass |
+| RES-11 | Layout at desktop width | Full hero composition (poem, wordmark, name, background image) displays as designed | As expected | Pass | Pass |
+
+<p align="center">
+  <img src="readme-assets/responsiveness//homepage-mobile.png" alt="Homepage at mobile width" width="200" style="margin-right: 16px;">
+  <img src="readme-assets/responsiveness//homepage-desktop.png" alt="Homepage at desktop width" width="500">
+</p>
+
+
+#### Gallery Page
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| RES-12 | Column count at desktop width | Theme cards arrange into 3 columns for tablet and disktop | As expected | Pass | Pass |
+| RES-13 | Column count at mobile width | Theme cards arrange into one column for mobile | As expected | Pass | Pass |
+| RES-14 | "Add sculpture" button on mobile viewport | Displays as a persistent, round FAB in the lower-right corner | As expected | Pass | Pass |
+| RES-15 | "Add sculpture" button on desktop viewport | Displays inline, centered, content-sized, positioned between quote and theme cards | As expected | Pass | Pass |
+
+<p align="center">
+  <img src="readme-assets/responsiveness//fab.png" alt="Floating action button at mobile width" width="200" style="margin-right: 16px;">
+  <img src="readme-assets/responsiveness/add-sculpture-button.png" alt="Button at desktop width" width="600">
+</p>
+
+
+#### Sculpture Detail Page
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| RES-16 | Layout at mobile width | Image and details stack in a single column | As expected | Pass | Pass |
+| RES-17 | Layout at desktop width (≥768px) | Image and details render in two columns (image left, details right) |As expected | Pass | Pass |
+| RES-18 | Layout transition across breakpoint | Resizing across 768px switches cleanly between stacked and two-column, no overlap or broken spacing | As expected | Pass | Pass |
+
+<p align="center">
+  <img src="readme-assets/responsiveness/sculpture-detail-mobile.png" alt="Sculpture detail page at mobile width" width="200">
+  <img src="readme-assets/responsiveness/sculpture-detail-desktop.png" alt="Sculpture detail page at desktop width" width="500">
+</p>
+
+#### Add Sculpture Page
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| RES-21 | Layout at mobile width | Form fields stack in a single column, remain legible and usable | As expected | Pass | Pass |
+| RES-22 | Layout at desktop width | Fields arrange per the two-column (`col-md-6`) layout | As expected | Pass | Pass |
+| RES-23 | Themes multi-select tap target size on mobile | **Known gap, not yet verified** — unclear whether individual theme options have sufficient tappable space on small screens | | | |
+
+<p align="center">
+  <img src="readme-assets/responsiveness/add-sculpture-mobile.png" alt="Add sculpture page at mobile width" width="200">
+  <img src="readme-assets/responsiveness/add-sculpture-desktop.png" alt="Add sculpture page at desktop width" width="500">
+</p>
 
 
 #### Navigation links (NAV)
