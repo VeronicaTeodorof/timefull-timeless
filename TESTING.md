@@ -755,4 +755,20 @@ Given that a field's default validation runs before custom clean() logic, when t
 
 ## Validation
 
+### W3C
+
+The following pages have been validated with https://validator.w3.org/:
+- [about page](readme-assets/w3c/about-validation.png)
+- [add sculpture](readme-assets/w3c/add-sculpture-validation.png)
+- [checkout-terms](readme-assets/w3c/checkout-terms-validation.png)
+- [contact](readme-assets/w3c/contact-validation.png)
+- [edit sculpture](readme-assets/w3c/edit-sculpture-validation.png)
+- [gallery](readme-assets/w3c/gallery-validation.png)
+- [home](readme-assets/w3c/home-validation.png)
+- [order history](readme-assets/w3c/order-validation.png)
+- [pages terms](readme-assets/w3c/pages-terms-validation.png)
+- [sculpture detail](readme-assets/w3c/sculpture-detail-validation.png)
+- [success page](readme-assets/w3c/success-validation.png)
+- [theme detail](readme-assets/w3c/theme-detail-validation.png)
+
 ---
