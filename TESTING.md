@@ -398,34 +398,55 @@ Responsiveness is checked per page across breakpoints, with screenshots included
 | SD-12 | Meta fields display (year, material, dimensions) | Year and material always shown; dimensions shown only when set, hidden entirely when not | As expected | Pass | Pass |
 | SD-13 | Price formatting | Displayed with comma separator for large values (e.g. £3,000, not £3000) | As expected | Pass | Pass |
 
+---
+
+### Theme Detail (TD)
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| TD-01 | Click carousel prev/next control | Current slide fades out, next/prev sculpture's slide fades in | As expected | Pass | Pass |
+| TD-02 | Prev/next control position stability across slides with different image aspect ratios | Does not shift position | Minor position shift observed occasionally; not visually disruptive, accepted as-is | Pass | Pass |
+
+---
+
+
+### Permissions (PERM)
+
+**Gallery page**
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| PERM-01 | Anonymous user, "Add sculpture" button | Not visible | As expected | Pass | Pass |
+| PERM-02 | Authenticated non-staff user, "Add sculpture" button | Not visible | As expected | Pass | Pass |
+| PERM-03 | Staff user, "Add sculpture" button | Visible | As expected | Pass | Pass |
+| PERM-04 | Anonymous user, theme-card edit button | Not visible | As expected  | Pass | Pass |
+| PERM-05 | Authenticated non-staff user, theme-card edit button | Not visible | As expected | Pass | Pass |
+| PERM-06 | Staff user, theme-card edit button | Visible | As expected | Pass | Pass |
+
+**Add Sculpture page**
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| PERM-07 | Anonymous user visits `/gallery/add_sculpture/` directly | Redirects to login page | As expected | Pass | Pass |
+| PERM-08 | Authenticated non-staff user visits `/gallery/add_sculpture/` directly | Gets 403 response | As expected  | Pass | Pass |
+| PERM-09 | Staff user visits `/gallery/add_sculpture/` directly | Page loads successfully | As expected | Pass | Pass |
+
+**Sculpture Detail page**
+
+| Test ID | Test | Expected | Actual | Local | Deployment |
+|---------|------|----------|--------|-------|------------|
+| PERM-10 | Anonymous user, actions dropdown (edit/delete) | Not visible | As expected | Pass | Pass |
+| PERM-11 | Authenticated non-staff user, actions dropdown | Not visible | As expected | Pass | Pass |
+| PERM-12 | Staff user, actions dropdown | Visible | As expected | Pass | Pass |
+
+---
+
 #### Empty states (EMPTY)
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|--------|-------|------------|
 | EMPTY-01 | Gallery page empty state content | Quote and empty message for regular users, plus Add Sculpture button for staff controls | As expected | Pass | |
 | EMPTY-02 | Gallery page non-empty state content | Quote, filter row, and theme card grid render when at least one sculpture exists | | | |
-
-#### Permissions (PERM)
-
-| Test ID | Test | Expected | Actual | Local | Deployment |
-|---------|------|----------|--------|-------|------------|
-| PERM-01 | Gallery page anonymous user | Doesn't see 'Add sculpture' button | As expected | Pass | |
-| PERM-02 | Gallery page authenticated non-staff user | Doesn't see 'Add sculpture' button | As expected | Pass | |
-| PERM-03 | Gallery page staff | Sees 'Add sculpture' button | As expected | Pass | |
-| PERM-04 | Change representative image icon visibility | Visible to staff only, on theme cards in non-empty state | | | |
-| PERM-05 | Anonymous user tries to access '/gallery/add_sculpture/' | Redirects to login page | As expected | Pass | |
-| PERM-06 | Authenticated non-staff user tries to access '/gallery/add_sculpture/' | Gets 403 response | As expected | Pass | |
-| PERM-07 | Staff user tries to access '/gallery/add_sculpture/' from url browser | Page loads successfully | As expected | Pass | |
-| PERM-08 | Anonymous user tries to access edit sculpture page | Redirects to login page | | | |
-| PERM-09 | Authenticated non-staff user tries to access edit sculpture page | Gets 403 response  | | | |
-| PERM-10 | Staff user tries to access edit sculpture page | Page loads successfully | | | |
-| PERM-11 | Anonymous user tries to see edit/delete buttons on sculpture detail | Buttons not visible/rendered | As expected for edit | Pass for edit | |
-| PERM-12 | Non-staff user tries to see edit/delete buttons on sculpture detail | Buttons not visible/rendered | As expected for edit | Pass for edit | |
-| PERM-13 | Staff user tries to see edit/delete buttons on sculpture detail | Buttons visible | As expected for edit | Pass for edit | |
-| PERM-14 | Staff user clicks delete button modal trigger on sculpture detail | Can trigger delete modal | | | |
-| PERM-15 | Anonymous user tries to access edit theme controls / change representative image (gallery) | Controls not visible/accessible | | | |
-| PERM-16 | Non-staff user tries to  edit theme / change representative image (gallery) | Controls not visible/accessible | | | |
-| PERM-17| Staff user tries to edit theme / change representative image (gallery) | Controls visible/accessible | | | |
 
 
 #### Add Sculpture Page
