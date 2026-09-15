@@ -1,7 +1,7 @@
 /* ===== Homepage-only background ===== */
 /* Flattened marble/vein + sculpture image runs continuously behind nav, hero, and footer */
 body.home-page {
-  background-image: url('../images/timefull-hero-blend-v5.png');
+  background-image: url('../images/timefull-hero-blend-v5.webp');
   background-size: cover;
   background-position: bottom 25% left 75%;
   height: 100vh;
