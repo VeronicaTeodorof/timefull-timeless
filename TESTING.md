@@ -15,9 +15,8 @@
      - [Pages App - BusinessSettings Model](#pages-app--businesssettings-model) - `pages/tests/test_models.py`
      - [Pages App - ContactForm](#pages-app--contactform) - `pages/tests/test_forms.py`
      - [Pages App - Contact View](#pages-app--contact-view) - `pages/tests/test_views.py`
-
-2. [Pass 2 - User-Perspective Testing](#pass-2--user-perspective-testing)
-   - [Repeating categories](#repeating-categories)
+2. [Pass 2 — Manual Tests](#pass-2--manual-tests)
+   - [Accessibility](#accessibility)
    - [Per-feature tests](#per-feature-tests)
      - [Authentication (AUTH)](#authentication-auth)
      - [Responsiveness (RES)](#responsiveness-res)
@@ -209,7 +208,9 @@ Uses a test data builder pattern (`valid_data(**overrides)`) to isolate one vari
 
 ---
 
-#### Accessibility - cross-apps
+## Pass 2 — Manual Tests
+
+### Accessibility
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---|---|---|---|---|---|
@@ -233,26 +234,15 @@ Uses a test data builder pattern (`valid_data(**overrides)`) to isolate one vari
 | A11Y-18 | Tab order | All interactive elements reachable in logical order by tab navigation | As expected | Pass | Pass |
 | A11Y-19 | <title> on every page | Accurately describes page content | As expected | Pass | Pass |
 
-
-
-
 ---
 
-## Pass 2 — User-Perspective Testing
-
-### Repeating categories
-
----
-
-### Per-feature tests
-
-#### Authentication (AUTH)
+### Authentication (AUTH)
 
 
 | Test ID | Test | Expected | Actual | Local | Deployment |
 |---------|------|----------|-------|-------|------------|
 | AUTH-01 | Sign up with valid data | Loads Confirm Emai page | As expected | Pass | Pass |
-| AUTH-02 | Paste confirmation link url in browser (obtained via console backend) | Loads "Confirm Email Address" page showing correct email/username | As expected | Pass | |
+| AUTH-02 | Paste confirmation link url in browser (obtained via console backend) | Loads "Confirm Email Address" page showing correct email/username | As expected | Pass | Not applicable |
 | AUTH-03 | Click Confirm button on that page | Email is marked verified; redirects to Sign in page  | As expected | Pass | Pass |
 | AUTH-04 | Submit signup with honeypot field (`phone_number`) filled in (simulating a bot) | Signup appears to succeed (fake success page shown) but no user account is actually created | Does not apply for this MVP | | |
 | AUTH-05 | Attempt login before confirming email | Login blocked; redirected to Confirm Email page rather than logged in | As expected - redirected to Confirm Email page, login refused | Pass | Pass|
@@ -272,6 +262,13 @@ Uses a test data builder pattern (`valid_data(**overrides)`) to isolate one vari
 | AUTH-17 | Click confirmation link from a real email client | Link opens and loads the Confirm Email Address page correctly, showing the right email/username | As expected | | Pass |
 | AUTH-18 | Submit login with valid username but wrong password | Login rejected; clear error shown; user remains logged out | As expected | Pass | Pass |
 | AUTH-20 | Submit login with a username/email that doesn't exist | Login rejected; clear error shown; user remains logged out | As expected | Pass | Pass |
+| AUTH-21 | Submit login with a username/email that doesn't exist | Login rejected; clear error shown; user remains logged out | As expected | Pass | Pass |
+| AUTH-22 | Login and signup form fields render with `form-control` styling | Fields show Bootstrap border/padding, not unstyled defaults | As expected | Pass | Pass |
+| AUTH-23 | Login and signup fields show no placeholder text | Only labels shown; no placeholder duplicating the label | As expected | Pass | Pass |
+| AUTH-24 | "Remember Me" checkbox styling (login) | Renders as a standard small checkbox (`form-check-input`), not stretched/deformed | As expected | Pass | Pass |
+| AUTH-25 | "All fields are required" note (signup) | Displayed once, near the top of the form | As expected | Pass | Pass |
+| AUTH-26 | Password help text (signup) | Not shown; error only appears if password fails validation on submit | As expected | Pass | Pass |
+| AUTH-27 | Logged-in/logged-out flash messages | Suppressed; no default allauth message shown after login or logout | As expected | Pass | Pass |
 
 
 #### Responsiveness (RES)
