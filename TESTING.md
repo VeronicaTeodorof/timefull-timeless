@@ -1,9 +1,20 @@
-# TESTING.md — timefull-timeless
-# Table of Contents
+# TESTING.md - timefull-timeless
 
-1. [Pass 1 - Code Audit](#pass-1--code-audit)
-   - [Automated tests](#automated-tests)
-   - [Manual tests - code reflection in UI](#manual-tests--code-reflection-in-ui)
+## Table of Contents
+
+1. [Pass 1 - Automated Tests](#pass-1--automated-tests)
+   - **gallery app**
+     - [Theme and Sculpture Models](#theme-and-sculpture-models) - `gallery/tests/test_models.py`
+     - [Gallery Views](#gallery-views) - `gallery/tests/test_views.py`
+     - [Create and Edit Theme](#create-and-edit-theme)
+     - [Gallery Forms](#gallery-forms) - `gallery/tests/test_forms.py`
+   - **checkout app**
+     - [Checkout Models](#checkout-models) - `checkout/tests/test_models.py`
+     - [Checkout Views](#checkout-views) - `checkout/tests/test_views.py`
+   - **pages app**
+     - [Pages App - BusinessSettings Model](#pages-app--businesssettings-model) - `pages/tests/test_models.py`
+     - [Pages App - ContactForm](#pages-app--contactform) - `pages/tests/test_forms.py`
+     - [Pages App - Contact View](#pages-app--contact-view) - `pages/tests/test_views.py`
 
 2. [Pass 2 - User-Perspective Testing](#pass-2--user-perspective-testing)
    - [Repeating categories](#repeating-categories)
@@ -22,10 +33,9 @@
 ---
 
 
-## Pass 1 — Code Audit
+## Pass 1 — Automated Tests
 
-### Automated tests
-#### First TDD pass for Theme and Sculpture models in gallery app
+### Theme and Sculpture Models
 
 Model-level tests were written first (red), followed by the model implementation (green), following TDD. Tests are grouped by category
 below rather than listed individually, given the volume of similar field-level checks.
@@ -60,17 +70,43 @@ Two tests were written to capture this:
 **Risk noted:** any code path that saves a `Sculpture` without calling `full_clean()` first (e.g. a direct `.objects.create()` or
 `.save()` call outside a `ModelForm`) could silently save a sculpture with no real image, since the database itself will not reject it.
 
-#### Tdd pass for gallery views
-- To add pass for gallery views permission enforcement automated tests needed for each new staff-only view, mirroring the existing add-sculpture pattern (anonymous -> 302, non-staff -> 403, staff ->200):
 
-- [x] add_sculpture view
-- [ ] edit_sculpture view
-- [ ] delete_sculpture view
-- [x] edit_theme view
-- [ ] change representative image view
+### Gallery Views
+
+**File:** `gallery/tests/test_views.py`
+
+**Gallery page** (`GalleryViewCase`)
+- Anonymous and non-staff authenticated users cannot see the "Add sculpture" CTA
+- Themes with no sculptures are excluded from the gallery view
+- A theme with multiple sculptures appears only once (not duplicated per sculpture)
+**Add Sculpture** (`AddSculptureViewCase`)
+- URL resolves correctly
+- Permission enforcement: anonymous->302, non-staff->403, staff->200
+- Form is passed in context
+- Valid data creates a `Sculpture` object and redirects to its detail page
+- New theme creation, exact-duplicate reuse, case-insensitive duplicate reuse
+- Multiple selected themes all attach correctly
+- Existing-theme selection + new theme combine correctly
+- Submission with no themes and no new theme fails validation
+- Multiple `new_theme` fields (cloned) each create and attach their own theme
+- New theme alone (no existing theme selected) submits successfully
+**Edit Theme** (`EditThemeViewClass`)
+- Permission enforcement: anonymous->302, non-staff->403
+- GET request returns 400 (POST-only endpoint, no standalone page)
+- Valid POST saves new name
+- Valid POST saves `representative_sculpture`
+- Empty name is rejected (400), no changes saved
+**Edit Sculpture** (`EditSculptureViewClass`)
+- Valid changed data saves and persists
+- Successful edit redirects to sculpture's detail page
+- **No permission tests** - see gap noted above
+**Delete Sculpture** (`DeleteSculptureViewCase`)
+- Permission enforcement: anonymous->302, non-staff->403
+- A never-sold sculpture can be permanently deleted by staff, redirects to gallery
+- A sold sculpture cannot be deleted, even by staff (403), sculpture persists
 
 
-#### TDD pass for Create and Edit Theme
+### Create and Edit Theme
 
 - [x] AC1 - new theme created on valid submission
 - [x] AC2 - new theme created and attached to the sculpture
@@ -79,86 +115,99 @@ Two tests were written to capture this:
 - [x] AC6 - selecting multiple existing themes attaches all of them
 - [x] AC7 - existing-theme selection and new-theme submission combine correctly
 - [x] AC9 - multiple `new_theme` values (cloned fields) each create and attach a theme
-- [ ] AC11 - theme survives sculpture deletion; card falls back to remaining sculpture (blocked on story 31)
+- [ ] AC11 - theme survives sculpture deletion; card falls back to remaining sculpture
 - [x] AC12 - empty theme hidden from gallery queryset; still included in form queryset
 - [x] AC13 - edit-theme view rejects non-staff/anonymous requests (302/403/200)
 - [x] AC15 - representative image override takes precedence over fallback, even when it wouldn't coincidentally match
 - [x] AC16 - representative-image dropdown scoped to only this theme's sculptures, includes all of them
 - [x] AC17 - rename validation excludes self (no false duplicate on unchanged save), rejects name matching a different theme
-- [ ] AC19 - untagging a sculpture from a theme clears a stale representative-image override (blocked on story 31)
-- [x] AC21 - view calls `messages.success(...)` on theme-related success paths
+- [ ] AC19 - untagging a sculpture from a theme clears a stale representative-image override
+- [x] AC21 - view calls `messages.success` on theme-related success paths
+
+
+### Gallery Forms
+
+**File:** `gallery/tests/test_forms.py`
+
+**SculptureForm**
+- Form has all expected fields, in expected order (`title`, `title_translation`, `dimensions`, `year`, `material`, `price`, `themes`, `image`, `status`, `new_theme`)
+- Form has a distinct, non-model `new_theme` field
+**ThemeForm**
+- `representative_sculpture` field's queryset is correctly scoped to only sculptures belonging to the theme being edited (matches AC16 above), excluding sculptures from other themes
 
 
 ---
 
-### Manual tests — code reflection in UI
+### Checkout Models
 
-#### gallery app
+**File:** `checkout/tests/test_models.py`
 
-##### models.py
+**Order**
+- `order_number` exists, `max_length=32`, marked non-editable
+- `shipping_method` offers exactly `delivery` and `pickup` as choices
+- `postcode` is nullable
+- `shipped_at` is nullable
+- `order_number` auto-generates on save
+**OrderLineItem**
+- `order` and `sculpture` are both `ForeignKey` fields
+- `delivery_cost` defaults to `0` (Studio Pickup orders have no delivery cost)
+- `lineitem_total` is marked non-editable (always calculated, never user-entered)
+- `lineitem_total` calculates correctly as `price_at_purchase + insurance_cost + delivery_cost`
 
-| Test ID | Test | Expected | Actual | Local | Deployment |
-|---|---|---|---|---|---|
-| MGM-01 | Theme name appears on Bootstrap theme cards in gallery page | Each theme card displays the theme's name clearly | | | |
-| MGM-02 | Select a theme card on the gallery page | URL updates to include the theme's slug (e.g. `/gallery/theme/broken-forms/`), and the page shows sculptures filtered to that theme | | | |
-| MGM-03 | Sculptor's control shows a "change image" (or similar) button on each theme card | Clicking it lets the sculptor select/change which sculpture is the representative_sculpture for that theme | | | |
-| MGM-04 | Delete a sculpture set as a theme's representative_sculpture | Theme card remains on the gallery page; theme is not deleted | | | |
-| MGM-05 | A theme still has other sculptures after its representative_sculpture is deleted | Theme card remains displayed on the gallery page | | | |
-| MGM-06 | A theme has no sculptures remaining at all | Theme card is not displayed on the gallery page | | | |
-| MGM-07 | Sculptor enters an existing theme name with different case (e.g. "broken forms" vs "Broken Forms") | No new theme card is created; sculpture is linked to the existing theme | | | |
-| MGM-08 | Sculptor enters an existing theme name with leading/trailing whitespace (e.g. " Broken Forms ") | No new theme card is created; sculpture is linked to the existing theme | | | |
-| MGM-09 | Create and edit forms in sculptor's controls display the status field | Field shows exactly three choices: Available, Reserved, Sold | | | |
-| MGM-10 | Title field present on create and edit sculpture forms; submit with title blank | Field is shown on both forms; blank submission is rejected with a validation error | As expected on create | Pass on create | |
-| MGM-11 | Title translation field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission succeeds (nullable/optional) | As expected on create | Pass on create | |
-| MGM-12 | View a sculpture's detail page | URL shows the sculpture's slug (e.g. `/gallery/sculpture/whispering-bronze/`) | | | |
-| MGM-13 | Dimensions field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission succeeds (nullable/optional) | As expected on crate | Pass on create | |
-| MGM-14 | Material field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission is rejected with a validation error | As expected on create | Pass on create | |
-| MGM-15 | Price field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission is rejected with a validation error | As expected on create | Pass on create | |
-| MGM-16 | Enter non-digit characters (excluding "e" and "-", which the number input allows by default) into the price field | Form does not submit; validation error shown | Pass on create | Pass | |
-| MGM-17 | Enter 0.01 in the price field | Form submits successfully (minimum allowed value) | As expected on create | Pass on create | |
-| MGM-18 | Enter 0 in the price field | Form does not submit; validation error shown | As expected on create | Pass on create | |
-| MGM-19 | Enter a negative number in the price field | Form does not submit; validation error shown | As expected on create | Pass on create | |
-| MGM-20 | Weight field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission succeeds (nullable/optional) | Does not apply/inconsistent artist records | | |
-| MGM-21 | Enter 0.10 in the weight field | Form submits successfully (minimum allowed value) | Does not apply | | |
-| MGM-22 | Enter 0.09 in the weight field | Form does not submit; validation error shown | Does not apply | | |
-| MGM-23 | Year field present on create and edit sculpture forms; submit with field blank | Field is shown on both forms; blank submission is rejected with a validation error | As expected on creatte | Pass on create | |
-| MGM-24 | Enter 1990 in the year field | Form submits successfully (minimum allowed value) | As expected on create | Pass on create | |
-| MGM-25 | Enter 1989 in the year field | Form does not submit; validation error shown | As expected on create | Pass on create | |
-| MGM-26 | Enter 2026 in the year field | Form submits successfully (current year, maximum allowed) | As expected on create | Pass on create | |
-| MGM-27 | Enter 2027 in the year field | Form does not submit; validation error shown | As expected  on create | Pass on create | |
-| MGM-28 | Enter a negative number in the year field | Form does not submit; validation error shown (PositiveIntegerField) | As expected on create | Pass on create | |
-| MGM-29 | Image upload option present on create form; image change option present on edit form; submit with no image | Upload/change control shown appropriately on each form; blank submission is rejected with a validation error | As expected on create | Pass on create | |
-| MGM-30 | View a sculpture's detail/edit page in sculptor's controls | reserved_at timestamp is displayed (read-only) when the sculpture is reserved | Does not apply for this MVP| | |
-| MGM-31 | View a sculpture's detail/edit page in sculptor's controls | is_manually_reserved value is displayed (read-only), for verifying reservation logic behaves correctly | Does not apply for this MVP | | |
-| MGM-32 | New sculpture created, no reservation activity yet | is_manually_reserved displays as False (default) | Does not apply for this MVP | | |
-| MGM-33 | Artist manually reserves a sculpture from the edit page | is_manually_reserved displays as True | Does not apply for this MVP | | |
-| MGM-34 | Sculpture is reserved automatically (added to a buyer's selection) | is_manually_reserved displays as False | Does not apply for this MVP | | |
-| MGM-35 | View a sculpture's detail/edit page in sculptor's controls | is_visible field is present, displays True by default | Save as draft vs Save buttons present | Pass | |
-| MGM-36 | Sculptor sets is_visible to False | Sculpture no longer appears in the public gallery | | | |
-| MGM-37 | Sculptor resets is_visible back to True | Sculpture reappears in the public gallery | | | |
-| MGM-38 | Insurance rate override field present on create/edit sculpture forms; sculptor can fill in or change value | Field shown and editable on both forms | Doesn't apply for this MVP | | |
-| MGM-39 | Submit with insurance_rate_override left blank | Submission succeeds (nullable/optional) | Does not apply for this MVP | | |
-| MGM-40 | Enter 0 in insurance_rate_override | Form submits successfully | Does not apply for this MVP  | | |
-| MGM-41 | Enter -1 in insurance_rate_override | Form does not submit; validation error shown | Does not apply for this MVP| | |
-| MGM-42 | Enter 50 in insurance_rate_override | Form submits successfully (maximum allowed value) | Does not apply for this MVP | | |
-| MGM-43 | Enter 50.01 in insurance_rate_override | Form does not submit; validation error shown | Does not apply for this MVP | | |
-| MGM-44 | Themes field present on create/edit sculpture forms | Field is shown and themes are selectable (multi-select) | As expected on create | Pass on create | |
-| MGM-45 | Submit a sculpture form with a title exactly matching an existing sculpture's title (same casing) | Form rejects submission; validation error shown | | | |
-| MGM-46 | Submit a sculpture form with a title matching an existing sculpture's title but in different casing | Form rejects submission; validation error shown | | | |
-| MGM-47 | Submit a sculpture form with a title matching an existing sculpture's title, but with leading/trailing whitespace | Form rejects submission; validation error shown | | | |
-| MGM-48 | Submit sculpture form with material entered in lowercase (e.g. "bronze wire") | After saving, material displays as title case (e.g. "Bronze Wire") on the sculpture's detail/edit page | | | |
+---
 
+### Checkout Views
 
-##### forms.py
+**File:** `checkout/tests/test_views.py`
 
-**SculptureForm**
+**Create Checkout Session** (`CreateCheckoutSessionTests`)
+- Direct POST to create-checkout-session for an already-sold sculpture (bypassing the terms page) is blocked - redirects to sculpture detail, no Stripe session created
+**Stripe Webhook** (`StripeWebhookTests`)
+- An invalid `Stripe-Signature` header is rejected with 400, event not processed
+**Order History** (`OrderHistoryViewTests`)
+- Anonymous request redirected to login (302)
+- Authenticated user sees their own order in history
+- Authenticated user does NOT see another user's order in history
 
-| Test ID | Test | Expected | Actual | Local | Deployment |
-|---|---|---|---|---|---|
-| MGF-01 | New theme field |  Present on the form | As expected | | |
-| MGF-02 | Submit with blank 'new theme' field | Form submits successfully | | | |
-| MGF-03 | 'title', 'title_translation', 'dimensions', 'year', 'material', 'price', 'themes', 'image', 'status'  fields | Present | | | |
-| MGF-04 | placeholders | Correct placeholders on each input | | | |
+---
+
+### Pages App — BusinessSettings Model
+
+**File:** `pages/tests/test_models.py`
+
+- `load()` creates a new row with the default insurance rate (0.015) when none exists yet
+- `load()` returns the existing row (including saved edits) rather than creating a duplicate
+- `save()` pins the primary key to `1` regardless of how the instance was created — this is the actual mechanism enforcing singleton behaviour
+- `delete()` has no effect; the row persists, since deletion is intentionally disabled to protect the single row
+
+---
+
+### Pages App — ContactForm
+
+**File:** `pages/tests/test_forms.py`
+
+Uses a test data builder pattern (`valid_data(**overrides)`) to isolate one variable per test.
+
+- Missing `phone` (optional) — valid
+- Missing `name` — invalid, error on `name`
+- Missing `email` — invalid, error on `email`
+- Malformed `email` — invalid, error on `email`
+- Missing `subject` (optional) — valid
+- Missing `message` — invalid, error on `message`
+- All fields valid — submits successfully
+
+---
+
+### Pages App — Contact View
+
+**File:** `pages/tests/test_views.py`
+
+- Valid POST redirects back to the contact page
+- Invalid POST re-renders the form with errors, without redirecting (status 200)
+- Anonymous GET request has no prefilled email
+- Authenticated GET request prefills email with the logged-in user's registered address
+
+---
 
 #### Accessibility - cross-apps
 
